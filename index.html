@@ -22,7 +22,7 @@
 
             var overlay = document.createElement('div')
             overlay.style.position = 'absolute'
-            overlay.style.height = '25%'
+            overlay.style.height = '23.885%'
             overlay.style.width = '75%'
             overlay.style.backgroundColor = '#000'
             overlay.style.opacity = '0.6'
@@ -30,11 +30,13 @@
             overlay.style.marginLeft = 'auto'
             overlay.style.marginRight = 'auto'
 
+            // an empty div
+
             // lisica div
 
             var div_lisica = document.createElement('div')
             document.body.appendChild(div_lisica)
-            div_lisica.style.height = '25%'
+            div_lisica.style.height = '23.885%'
             div_lisica.style.width = '75%'
             div_lisica.style.backgroundImage = "url('assets/lisica_background.jpeg')"
             div_lisica.style.backgroundPosition = 'center'
@@ -46,10 +48,10 @@
             var title_lisica = document.createElement('div')
             div_lisica.appendChild(title_lisica)
             title_lisica.style.position = 'relative'
-            title_lisica.style.top = '20px'
-            title_lisica.style.left = '20px'
-            title_lisica.style.fontFamily = 'Times New Roman'
-            title_lisica.style.fontSize = '20px'
+            title_lisica.style.top = '20px'    // TODO: this wrt div sizes
+            title_lisica.style.left = '20px'    // TODO: this wrt div sizes
+            title_lisica.style.fontFamily = 'Quicksand'
+            title_lisica.style.fontSize = '20px'    // TODO: this wrt div sizes
             title_lisica.style.fontWeight = 'bold'
             title_lisica.style.color = '#fff'
             title_lisica.innerHTML = 'Lisica'
@@ -57,10 +59,10 @@
             var description_lisica = document.createElement('div')
             //div_lisica.appendChild(description_lisica)
             description_lisica.style.position = 'relative'
-            description_lisica.style.top = '60px'
-            description_lisica.style.left = '20px'
-            description_lisica.style.fontFamily = 'Times New Roman'
-            description_lisica.style.fontSize = '14px'
+            description_lisica.style.top = '60px'    // TODO: this wrt div sizes
+            description_lisica.style.left = '20px'    // TODO: this wrt div sizes
+            description_lisica.style.fontFamily = 'Quicksand'
+            description_lisica.style.fontSize = '14px'    // TODO: this wrt div sizes
             description_lisica.style.color = '#fff'
             description_lisica.innerHTML = ''
 
@@ -141,12 +143,12 @@
 
             // paypal button div
 
-            var div = document.createElement('div')
-            document.body.appendChild(div)
-            div.id = 'paypal-button-container'
-            div.style.position = 'absolute'
-            div.style.left = '50%'
-            div.style.marginLeft = '-50px'
+            var div_paypal = document.createElement('div')
+            document.body.appendChild(div_paypal)
+            div_paypal.id = 'paypal-button-container'
+            div_paypal.style.position = 'absolute'
+            div_paypal.style.left = '50%'
+            div_paypal.style.marginLeft = '-50px'
 
             // helpers
 
@@ -195,12 +197,11 @@
                     label: 'paypal',
                     },
                     createOrder: function(data, actions) {
-                        
-                        if (username == null || password == null) alert("not_logged_in.")
-                        if (selectedItemDescription == null || selectedItemPrice == null) alert("not_item_selected.")
-
                         //var selectedItemDescription = itemOptions.options[itemOptions.selectedIndex].value;
                         //var selectedItemPrice = parseFloat(itemOptions.options[itemOptions.selectedIndex].getAttribute("price"));
+
+                        if (username == null || password == null) alert("not_logged_in.")
+                        if (selectedItemDescription == null || selectedItemPrice == null) alert("not_item_selected.")
 
                         var tax = (0 === 0 || false) ? 0 : (selectedItemPrice * (parseFloat(0)/100));
                         if(quantitySelect.options.length > 0) {
