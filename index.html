@@ -18,11 +18,7 @@
             var selectedItemDescription
             var selectedItemPrice
 
-            // helpers
-
-            const sleep = sec => new Promise(r => setTimeout(r, sec*1_000))
-
-            // general dark overlay for divs
+            // general dark div
 
             var overlay = document.createElement('div')
             overlay.style.position = 'absolute'
@@ -31,7 +27,8 @@
             overlay.style.top = '0px'
             overlay.style.left = '0px'
             overlay.style.backgroundColor = '#000'
-            overlay.style.opacity = '0.5'
+            overlay.style.opacity = '0.6'
+            overlay.style.borderRadius = '20px'
 
             // lisica div
 
@@ -42,6 +39,7 @@
             div_lisica.style.backgroundImage = "url('assets/lisica_background.jpeg')"
             div_lisica.style.backgroundPosition = 'center'
             div_lisica.style.backgroundSize = 'cover'
+            div_lisica.style.borderRadius = '10px'
 
             var title_lisica = document.createElement('div')
             div_lisica.appendChild(title_lisica)
@@ -81,8 +79,8 @@
                         for (var i = 0; i < text.length; i++) {
                             next = text[i]
                             switch (next) {
-                                case '*': next = '<br>'; break;
-                                case '+': next = '   '; break;
+                                case '*': next = '<br>'; break
+                                case '+': next = '   '; break
                             }
                             description_lisica.innerHTML +=next
                             await sleep(.036)
@@ -94,10 +92,10 @@
             }
 
             div_lisica.onmouseleave = function() {
+                lisica_mouseover = false
                 document.body.style.cursor = 'default'
                 div_lisica.removeChild(description_lisica)
                 div_lisica.removeChild(overlay)
-                lisica_mouseover = false
                 lisica_typing = false
                 description_lisica.innerHTML = ''
             }
@@ -148,6 +146,10 @@
             // div.style.left = '50%'
             // div.style.transform = 'translate(-50%, -50%)'
             // div.style.margin = '0 auto'
+
+            // helpers
+
+            const sleep = sec => new Promise(r => setTimeout(r, sec*1_000))
 
         </script>
 
