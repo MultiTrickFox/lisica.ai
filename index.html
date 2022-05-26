@@ -10,20 +10,106 @@
 
         <script>
 
+            // info
+
             var username
             var password
 
             var selectedItemDescription
             var selectedItemPrice
 
+            // helpers
 
-            var div = document.createElement('div')
-            document.body.appendChild(div)
-            div.style.height = '25%'
-            div.style.width = '75%'
-            div.style.backgroundImage = "url('assets/lisica_background.jpeg')"
-            div.style.backgroundSize = 'cover'
-            div.innerHTML = 'Hello World'
+            const sleep = sec => new Promise(r => setTimeout(r, sec*1_000))
+
+            // general dark overlay for divs
+
+            var overlay = document.createElement('div')
+            overlay.style.position = 'absolute'
+            overlay.style.height = '25%'
+            overlay.style.width = '75%'
+            overlay.style.top = '0px'
+            overlay.style.left = '0px'
+            overlay.style.backgroundColor = '#000'
+            overlay.style.opacity = '0.5'
+
+            // lisica div
+
+            var div_lisica = document.createElement('div')
+            document.body.appendChild(div_lisica)
+            div_lisica.style.height = '25%'
+            div_lisica.style.width = '75%'
+            div_lisica.style.backgroundImage = "url('assets/lisica_background.jpeg')"
+            div_lisica.style.backgroundSize = 'cover'
+
+            var title_lisica = document.createElement('div')
+            div_lisica.appendChild(title_lisica)
+            title_lisica.style.position = 'absolute'
+            title_lisica.style.top = '20px'
+            title_lisica.style.left = '20px'
+            title_lisica.style.fontFamily = 'Times New Roman'
+            title_lisica.style.fontSize = '20px'
+            title_lisica.style.fontWeight = 'bold'
+            title_lisica.style.color = '#fff'
+            title_lisica.innerHTML = 'Lisica'
+
+            var description_lisica = document.createElement('div')
+            //div_lisica.appendChild(description_lisica)
+            description_lisica.style.position = 'absolute'
+            description_lisica.style.top = '60px'
+            description_lisica.style.left = '20px'
+            description_lisica.style.fontFamily = 'Times New Roman'
+            description_lisica.style.fontSize = '14px'
+            description_lisica.style.color = '#fff'
+            description_lisica.innerHTML = ''
+
+            var lisica_mouseover = false
+            var lisica_typing = false
+
+            div_lisica.onmouseover = function() {
+                lisica_mouseover = true
+                document.body.style.cursor = 'pointer'
+                if (!lisica_typing) {
+                    lisica_typing = true
+                    const type_description = async () => {
+                        div_lisica.removeChild(title_lisica)
+                        div_lisica.appendChild(overlay)
+                        div_lisica.appendChild(title_lisica)
+                        div_lisica.appendChild(description_lisica)
+                        text = 'This is lisica description text.*It is a nice text.*I personally liked it.'
+                        for (var i = 0; i < text.length; i++) {
+                            next = text[i]
+                            switch (next) {
+                                case '*': next = '<br>'; break;
+                                case '+': next = '   '; break;
+                            }
+                            description_lisica.innerHTML +=next
+                            await sleep(.036)
+                            if (!lisica_mouseover) return
+                        }                
+                    }
+                    type_description()
+                }
+            }
+
+            div_lisica.onmouseleave = function() {
+                document.body.style.cursor = 'default'
+                div_lisica.removeChild(description_lisica)
+                div_lisica.removeChild(overlay)
+                lisica_mouseover = false
+                lisica_typing = false
+                description_lisica.innerHTML = ''
+            }
+
+            div_lisica.onclick = function() {
+                window.location.href = 'http://www.google.com'
+            }
+
+
+
+            
+            
+
             
 
             var div = document.createElement('div')
@@ -51,6 +137,8 @@
             
 
 
+
+            // paypal button div
 
             var div = document.createElement('div')
             document.body.appendChild(div)
@@ -59,7 +147,6 @@
             // div.style.left = '50%'
             // div.style.transform = 'translate(-50%, -50%)'
             // div.style.margin = '0 auto'
-            
 
         </script>
 
