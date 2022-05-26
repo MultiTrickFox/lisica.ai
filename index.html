@@ -30,7 +30,7 @@
             overlay.style.marginLeft = 'auto'
             overlay.style.marginRight = 'auto'
 
-            // an empty div
+            // Todo: an empty div here & between the cards & other stuffs
 
             // lisica div
 
@@ -80,9 +80,9 @@
                         div_lisica.appendChild(title_lisica)
                         div_lisica.appendChild(description_lisica)
                         var opacity = 0
-                        for (var i = 0; i < 10; i++) {
+                        for (var i = 0; i < 11; i++) {
                             description_lisica.style.opacity = opacity
-                            opacity += .07
+                            opacity += .077
                             await sleep(.1)
                             if (!lisica_mouseover) return
                         }                
@@ -101,10 +101,10 @@
             }
 
             div_lisica.onclick = function() {
-                window.location.href = 'http://www.google.com'
+                window.location.href = 'https://multitrickfox.itch.io/lisicaai'
             }
 
-
+            
 
             
             
