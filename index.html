@@ -64,30 +64,26 @@
             description_lisica.style.fontFamily = 'Quicksand'
             description_lisica.style.fontSize = '14px'    // TODO: this wrt div sizes
             description_lisica.style.color = '#fff'
-            description_lisica.innerHTML = ''
+            description_lisica.innerHTML = 'This is lisica description text.<br>It is a nice text.<br>I personally liked it.'
 
             var lisica_mouseover = false
-            var lisica_typing = false
+            var lisica_description_appearing = false
 
             div_lisica.onmouseover = function() {
                 lisica_mouseover = true
                 document.body.style.cursor = 'pointer'
-                if (!lisica_typing) {
-                    lisica_typing = true
+                if (!lisica_description_appearing) {
+                    lisica_description_appearing = true
                     const type_description = async () => {
                         div_lisica.removeChild(title_lisica)
                         div_lisica.appendChild(overlay)
                         div_lisica.appendChild(title_lisica)
                         div_lisica.appendChild(description_lisica)
-                        text = 'This is lisica description text.*It is a nice text.*I personally liked it.'
-                        for (var i = 0; i < text.length; i++) {
-                            next = text[i]
-                            switch (next) {
-                                case '*': next = '<br>'; break
-                                case '+': next = '   '; break
-                            }
-                            description_lisica.innerHTML +=next
-                            await sleep(.036)
+                        var opacity = 0
+                        for (var i = 0; i < 10; i++) {
+                            description_lisica.style.opacity = opacity
+                            opacity += .07
+                            await sleep(.1)
                             if (!lisica_mouseover) return
                         }                
                     }
@@ -100,8 +96,8 @@
                 document.body.style.cursor = 'default'
                 div_lisica.removeChild(description_lisica)
                 div_lisica.removeChild(overlay)
-                lisica_typing = false
-                description_lisica.innerHTML = ''
+                lisica_description_appearing = false
+                description_lisica.style.opacity = 0
             }
 
             div_lisica.onclick = function() {
