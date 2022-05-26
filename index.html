@@ -24,11 +24,11 @@
             overlay.style.position = 'absolute'
             overlay.style.height = '25%'
             overlay.style.width = '75%'
-            overlay.style.top = '0px'
-            overlay.style.left = '0px'
             overlay.style.backgroundColor = '#000'
             overlay.style.opacity = '0.6'
             overlay.style.borderRadius = '10px'
+            overlay.style.marginLeft = 'auto'
+            overlay.style.marginRight = 'auto'
 
             // lisica div
 
@@ -40,10 +40,12 @@
             div_lisica.style.backgroundPosition = 'center'
             div_lisica.style.backgroundSize = 'cover'
             div_lisica.style.borderRadius = '10px'
+            div_lisica.style.marginLeft = 'auto'
+            div_lisica.style.marginRight = 'auto'
 
             var title_lisica = document.createElement('div')
             div_lisica.appendChild(title_lisica)
-            title_lisica.style.position = 'absolute'
+            title_lisica.style.position = 'relative'
             title_lisica.style.top = '20px'
             title_lisica.style.left = '20px'
             title_lisica.style.fontFamily = 'Times New Roman'
@@ -54,7 +56,7 @@
 
             var description_lisica = document.createElement('div')
             //div_lisica.appendChild(description_lisica)
-            description_lisica.style.position = 'absolute'
+            description_lisica.style.position = 'relative'
             description_lisica.style.top = '60px'
             description_lisica.style.left = '20px'
             description_lisica.style.fontFamily = 'Times New Roman'
@@ -142,10 +144,9 @@
             var div = document.createElement('div')
             document.body.appendChild(div)
             div.id = 'paypal-button-container'
-            // div.style.position = 'fixed'
-            // div.style.left = '50%'
-            // div.style.transform = 'translate(-50%, -50%)'
-            // div.style.margin = '0 auto'
+            div.style.position = 'absolute'
+            div.style.left = '50%'
+            div.style.marginLeft = '-50px'
 
             // helpers
 
