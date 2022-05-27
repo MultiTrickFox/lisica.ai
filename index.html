@@ -9,7 +9,7 @@
     background-color: black;
     margin: 0;
     overflow-y: scroll;
-    cursor: default;
+    cursor: auto;
     ">
 
         <link rel="stylesheet" href="style.css">
@@ -73,12 +73,12 @@
             var description_lisica = document.createElement('div')
             //div_lisica.appendChild(description_lisica)
             description_lisica.style.position = 'relative'
-            description_lisica.style.top = '60px'  
+            description_lisica.style.top = '40px'  
             description_lisica.style.left = '20px'  
             description_lisica.style.fontFamily = 'Quicksand'
             description_lisica.style.fontSize = '14px' 
             description_lisica.style.color = '#fff'
-            description_lisica.innerHTML = "&emsp;Visit this Zen-inspired shrine and meet Lisica,<br>she is the shrine’s keeper and friendly fox deity.<br>&emsp;Talk to her about anything that comes to mind;<br>from daily life to abstract thoughts, to even foxes.<br>&emsp;She's always happy to chat and be helpful to visitors.<br><br>(She doesn't know she's an AI, so you don't have to mention that..)<br><br>Available chat modes include:<br>&emsp;- Core<br>&emsp;- Meditation<br>&emsp;- Poetry<br>&emsp;- Storytelling"
+            description_lisica.innerHTML = "&emsp;Visit this Zen-inspired shrine and meet Lisica,<br>she is the shrine’s keeper and friendly fox deity.<br>&emsp;Talk to her about anything that comes to mind;<br>from daily life to abstract thoughts, to even foxes.<br>&emsp;She's always happy to chat and be helpful to visitors.<br><br>Available chat modes include:<br>&emsp;- General<br>&emsp;- Meditation<br>&emsp;- Poetry<br>&emsp;- Storytelling"
 
             var lisica_mouseover = false
             var lisica_description_appearing = false
@@ -88,6 +88,7 @@
                 document.body.style.cursor = 'pointer'
                 if (!lisica_description_appearing) {
                     lisica_description_appearing = true
+                    title_lisica.innerHTML = "Lisica:"
                     const work = async () => {
                         div_lisica.removeChild(title_lisica)
                         div_lisica.appendChild(overlay)
@@ -107,11 +108,12 @@
 
             div_lisica.onmouseleave = function() {
                 lisica_mouseover = false
-                document.body.style.cursor = 'default'
+                document.body.style.cursor = 'auto'
                 div_lisica.removeChild(description_lisica)
                 div_lisica.removeChild(overlay)
                 lisica_description_appearing = false
                 description_lisica.style.opacity = 0
+                title_lisica.innerHTML = "Lisica"
             }
 
             div_lisica.onclick = function() {
@@ -170,6 +172,7 @@
                 document.body.style.cursor = 'pointer'
                 if (!PROJECT2_description_appearing) {
                     PROJECT2_description_appearing = true
+                    title_PROJECT2.innerHTML = "//upcoming//:"
                     const work = async () => {
                         div_PROJECT2.removeChild(title_PROJECT2)
                         div_PROJECT2.appendChild(overlay)
@@ -189,11 +192,12 @@
 
             div_PROJECT2.onmouseleave = function() {
                 PROJECT2_mouseover = false
-                document.body.style.cursor = 'default'
+                document.body.style.cursor = 'auto'
                 div_PROJECT2.removeChild(description_PROJECT2)
                 div_PROJECT2.removeChild(overlay)
                 PROJECT2_description_appearing = false
                 description_PROJECT2.style.opacity = 0
+                title_PROJECT2.innerHTML = "//upcoming//"
             }
 
             div_PROJECT2.onclick = function() {
@@ -252,6 +256,7 @@
                 document.body.style.cursor = 'pointer'
                 if (!PROJECT3_description_appearing) {
                     PROJECT3_description_appearing = true
+                    title_PROJECT3.innerHTML = "//upcoming//:"
                     const work = async () => {
                         div_PROJECT3.removeChild(title_PROJECT3)
                         div_PROJECT3.appendChild(overlay)
@@ -271,11 +276,12 @@
 
             div_PROJECT3.onmouseleave = function() {
                 PROJECT3_mouseover = false
-                document.body.style.cursor = 'default'
+                document.body.style.cursor = 'auto'
                 div_PROJECT3.removeChild(description_PROJECT3)
                 div_PROJECT3.removeChild(overlay)
                 PROJECT3_description_appearing = false
                 description_PROJECT3.style.opacity = 0
+                title_PROJECT3.innerHTML = "//upcoming//"
             }
 
             div_PROJECT3.onclick = function() {
@@ -287,7 +293,167 @@
             var empty_div = document.createElement('div')
             document.body.appendChild(empty_div)
             empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%'            
+            empty_div.style.width = '75%'  
+            
+            // user div
+
+            var div_user = document.createElement('div')
+            document.body.appendChild(div_user)
+            div_user.style.display = 'flex'
+            div_user.style.flexDirection = 'row'
+            div_user.style.justifyContent = 'center'
+            div_user.style.height = '46.3535%'
+            div_user.style.width = '75%'
+            div_user.style.marginLeft = 'auto'
+            div_user.style.marginRight = 'auto'
+            //div_user.style.border = '1.6px solid silver'
+            //div_user.style.borderRadius = '60px'
+            div_user.style.opacity = .666
+
+            var button_login = document.createElement('button')
+            div_user.appendChild(button_login)
+            button_login.innerHTML = 'Login'
+            button_login.style.color = 'white'
+            button_login.style.width = div_user.offsetWidth/6
+            button_login.style.height = button_login.offsetWidth/1.618
+            button_login.style.position = 'relative'
+            button_login.style.marginLeft = 'auto'
+            button_login.style.marginRight = 'auto'
+            button_login.style.marginTop = 'auto'
+            button_login.style.marginBottom = 'auto'
+            button_login.style.backgroundColor = 'transparent'
+            button_login.style.border = '2px solid white'
+            button_login.style.borderRadius = '20px'
+            
+            var button_signup = document.createElement('button')
+            div_user.appendChild(button_signup)
+            button_signup.innerHTML = 'Signup'
+            button_signup.style.color = 'white'
+            button_signup.style.width = div_user.offsetWidth/6
+            button_signup.style.height = button_signup.offsetWidth/1.618
+            button_signup.style.position = 'relative'
+            button_signup.style.marginLeft = 'auto'
+            button_signup.style.marginRight = 'auto'
+            button_signup.style.marginTop = 'auto'
+            button_signup.style.marginBottom = 'auto'
+            button_signup.style.backgroundColor = 'transparent'
+            button_signup.style.border = '2px solid white'
+            button_signup.style.borderRadius = '20px'
+
+            var text_username = document.createElement('input')
+            text_username.type = 'text'
+            text_username.placeholder = 'username'
+            text_username.style.color = 'white'
+            text_username.style.textAlign = 'center'
+            text_username.style.width = button_login.offsetWidth
+            text_username.style.height = button_login.offsetHeight
+            text_username.style.position = 'relative'
+            text_username.style.marginLeft = 'auto'
+            text_username.style.marginRight = 'auto'
+            text_username.style.marginTop = 'auto'
+            text_username.style.marginBottom = 'auto'
+            text_username.style.backgroundColor = 'transparent'
+            text_username.style.border = '2px solid white'
+            text_username.style.borderRadius = '20px'
+            
+            var text_password = document.createElement('input')
+            text_password.type = 'password'
+            text_password.placeholder = 'password'
+            text_password.style.color = 'white'
+            text_password.style.textAlign = 'center'
+            text_password.style.width = button_login.offsetWidth
+            text_password.style.height = button_login.offsetHeight
+            text_password.style.position = 'relative'
+            text_password.style.marginLeft = 'auto'
+            text_password.style.marginRight = 'auto'
+            text_password.style.marginTop = 'auto'
+            text_password.style.marginBottom = 'auto'
+            text_password.style.backgroundColor = 'transparent'
+            text_password.style.border = '2px solid white'
+            text_password.style.borderRadius = '20px'
+            
+            var text_email = document.createElement('input')
+            text_email.type = 'text'
+            text_email.placeholder = 'email (optional)'
+            text_email.style.color = 'white'
+            text_email.style.textAlign = 'center'
+            text_email.style.width = button_login.offsetWidth
+            text_email.style.height = button_login.offsetHeight
+            text_email.style.position = 'relative'
+            text_email.style.marginLeft = 'auto'
+            text_email.style.marginRight = 'auto'
+            text_email.style.marginTop = 'auto'
+            text_email.style.marginBottom = 'auto'
+            text_email.style.backgroundColor = 'transparent'
+            text_email.style.border = '2px solid white'
+            text_email.style.borderRadius = '20px'
+
+            var button_proceed = document.createElement('button')
+            button_proceed.style.width = button_login.offsetWidth
+            button_proceed.style.height = button_login.offsetHeight
+            button_proceed.innerHTML = 'Proceed'
+            button_proceed.style.color = 'white'
+            button_proceed.style.position = 'relative'
+            button_proceed.style.marginLeft = 'auto'
+            button_proceed.style.marginRight = 'auto'
+            button_proceed.style.marginTop = 'auto'
+            button_proceed.style.marginBottom = 'auto'
+            button_proceed.style.backgroundColor = 'transparent'
+            button_proceed.style.border = '2px solid white'
+            button_proceed.style.borderRadius = '20px'
+
+            button_signup.onclick = function() {
+                div_user.removeChild(button_login)
+                div_user.removeChild(button_signup)
+                div_user.appendChild(text_username)
+                div_user.appendChild(text_password)
+                div_user.appendChild(text_email)
+                div_user.appendChild(button_proceed)
+                button_proceed.onclick = function() {
+                    if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
+                    text_username.value
+                    text_password.value
+                    text_email.value
+                }
+            }
+
+            button_login.onclick = function() {
+                div_user.removeChild(button_login)
+                div_user.removeChild(button_signup)
+                div_user.appendChild(text_username)
+                div_user.appendChild(text_password)
+                div_user.appendChild(button_proceed)
+                button_proceed.onclick = function() {
+                    if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
+                    text_username.value
+                    text_password.value
+                }
+            }
+
+    
+            
+
+
+
+
+
+            // Todo: div this shit up !! Websocket etc!
+        
+            
+            
+
+
+
+
+
+
+
+            // empty div
+
+            var empty_div = document.createElement('div')
+            document.body.appendChild(empty_div)
+            empty_div.style.height = '4.63535%'
+            empty_div.style.width = '75%'  
 
             // tokens div
 
@@ -337,7 +503,7 @@
             div_usd1_desc.style.fontFamily = 'Quicksand'
             div_usd1_desc.style.fontSize = '20px'    
             div_usd1_desc.style.color = '#fff'
-            div_usd1_desc.innerHTML = '5000 T'
+            div_usd1_desc.innerHTML = '5000<br>Tokens'
             div_usd1_desc.style.textAlign = 'center'
 
             var div_usd1_explanation = document.createElement('div')
@@ -372,7 +538,7 @@
 
             div_usd1.onmouseleave = function() {
                 //div_token_mouseover = false
-                document.body.style.cursor = 'default'
+                document.body.style.cursor = 'auto'
             }
 
             div_usd1.onclick = function() {
@@ -426,7 +592,7 @@
             div_usd5_desc.style.fontFamily = 'Quicksand'
             div_usd5_desc.style.fontSize = '20px'    
             div_usd5_desc.style.color = '#fff'
-            div_usd5_desc.innerHTML = '30000 T'
+            div_usd5_desc.innerHTML = '30000<br>Tokens'
             div_usd5_desc.style.textAlign = 'center'
 
             var div_usd5_explanation = document.createElement('div')
@@ -461,7 +627,7 @@
 
             div_usd5.onmouseleave = function() {
                 // div_token_mouseover = false
-                document.body.style.cursor = 'default'
+                document.body.style.cursor = 'auto'
             }
 
             div_usd5.onclick = function() {
@@ -515,7 +681,7 @@
             div_usd10_desc.style.fontFamily = 'Quicksand'
             div_usd10_desc.style.fontSize = '20px'    
             div_usd10_desc.style.color = '#fff'
-            div_usd10_desc.innerHTML = '80000 T'
+            div_usd10_desc.innerHTML = '80000<br>Tokens'
             div_usd10_desc.style.textAlign = 'center'
 
             var div_usd10_explanation = document.createElement('div')
@@ -550,7 +716,7 @@
 
             div_usd10.onmouseleave = function() {
                 // div_token_mouseover = false
-                document.body.style.cursor = 'default'
+                document.body.style.cursor = 'auto'
             }
 
             div_usd10.onclick = function() {
@@ -604,7 +770,7 @@
             div_usd20_desc.style.fontFamily = 'Quicksand'
             div_usd20_desc.style.fontSize = '20px'    
             div_usd20_desc.style.color = '#fff'
-            div_usd20_desc.innerHTML = '200000 T'
+            div_usd20_desc.innerHTML = '200000<br>Tokens'
             div_usd20_desc.style.textAlign = 'center'
 
             var div_usd20_explanation = document.createElement('div')
@@ -639,7 +805,7 @@
 
             div_usd20.onmouseleave = function() {
                 // div_token_mouseover = false
-                document.body.style.cursor = 'default'
+                document.body.style.cursor = 'auto'
             }
 
             div_usd20.onclick = function() {
