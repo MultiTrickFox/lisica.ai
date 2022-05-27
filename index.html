@@ -46,6 +46,9 @@
 
             var div_lisica = document.createElement('div')
             document.body.appendChild(div_lisica)
+            div_lisica.style.display = 'flex'
+            div_lisica.style.flexDirection = 'column'
+            div_lisica.style.justifyContent = 'flex-start'
             div_lisica.style.height = '46.3535%'
             div_lisica.style.width = '75%'
             div_lisica.style.backgroundImage = "url('assets/lisica_background.jpeg')"
@@ -160,63 +163,52 @@
             div_tokens.style.marginLeft = 'auto'
             div_tokens.style.marginRight = 'auto'
 
+            //
+
             var div_usd1 = document.createElement('div')
             div_tokens.appendChild(div_usd1)
             div_usd1.style.display = 'flex'
             div_usd1.style.flexDirection = 'column'
-            div_usd1.style.justifyContent = 'center'
+            div_usd1.style.justifyContent = 'flex-start'
             div_usd1.style.height = '100%'
             div_usd1.style.width = div_usd1.offsetHeight/1.618+'px'
             div_usd1.style.border = '1.6px solid silver'
             div_usd1.style.borderRadius = '10px'
 
-            var div_empty = document.createElement('div')
-            div_tokens.appendChild(div_empty)
-            div_empty.style.height = '100%'
-            div_empty.style.width = div_empty.offsetHeight/16+'px'
+            var div_usd1_title = document.createElement('div')
+            div_usd1.appendChild(div_usd1_title)
+            div_usd1_title.style.position = 'relative'
+            div_usd1_title.style.top = '20px'    // TODO: this wrt div sizes
+            div_usd1_title.style.fontFamily = 'Quicksand'
+            div_usd1_title.style.fontSize = '20px'    // TODO: this wrt div sizes
+            div_usd1_title.style.fontWeight = 'bold'
+            div_usd1_title.style.color = '#fff'
+            div_usd1_title.innerHTML = '1 USD'
+            div_usd1_title.style.textAlign = 'center'
 
-            var div_usd5 = document.createElement('div')
-            div_tokens.appendChild(div_usd5)
-            div_usd5.style.display = 'flex'
-            div_usd5.style.flexDirection = 'column'
-            div_usd5.style.justifyContent = 'center'
-            div_usd5.style.height = '100%'
-            div_usd5.style.width = div_usd5.offsetHeight/1.618+'px'
-            div_usd5.style.border = '1.6px solid silver'
-            div_usd5.style.borderRadius = '10px'
+            var div_usd1_desc = document.createElement('div')
+            div_usd1.appendChild(div_usd1_desc)
+            div_usd1_desc.style.position = 'relative'
+            div_usd1_desc.style.top = '60px'    // TODO: this wrt div sizes
+            div_usd1_desc.style.fontFamily = 'Quicksand'
+            div_usd1_desc.style.fontSize = '14px'    // TODO: this wrt div sizes
+            div_usd1_desc.style.color = '#fff'
+            div_usd1_desc.innerHTML = '5000 Tokens'
+            div_usd1_desc.style.textAlign = 'center'
 
-            var div_empty = document.createElement('div')
-            div_tokens.appendChild(div_empty)
-            div_empty.style.height = '100%'
-            div_empty.style.width = div_empty.offsetHeight/16+'px'
-
-            var div_usd10 = document.createElement('div')
-            div_tokens.appendChild(div_usd10)
-            div_usd10.style.display = 'flex'
-            div_usd10.style.flexDirection = 'column'
-            div_usd10.style.justifyContent = 'center'
-            div_usd10.style.height = '100%'
-            div_usd10.style.width = div_usd10.offsetHeight/1.618+'px'
-            div_usd10.style.border = '1.6px solid silver'
-            div_usd10.style.borderRadius = '10px'
+            //
 
             var div_empty = document.createElement('div')
             div_tokens.appendChild(div_empty)
             div_empty.style.height = '100%'
             div_empty.style.width = div_empty.offsetHeight/16+'px'
 
-            var div_usd20 = document.createElement('div')
-            div_tokens.appendChild(div_usd20)
-            div_usd20.style.display = 'flex'
-            div_usd20.style.flexDirection = 'column'
-            div_usd20.style.justifyContent = 'center'
-            div_usd20.style.height = '100%'
-            div_usd20.style.width = div_usd20.offsetHeight/1.618+'px'
-            div_usd20.style.border = '1.6px solid silver'
-            div_usd20.style.borderRadius = '10px'
+            //
+
+            
 
             // empty div
-            
+
             var empty_div = document.createElement('div')
             document.body.appendChild(empty_div)
             empty_div.style.height = '4.63535%'
