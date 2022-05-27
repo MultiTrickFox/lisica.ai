@@ -8,7 +8,8 @@
     <body style="
     background-color: black;
     margin: 0;
-    overflow-y: scroll
+    overflow-y: scroll;
+    cursor: default;
     ">
 
         <link rel="stylesheet" href="style.css">
@@ -61,10 +62,10 @@
             var title_lisica = document.createElement('div')
             div_lisica.appendChild(title_lisica)
             title_lisica.style.position = 'relative'
-            title_lisica.style.top = '20px'    // TODO: this wrt div sizes
-            title_lisica.style.left = '20px'    // TODO: this wrt div sizes
+            title_lisica.style.top = '20px'  
+            title_lisica.style.left = '20px'  
             title_lisica.style.fontFamily = 'Quicksand'
-            title_lisica.style.fontSize = '20px'    // TODO: this wrt div sizes
+            title_lisica.style.fontSize = '20px'    
             title_lisica.style.fontWeight = 'bold'
             title_lisica.style.color = '#fff'
             title_lisica.innerHTML = 'Lisica'
@@ -72,12 +73,12 @@
             var description_lisica = document.createElement('div')
             //div_lisica.appendChild(description_lisica)
             description_lisica.style.position = 'relative'
-            description_lisica.style.top = '60px'    // TODO: this wrt div sizes
-            description_lisica.style.left = '20px'    // TODO: this wrt div sizes
+            description_lisica.style.top = '60px'  
+            description_lisica.style.left = '20px'  
             description_lisica.style.fontFamily = 'Quicksand'
-            description_lisica.style.fontSize = '14px'    // TODO: this wrt div sizes
+            description_lisica.style.fontSize = '14px' 
             description_lisica.style.color = '#fff'
-            description_lisica.innerHTML = 'This is lisica description text.<br>It is a nice text.<br>I personally liked it.'
+            description_lisica.innerHTML = "&emsp;Visit this Zen-inspired shrine and meet Lisica,<br>she is the shrine’s keeper and friendly fox deity.<br>&emsp;Talk to her about anything that comes to mind;<br>from daily life to abstract thoughts, to even foxes.<br>&emsp;She's always happy to chat and be helpful to visitors.<br><br>(She doesn't know she's an AI, so you don't have to mention that..)<br><br>Available chat modes include:<br>&emsp;- Core<br>&emsp;- Meditation<br>&emsp;- Poetry<br>&emsp;- Storytelling"
 
             var lisica_mouseover = false
             var lisica_description_appearing = false
@@ -163,6 +164,9 @@
             div_tokens.style.marginLeft = 'auto'
             div_tokens.style.marginRight = 'auto'
 
+            var div_token_mouseover = false
+            var div_token_appearing = false
+
             //
 
             var div_usd1 = document.createElement('div')
@@ -178,9 +182,9 @@
             var div_usd1_title = document.createElement('div')
             div_usd1.appendChild(div_usd1_title)
             div_usd1_title.style.position = 'relative'
-            div_usd1_title.style.top = '20px'    // TODO: this wrt div sizes
+            div_usd1_title.style.top = '30px'    
             div_usd1_title.style.fontFamily = 'Quicksand'
-            div_usd1_title.style.fontSize = '20px'    // TODO: this wrt div sizes
+            div_usd1_title.style.fontSize = '30px'    
             div_usd1_title.style.fontWeight = 'bold'
             div_usd1_title.style.color = '#fff'
             div_usd1_title.innerHTML = '1 USD'
@@ -189,12 +193,53 @@
             var div_usd1_desc = document.createElement('div')
             div_usd1.appendChild(div_usd1_desc)
             div_usd1_desc.style.position = 'relative'
-            div_usd1_desc.style.top = '60px'    // TODO: this wrt div sizes
+            div_usd1_desc.style.top = '80px'    
             div_usd1_desc.style.fontFamily = 'Quicksand'
-            div_usd1_desc.style.fontSize = '14px'    // TODO: this wrt div sizes
+            div_usd1_desc.style.fontSize = '20px'    
             div_usd1_desc.style.color = '#fff'
-            div_usd1_desc.innerHTML = '5000 Tokens'
+            div_usd1_desc.innerHTML = '5000 T'
             div_usd1_desc.style.textAlign = 'center'
+
+            var div_usd1_explanation = document.createElement('div')
+            div_usd1.appendChild(div_usd1_explanation)
+            div_usd1_explanation.style.position = 'relative'
+            div_usd1_explanation.style.top = '130px'    
+            div_usd1_explanation.style.fontFamily = 'Quicksand'
+            div_usd1_explanation.style.fontSize = '16px'    
+            div_usd1_explanation.style.color = '#fff'
+            div_usd1_explanation.innerHTML = 'This is an explanation for this amount of tokens.'
+            div_usd1_explanation.style.textAlign = 'center'
+            div_usd1_explanation.style.opacity = 0
+
+            div_usd1.onmouseover = function() {
+                div_token_mouseover = true
+                document.body.style.cursor = 'pointer'
+                if (!div_token_appearing) {
+                    div_token_appearing = true
+                    const type_description = async () => {
+                        var opacity = 0
+                        for (var i = 0; i < 11; i++) {
+                            div_usd1_explanation.style.opacity = opacity
+                            opacity += .077
+                            await sleep(.1)
+                            if (!div_token_mouseover) return
+                        }                
+                    }
+                    type_description()
+                }
+            }
+
+            div_usd1.onmouseleave = function() {
+                div_token_mouseover = false
+                document.body.style.cursor = 'default'
+                div_token_appearing = false
+                div_usd1_explanation.style.opacity = 0
+            }
+
+            div_usd1.onclick = function() {
+                selectedItemPrice = '1'
+                selectedItemDescription = '1 USD'
+            }
 
             //
 
@@ -273,8 +318,8 @@
                         //var selectedItemDescription = itemOptions.options[itemOptions.selectedIndex].value;
                         //var selectedItemPrice = parseFloat(itemOptions.options[itemOptions.selectedIndex].getAttribute("price"));
 
-                        if (username == null || password == null) { alert("not_logged_in."); return }
-                        if (selectedItemDescription == null || selectedItemPrice == null) { alert("not_item_selected."); return }
+                        if (username == null || password == null) { alert("Not logged in.."); return }
+                        if (selectedItemDescription == null || selectedItemPrice == null) { alert("No item selected"); return }
 
                         var tax = (0 === 0 || false) ? 0 : (selectedItemPrice * (parseFloat(0)/100));
                         if(quantitySelect.options.length > 0) {
