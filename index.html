@@ -88,7 +88,7 @@
                 document.body.style.cursor = 'pointer'
                 if (!lisica_description_appearing) {
                     lisica_description_appearing = true
-                    const type_description = async () => {
+                    const work = async () => {
                         div_lisica.removeChild(title_lisica)
                         div_lisica.appendChild(overlay)
                         div_lisica.appendChild(title_lisica)
@@ -101,7 +101,7 @@
                             if (!lisica_mouseover) return
                         }                
                     }
-                    type_description()
+                    work()
                 }
             }
 
@@ -125,32 +125,169 @@
             empty_div.style.height = '4.63535%'
             empty_div.style.width = '75%'
 
+            // the PROJECT2 div
 
-            // the dreaming one div
-            var div = document.createElement('div')
-            document.body.appendChild(div)
-            div.style.height = '25%'
-            div.style.width = '75%'
-            div.style.backgroundColor = 'red'
-            div.innerHTML = 'Hello World'
+            var div_PROJECT2 = document.createElement('div')
+            document.body.appendChild(div_PROJECT2)
+            div_PROJECT2.style.display = 'flex'
+            div_PROJECT2.style.flexDirection = 'column'
+            div_PROJECT2.style.justifyContent = 'flex-start'
+            div_PROJECT2.style.height = '46.3535%'
+            div_PROJECT2.style.width = '75%'
+            //div_PROJECT2.style.backgroundImage = "url('assets/lisica_background.jpeg')"
+            div_PROJECT2.style.backgroundPosition = 'center'
+            div_PROJECT2.style.backgroundSize = 'cover'
+            div_PROJECT2.style.borderRadius = '10px'
+            div_PROJECT2.style.marginLeft = 'auto'
+            div_PROJECT2.style.marginRight = 'auto'
+
+            var title_PROJECT2 = document.createElement('div')
+            div_PROJECT2.appendChild(title_PROJECT2)
+            title_PROJECT2.style.position = 'relative'
+            title_PROJECT2.style.top = '20px'  
+            title_PROJECT2.style.left = '20px'  
+            title_PROJECT2.style.fontFamily = 'Quicksand'
+            title_PROJECT2.style.fontSize = '20px'    
+            title_PROJECT2.style.fontWeight = 'bold'
+            title_PROJECT2.style.color = '#fff'
+            title_PROJECT2.innerHTML = '//upcoming//'
+
+            var description_PROJECT2 = document.createElement('div')
+            //div_PROJECT2.appendChild(description_PROJECT2)
+            description_PROJECT2.style.position = 'relative'
+            description_PROJECT2.style.top = '60px'  
+            description_PROJECT2.style.left = '20px'  
+            description_PROJECT2.style.fontFamily = 'Quicksand'
+            description_PROJECT2.style.fontSize = '14px' 
+            description_PROJECT2.style.color = '#fff'
+            description_PROJECT2.innerHTML = ""
+
+            var PROJECT2_mouseover = false
+            var PROJECT2_description_appearing = false
+
+            div_PROJECT2.onmouseover = function() {
+                PROJECT2_mouseover = true
+                document.body.style.cursor = 'pointer'
+                if (!PROJECT2_description_appearing) {
+                    PROJECT2_description_appearing = true
+                    const work = async () => {
+                        div_PROJECT2.removeChild(title_PROJECT2)
+                        div_PROJECT2.appendChild(overlay)
+                        div_PROJECT2.appendChild(title_PROJECT2)
+                        div_PROJECT2.appendChild(description_PROJECT2)
+                        var opacity = 0
+                        for (var i = 0; i < 11; i++) {
+                            description_PROJECT2.style.opacity = opacity
+                            opacity += .077
+                            await sleep(.1)
+                            if (!PROJECT2_mouseover) return
+                        }                
+                    }
+                    work()
+                }
+            }
+
+            div_PROJECT2.onmouseleave = function() {
+                PROJECT2_mouseover = false
+                document.body.style.cursor = 'default'
+                div_PROJECT2.removeChild(description_PROJECT2)
+                div_PROJECT2.removeChild(overlay)
+                PROJECT2_description_appearing = false
+                description_PROJECT2.style.opacity = 0
+            }
+
+            div_PROJECT2.onclick = function() {
+                //window.location.href = 'https://multitrickfox.itch.io/PROJECT2ai'
+            }
+
             // empty div
+
             var empty_div = document.createElement('div')
             document.body.appendChild(empty_div)
             empty_div.style.height = '4.63535%'
             empty_div.style.width = '75%'
-            // the hub div
-            var div = document.createElement('div')
-            document.body.appendChild(div)
-            div.style.height = '25%'
-            div.style.width = '75%'
-            div.style.backgroundColor = 'red'
-            div.innerHTML = 'Hello World'
+
+            // the PROJECT3 div
+
+            var div_PROJECT3 = document.createElement('div')
+            document.body.appendChild(div_PROJECT3)
+            div_PROJECT3.style.display = 'flex'
+            div_PROJECT3.style.flexDirection = 'column'
+            div_PROJECT3.style.justifyContent = 'flex-start'
+            div_PROJECT3.style.height = '46.3535%'
+            div_PROJECT3.style.width = '75%'
+            //div_PROJECT3.style.backgroundImage = "url('assets/lisica_background.jpeg')"
+            div_PROJECT3.style.backgroundPosition = 'center'
+            div_PROJECT3.style.backgroundSize = 'cover'
+            div_PROJECT3.style.borderRadius = '10px'
+            div_PROJECT3.style.marginLeft = 'auto'
+            div_PROJECT3.style.marginRight = 'auto'
+
+            var title_PROJECT3 = document.createElement('div')
+            div_PROJECT3.appendChild(title_PROJECT3)
+            title_PROJECT3.style.position = 'relative'
+            title_PROJECT3.style.top = '20px'  
+            title_PROJECT3.style.left = '20px'  
+            title_PROJECT3.style.fontFamily = 'Quicksand'
+            title_PROJECT3.style.fontSize = '20px'    
+            title_PROJECT3.style.fontWeight = 'bold'
+            title_PROJECT3.style.color = '#fff'
+            title_PROJECT3.innerHTML = '//upcoming//'
+
+            var description_PROJECT3 = document.createElement('div')
+            //div_PROJECT3.appendChild(description_PROJECT3)
+            description_PROJECT3.style.position = 'relative'
+            description_PROJECT3.style.top = '60px'  
+            description_PROJECT3.style.left = '20px'  
+            description_PROJECT3.style.fontFamily = 'Quicksand'
+            description_PROJECT3.style.fontSize = '14px' 
+            description_PROJECT3.style.color = '#fff'
+            description_PROJECT3.innerHTML = ""
+
+            var PROJECT3_mouseover = false
+            var PROJECT3_description_appearing = false
+
+            div_PROJECT3.onmouseover = function() {
+                PROJECT3_mouseover = true
+                document.body.style.cursor = 'pointer'
+                if (!PROJECT3_description_appearing) {
+                    PROJECT3_description_appearing = true
+                    const work = async () => {
+                        div_PROJECT3.removeChild(title_PROJECT3)
+                        div_PROJECT3.appendChild(overlay)
+                        div_PROJECT3.appendChild(title_PROJECT3)
+                        div_PROJECT3.appendChild(description_PROJECT3)
+                        var opacity = 0
+                        for (var i = 0; i < 11; i++) {
+                            description_PROJECT3.style.opacity = opacity
+                            opacity += .077
+                            await sleep(.1)
+                            if (!PROJECT3_mouseover) return
+                        }                
+                    }
+                    work()
+                }
+            }
+
+            div_PROJECT3.onmouseleave = function() {
+                PROJECT3_mouseover = false
+                document.body.style.cursor = 'default'
+                div_PROJECT3.removeChild(description_PROJECT3)
+                div_PROJECT3.removeChild(overlay)
+                PROJECT3_description_appearing = false
+                description_PROJECT3.style.opacity = 0
+            }
+
+            div_PROJECT3.onclick = function() {
+                //window.location.href = 'https://multitrickfox.itch.io/PROJECT3ai'
+            }
+
             // empty div
+
             var empty_div = document.createElement('div')
             document.body.appendChild(empty_div)
             empty_div.style.height = '4.63535%'
             empty_div.style.width = '75%'            
-
 
             // tokens div
 
@@ -164,8 +301,11 @@
             div_tokens.style.marginLeft = 'auto'
             div_tokens.style.marginRight = 'auto'
 
-            var div_token_mouseover = false
-            var div_token_appearing = false
+            //var div_token_mouseover = false
+            var div_token1_appearing = false
+            var div_token5_appearing = false
+            var div_token10_appearing = false
+            var div_token20_appearing = false
 
             //
 
@@ -207,38 +347,46 @@
             div_usd1_explanation.style.fontFamily = 'Quicksand'
             div_usd1_explanation.style.fontSize = '16px'    
             div_usd1_explanation.style.color = '#fff'
-            div_usd1_explanation.innerHTML = 'This is an explanation for this amount of tokens.'
+            div_usd1_explanation.innerHTML = 'I just want to check out these projects.'
             div_usd1_explanation.style.textAlign = 'center'
             div_usd1_explanation.style.opacity = 0
+            div_usd1_explanation.style.paddingLeft = '20px'
+            div_usd1_explanation.style.paddingRight = '20px'
 
             div_usd1.onmouseover = function() {
-                div_token_mouseover = true
+                // div_token_mouseover = true
                 document.body.style.cursor = 'pointer'
-                if (!div_token_appearing) {
-                    div_token_appearing = true
-                    const type_description = async () => {
+                if (!div_token1_appearing) {
+                    div_token1_appearing = true
+                    const work = async () => {
                         var opacity = 0
                         for (var i = 0; i < 11; i++) {
                             div_usd1_explanation.style.opacity = opacity
                             opacity += .077
                             await sleep(.1)
-                            if (!div_token_mouseover) return
                         }                
                     }
-                    type_description()
+                    work()
                 }
             }
 
             div_usd1.onmouseleave = function() {
-                div_token_mouseover = false
+                //div_token_mouseover = false
                 document.body.style.cursor = 'default'
-                div_token_appearing = false
-                div_usd1_explanation.style.opacity = 0
             }
 
             div_usd1.onclick = function() {
                 selectedItemPrice = '1'
                 selectedItemDescription = '1 USD'
+                const work = async () => {
+                    var opacity = 0                    
+                    for (var i = 0; i < 10; i++) {
+                        opacity += .1
+                        div_paypal.style.opacity = opacity
+                        await sleep(.06)
+                    }                
+                }
+                work()
             }
 
             //
@@ -250,7 +398,263 @@
 
             //
 
-            
+            var div_usd5 = document.createElement('div')
+            div_tokens.appendChild(div_usd5)
+            div_usd5.style.display = 'flex'
+            div_usd5.style.flexDirection = 'column'
+            div_usd5.style.justifyContent = 'flex-start'
+            div_usd5.style.height = '100%'
+            div_usd5.style.width = div_usd5.offsetHeight/1.618+'px'
+            div_usd5.style.border = '1.6px solid silver'
+            div_usd5.style.borderRadius = '10px'
+
+            var div_usd5_title = document.createElement('div')
+            div_usd5.appendChild(div_usd5_title)
+            div_usd5_title.style.position = 'relative'
+            div_usd5_title.style.top = '30px'    
+            div_usd5_title.style.fontFamily = 'Quicksand'
+            div_usd5_title.style.fontSize = '30px'    
+            div_usd5_title.style.fontWeight = 'bold'
+            div_usd5_title.style.color = '#fff'
+            div_usd5_title.innerHTML = '5 USD'
+            div_usd5_title.style.textAlign = 'center'
+
+            var div_usd5_desc = document.createElement('div')
+            div_usd5.appendChild(div_usd5_desc)
+            div_usd5_desc.style.position = 'relative'
+            div_usd5_desc.style.top = '80px'    
+            div_usd5_desc.style.fontFamily = 'Quicksand'
+            div_usd5_desc.style.fontSize = '20px'    
+            div_usd5_desc.style.color = '#fff'
+            div_usd5_desc.innerHTML = '30000 T'
+            div_usd5_desc.style.textAlign = 'center'
+
+            var div_usd5_explanation = document.createElement('div')
+            div_usd5.appendChild(div_usd5_explanation)
+            div_usd5_explanation.style.position = 'relative'
+            div_usd5_explanation.style.top = '130px'    
+            div_usd5_explanation.style.fontFamily = 'Quicksand'
+            div_usd5_explanation.style.fontSize = '16px'    
+            div_usd5_explanation.style.color = '#fff'
+            div_usd5_explanation.innerHTML = 'It seemed interesting the first time.'
+            div_usd5_explanation.style.textAlign = 'center'
+            div_usd5_explanation.style.opacity = 0
+            div_usd5_explanation.style.paddingLeft = '20px'
+            div_usd5_explanation.style.paddingRight = '20px'
+
+            div_usd5.onmouseover = function() {
+                // div_token_mouseover = true
+                document.body.style.cursor = 'pointer'
+                if (!div_token5_appearing) {
+                    div_token5_appearing = true
+                    const work = async () => {
+                        var opacity = 0
+                        for (var i = 0; i < 11; i++) {
+                            div_usd5_explanation.style.opacity = opacity
+                            opacity += .077
+                            await sleep(.1)
+                        }                
+                    }
+                    work()
+                }
+            }
+
+            div_usd5.onmouseleave = function() {
+                // div_token_mouseover = false
+                document.body.style.cursor = 'default'
+            }
+
+            div_usd5.onclick = function() {
+                selectedItemPrice = '5'
+                selectedItemDescription = '5 USD'
+                const work = async () => {
+                    var opacity = 0                    
+                    for (var i = 0; i < 10; i++) {
+                        opacity += .1
+                        div_paypal.style.opacity = opacity
+                        await sleep(.06)
+                    }                
+                }
+                work()
+            }
+
+            //
+
+            var div_empty = document.createElement('div')
+            div_tokens.appendChild(div_empty)
+            div_empty.style.height = '100%'
+            div_empty.style.width = div_empty.offsetHeight/16+'px'
+
+            //
+
+            var div_usd10 = document.createElement('div')
+            div_tokens.appendChild(div_usd10)
+            div_usd10.style.display = 'flex'
+            div_usd10.style.flexDirection = 'column'
+            div_usd10.style.justifyContent = 'flex-start'
+            div_usd10.style.height = '100%'
+            div_usd10.style.width = div_usd10.offsetHeight/1.618+'px'
+            div_usd10.style.border = '1.6px solid silver'
+            div_usd10.style.borderRadius = '10px'
+
+            var div_usd10_title = document.createElement('div')
+            div_usd10.appendChild(div_usd10_title)
+            div_usd10_title.style.position = 'relative'
+            div_usd10_title.style.top = '30px'    
+            div_usd10_title.style.fontFamily = 'Quicksand'
+            div_usd10_title.style.fontSize = '30px'    
+            div_usd10_title.style.fontWeight = 'bold'
+            div_usd10_title.style.color = '#fff'
+            div_usd10_title.innerHTML = '10 USD'
+            div_usd10_title.style.textAlign = 'center'
+
+            var div_usd10_desc = document.createElement('div')
+            div_usd10.appendChild(div_usd10_desc)
+            div_usd10_desc.style.position = 'relative'
+            div_usd10_desc.style.top = '80px'    
+            div_usd10_desc.style.fontFamily = 'Quicksand'
+            div_usd10_desc.style.fontSize = '20px'    
+            div_usd10_desc.style.color = '#fff'
+            div_usd10_desc.innerHTML = '80000 T'
+            div_usd10_desc.style.textAlign = 'center'
+
+            var div_usd10_explanation = document.createElement('div')
+            div_usd10.appendChild(div_usd10_explanation)
+            div_usd10_explanation.style.position = 'relative'
+            div_usd10_explanation.style.top = '130px'    
+            div_usd10_explanation.style.fontFamily = 'Quicksand'
+            div_usd10_explanation.style.fontSize = '16px'    
+            div_usd10_explanation.style.color = '#fff'
+            div_usd10_explanation.innerHTML = 'I find myself coming here often.'
+            div_usd10_explanation.style.textAlign = 'center'
+            div_usd10_explanation.style.opacity = 0
+            div_usd10_explanation.style.paddingLeft = '20px'
+            div_usd10_explanation.style.paddingRight = '20px'
+
+            div_usd10.onmouseover = function() {
+                // div_token_mouseover = true
+                document.body.style.cursor = 'pointer'
+                if (!div_token10_appearing) {
+                    div_token10_appearing = true
+                    const work = async () => {
+                        var opacity = 0
+                        for (var i = 0; i < 11; i++) {
+                            div_usd10_explanation.style.opacity = opacity
+                            opacity += .077
+                            await sleep(.1)
+                        }                
+                    }
+                    work()
+                }
+            }
+
+            div_usd10.onmouseleave = function() {
+                // div_token_mouseover = false
+                document.body.style.cursor = 'default'
+            }
+
+            div_usd10.onclick = function() {
+                selectedItemPrice = '10'
+                selectedItemDescription = '10 USD'
+                const work = async () => {
+                    var opacity = 0                    
+                    for (var i = 0; i < 10; i++) {
+                        opacity += .1
+                        div_paypal.style.opacity = opacity
+                        await sleep(.06)
+                    }                
+                }
+                work()
+            }
+
+            //
+
+            var div_empty = document.createElement('div')
+            div_tokens.appendChild(div_empty)
+            div_empty.style.height = '100%'
+            div_empty.style.width = div_empty.offsetHeight/16+'px'
+
+            //
+
+            var div_usd20 = document.createElement('div')
+            div_tokens.appendChild(div_usd20)
+            div_usd20.style.display = 'flex'
+            div_usd20.style.flexDirection = 'column'
+            div_usd20.style.justifyContent = 'flex-start'
+            div_usd20.style.height = '100%'
+            div_usd20.style.width = div_usd20.offsetHeight/1.618+'px'
+            div_usd20.style.border = '1.6px solid silver'
+            div_usd20.style.borderRadius = '10px'
+
+            var div_usd20_title = document.createElement('div')
+            div_usd20.appendChild(div_usd20_title)
+            div_usd20_title.style.position = 'relative'
+            div_usd20_title.style.top = '30px'    
+            div_usd20_title.style.fontFamily = 'Quicksand'
+            div_usd20_title.style.fontSize = '30px'    
+            div_usd20_title.style.fontWeight = 'bold'
+            div_usd20_title.style.color = '#fff'
+            div_usd20_title.innerHTML = '20 USD'
+            div_usd20_title.style.textAlign = 'center'
+
+            var div_usd20_desc = document.createElement('div')
+            div_usd20.appendChild(div_usd20_desc)
+            div_usd20_desc.style.position = 'relative'
+            div_usd20_desc.style.top = '80px'    
+            div_usd20_desc.style.fontFamily = 'Quicksand'
+            div_usd20_desc.style.fontSize = '20px'    
+            div_usd20_desc.style.color = '#fff'
+            div_usd20_desc.innerHTML = '200000 T'
+            div_usd20_desc.style.textAlign = 'center'
+
+            var div_usd20_explanation = document.createElement('div')
+            div_usd20.appendChild(div_usd20_explanation)
+            div_usd20_explanation.style.position = 'relative'
+            div_usd20_explanation.style.top = '130px'    
+            div_usd20_explanation.style.fontFamily = 'Quicksand'
+            div_usd20_explanation.style.fontSize = '16px'    
+            div_usd20_explanation.style.color = '#fff'
+            div_usd20_explanation.innerHTML = 'Well, I am a regular now.'
+            div_usd20_explanation.style.textAlign = 'center'
+            div_usd20_explanation.style.opacity = 0
+            div_usd20_explanation.style.paddingLeft = '20px'
+            div_usd20_explanation.style.paddingRight = '20px'
+
+            div_usd20.onmouseover = function() {
+                // div_token_mouseover = true
+                document.body.style.cursor = 'pointer'
+                if (!div_token20_appearing) {
+                    div_token20_appearing = true
+                    const work = async () => {
+                        var opacity = 0
+                        for (var i = 0; i < 11; i++) {
+                            div_usd20_explanation.style.opacity = opacity
+                            opacity += .077
+                            await sleep(.1)
+                        }                
+                    }
+                    work()
+                }
+            }
+
+            div_usd20.onmouseleave = function() {
+                // div_token_mouseover = false
+                document.body.style.cursor = 'default'
+            }
+
+            div_usd20.onclick = function() {
+                selectedItemPrice = '20'
+                selectedItemDescription = '20 USD'
+                const work = async () => {
+                    var opacity = 0                    
+                    for (var i = 0; i < 10; i++) {
+                        opacity += .1
+                        div_paypal.style.opacity = opacity
+                        await sleep(.06)
+                    }                
+                }
+                work()
+            }
 
             // empty div
 
@@ -267,6 +671,7 @@
             div_paypal.style.position = 'absolute'
             div_paypal.style.left = '50%'
             div_paypal.style.marginLeft = '-50px'
+            div_paypal.style.opacity = 0
 
             // helpers
 
