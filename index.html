@@ -35,7 +35,12 @@
             overlay.style.marginLeft = 'auto'
             overlay.style.marginRight = 'auto'
 
-            // Todo: an empty div here & between the cards & other stuffs
+            // empty div
+
+            var empty_div = document.createElement('div')
+            document.body.appendChild(empty_div)
+            empty_div.style.height = '4.63535%'
+            empty_div.style.width = '75%'
 
             // lisica div
 
@@ -109,35 +114,39 @@
                 window.location.href = 'https://multitrickfox.itch.io/lisicaai'
             }
 
-            
+            // empty div
 
-            
-            
+            var empty_div = document.createElement('div')
+            document.body.appendChild(empty_div)
+            empty_div.style.height = '4.63535%'
+            empty_div.style.width = '75%'
 
-        
+
+            // the dreaming one div
             var div = document.createElement('div')
             document.body.appendChild(div)
             div.style.height = '25%'
             div.style.width = '75%'
             div.style.backgroundColor = 'red'
             div.innerHTML = 'Hello World'
-            
-
+            // empty div
+            var empty_div = document.createElement('div')
+            document.body.appendChild(empty_div)
+            empty_div.style.height = '4.63535%'
+            empty_div.style.width = '75%'
+            // the hub div
             var div = document.createElement('div')
             document.body.appendChild(div)
             div.style.height = '25%'
             div.style.width = '75%'
             div.style.backgroundColor = 'red'
             div.innerHTML = 'Hello World'
-            
+            // empty div
+            var empty_div = document.createElement('div')
+            document.body.appendChild(empty_div)
+            empty_div.style.height = '4.63535%'
+            empty_div.style.width = '75%'            
 
-            var div = document.createElement('div')
-            document.body.appendChild(div)
-            div.style.height = '25%'
-            div.style.width = '75%'
-            div.style.backgroundColor = 'red'
-            div.innerHTML = 'Hello World'
-            
 
             // tokens div
 
@@ -161,10 +170,10 @@
             div_usd1.style.border = '1.6px solid silver'
             div_usd1.style.borderRadius = '10px'
 
-            var div_empty_vertical = document.createElement('div')
-            div_tokens.appendChild(div_empty_vertical)
-            div_empty_vertical.style.height = '100%'
-            div_empty_vertical.style.width = div_empty_vertical.offsetHeight/16+'px'
+            var div_empty = document.createElement('div')
+            div_tokens.appendChild(div_empty)
+            div_empty.style.height = '100%'
+            div_empty.style.width = div_empty.offsetHeight/16+'px'
 
             var div_usd5 = document.createElement('div')
             div_tokens.appendChild(div_usd5)
@@ -176,10 +185,10 @@
             div_usd5.style.border = '1.6px solid silver'
             div_usd5.style.borderRadius = '10px'
 
-            var div_empty_vertical = document.createElement('div')
-            div_tokens.appendChild(div_empty_vertical)
-            div_empty_vertical.style.height = '100%'
-            div_empty_vertical.style.width = div_empty_vertical.offsetHeight/16+'px'
+            var div_empty = document.createElement('div')
+            div_tokens.appendChild(div_empty)
+            div_empty.style.height = '100%'
+            div_empty.style.width = div_empty.offsetHeight/16+'px'
 
             var div_usd10 = document.createElement('div')
             div_tokens.appendChild(div_usd10)
@@ -191,10 +200,10 @@
             div_usd10.style.border = '1.6px solid silver'
             div_usd10.style.borderRadius = '10px'
 
-            var div_empty_vertical = document.createElement('div')
-            div_tokens.appendChild(div_empty_vertical)
-            div_empty_vertical.style.height = '100%'
-            div_empty_vertical.style.width = div_empty_vertical.offsetHeight/16+'px'
+            var div_empty = document.createElement('div')
+            div_tokens.appendChild(div_empty)
+            div_empty.style.height = '100%'
+            div_empty.style.width = div_empty.offsetHeight/16+'px'
 
             var div_usd20 = document.createElement('div')
             div_tokens.appendChild(div_usd20)
@@ -205,6 +214,13 @@
             div_usd20.style.width = div_usd20.offsetHeight/1.618+'px'
             div_usd20.style.border = '1.6px solid silver'
             div_usd20.style.borderRadius = '10px'
+
+            // empty div
+            
+            var empty_div = document.createElement('div')
+            document.body.appendChild(empty_div)
+            empty_div.style.height = '4.63535%'
+            empty_div.style.width = '75%'   
 
             // paypal button div
 
@@ -265,8 +281,8 @@
                         //var selectedItemDescription = itemOptions.options[itemOptions.selectedIndex].value;
                         //var selectedItemPrice = parseFloat(itemOptions.options[itemOptions.selectedIndex].getAttribute("price"));
 
-                        if (username == null || password == null) alert("not_logged_in.")
-                        if (selectedItemDescription == null || selectedItemPrice == null) alert("not_item_selected.")
+                        if (username == null || password == null) { alert("not_logged_in."); return }
+                        if (selectedItemDescription == null || selectedItemPrice == null) { alert("not_item_selected."); return }
 
                         var tax = (0 === 0 || false) ? 0 : (selectedItemPrice * (parseFloat(0)/100));
                         if(quantitySelect.options.length > 0) {
@@ -334,6 +350,8 @@
                 }).render('#paypal-button-container');
             }
             initPayPalButton();
+            //alert(div_paypal.offsetWidth)
+            div_paypal.style.marginLeft = -50 - div_paypal.offsetWidth/2 + 'px'
         </script>
     
     
