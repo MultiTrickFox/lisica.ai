@@ -411,9 +411,23 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    text_username.value
-                    text_password.value
-                    text_email.value
+                    const ws = new WebSocket('ws://138.68.123.96:64244')
+                    ws.onopen = function(event) {
+                        ws.send('/add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
+                    }
+                    ws.onmessage = function(event) {
+                        if (event.data === 'ACK.') {
+
+
+                            alert('Accepted.') // bring up user page
+                            username = text_username.value
+                            password = text_password.value
+
+
+                        } else if (event.data == 'NACK.') {
+                            alert('Username already present.')
+                        } else { alert('Unknown: ' + event.data) }
+                    }                    
                 }
             }
 
@@ -425,28 +439,25 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    text_username.value
-                    text_password.value
+                    const ws = new WebSocket('ws://138.68.123.96:64244')
+                    ws.onopen = function(event) { 
+                        ws.send('/check_user'+'<>'+text_username.value+'<>'+text_password.value) 
+                    }
+                    ws.onmessage = function(event) {
+                        if (event.data === 'ACK.') {
+
+
+                            alert('Accepted.') // bring up user page
+                            username = text_username.value
+                            password = text_password.value
+
+
+                        } else if (event.data == 'NACK.') {
+                            alert('Username/Password combination invalid.')
+                        } else { alert('Unknown: ' + event.data) }                   
+                    }
                 }
             }
-
-    
-            
-
-
-
-
-
-            // Todo: div this shit up !! Websocket etc!
-        
-            
-            
-
-
-
-
-
-
 
             // empty div
 
@@ -869,11 +880,11 @@
             function initPayPalButton() {
                 var shipping = 0;
                 //var itemOptions = document.querySelector("#smart-button-container #item-options");
-                var quantity = parseInt();
-                var quantitySelect = document.querySelector("#smart-button-container #quantitySelect");
-                if (!isNaN(quantity)) {
-                    quantitySelect.style.visibility = "visible";
-                }
+                var quantity = 1 //parseInt();
+                // var quantitySelect = document.querySelector("#smart-button-container #quantitySelect");
+                // if (!isNaN(quantity)) {
+                //     quantitySelect.style.visibility = "visible";
+                // }
                 var orderDescription = '';
                 if(orderDescription === '') {
                     orderDescription = 'Item';
@@ -893,11 +904,11 @@
                         if (selectedItemDescription == null || selectedItemPrice == null) { alert("No item selected"); return }
 
                         var tax = (0 === 0 || false) ? 0 : (selectedItemPrice * (parseFloat(0)/100));
-                        if(quantitySelect.options.length > 0) {
-                            quantity = parseInt(quantitySelect.options[quantitySelect.selectedIndex].value);
-                        } else {
-                            quantity = 1;
-                        }
+                        // if(quantitySelect.options.length > 0) {
+                        //     quantity = parseInt(quantitySelect.options[quantitySelect.selectedIndex].value);
+                        // } else {
+                        //     quantity = 1;
+                        // }
 
                         tax *= quantity;
                         tax = Math.round(tax * 100) / 100;
