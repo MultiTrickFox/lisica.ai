@@ -78,7 +78,7 @@
             description_lisica.style.fontFamily = 'Quicksand'
             description_lisica.style.fontSize = '14px' 
             description_lisica.style.color = '#fff'
-            description_lisica.innerHTML = "&emsp;Visit this Zen-inspired shrine and meet Lisica,<br>she is the shrine’s keeper and friendly fox deity.<br>&emsp;Talk to her about anything that comes to mind;<br>from daily life to abstract thoughts, to even foxes.<br>&emsp;She's always happy to chat and be helpful to visitors.<br><br>Available chat modes include:<br>&emsp;- General<br>&emsp;- Meditation<br>&emsp;- Poetry<br>&emsp;- Storytelling"
+            description_lisica.innerHTML = "&emsp;Visit this Zen-inspired shrine and meet Lisica,<br>she is the shrine's keeper and friendly fox deity.<br>&emsp;Talk to her about anything that comes to mind;<br>from daily life to abstract thoughts, to even foxes.<br>&emsp;She's always happy to chat and be helpful to visitors.<br><br>Available modes include:<br>&emsp;- General chat<br>&emsp;- Meditation<br>&emsp;- Poetry<br>&emsp;- Storytelling"
 
             var lisica_mouseover = false
             var lisica_description_appearing = false
@@ -411,23 +411,17 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    const ws = new WebSocket('ws://138.68.123.96:64244')
-                    ws.onopen = function(event) {
-                        ws.send('/add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
-                    }
-                    ws.onmessage = function(event) {
-                        if (event.data === 'ACK.') {
 
-
-                            alert('Accepted.') // bring up user page
+                    var url = 'http://138.68.123.96:64244'
+                    async function go_fetch() {
+                        const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
+                        const result = await response.json()
+                        if (result.answer == 'ACK.') {
+                            alert('Accepted.') // TODO: bring up user page 
                             username = text_username.value
                             password = text_password.value
-
-
-                        } else if (event.data == 'NACK.') {
-                            alert('Username already present.')
-                        } else { alert('Unknown: ' + event.data) }
-                    }                    
+                        } else alert('Username already present.')
+                    } go_fetch()                 
                 }
             }
 
@@ -439,23 +433,17 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    const ws = new WebSocket('ws://138.68.123.96:64244')
-                    ws.onopen = function(event) { 
-                        ws.send('/check_user'+'<>'+text_username.value+'<>'+text_password.value) 
-                    }
-                    ws.onmessage = function(event) {
-                        if (event.data === 'ACK.') {
 
-
-                            alert('Accepted.') // bring up user page
+                    var url = 'http://138.68.123.96:64244'
+                    async function go_fetch() {
+                        const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
+                        const result = await response.json()
+                        if (result.answer == 'ACK.') {
+                            alert('Accepted.') // TODO: bring up user page 
                             username = text_username.value
                             password = text_password.value
-
-
-                        } else if (event.data == 'NACK.') {
-                            alert('Username/Password combination invalid.')
-                        } else { alert('Unknown: ' + event.data) }                   
-                    }
+                        } else alert('Username/Password combination invalid.')
+                    } go_fetch()
                 }
             }
 
@@ -879,16 +867,9 @@
         <script>
             function initPayPalButton() {
                 var shipping = 0;
-                //var itemOptions = document.querySelector("#smart-button-container #item-options");
-                var quantity = 1 //parseInt();
-                // var quantitySelect = document.querySelector("#smart-button-container #quantitySelect");
-                // if (!isNaN(quantity)) {
-                //     quantitySelect.style.visibility = "visible";
-                // }
-                var orderDescription = '';
-                if(orderDescription === '') {
-                    orderDescription = 'Item';
-                }
+                var quantity = 1
+                var orderDescription = 'Item';
+
                 paypal.Buttons({
                     style: {
                     shape: 'pill',
@@ -897,21 +878,11 @@
                     label: 'paypal',
                     },
                     createOrder: function(data, actions) {
-                        //var selectedItemDescription = itemOptions.options[itemOptions.selectedIndex].value;
-                        //var selectedItemPrice = parseFloat(itemOptions.options[itemOptions.selectedIndex].getAttribute("price"));
 
                         if (username == null || password == null) { alert("Not logged in.."); return }
                         if (selectedItemDescription == null || selectedItemPrice == null) { alert("No item selected"); return }
 
-                        var tax = (0 === 0 || false) ? 0 : (selectedItemPrice * (parseFloat(0)/100));
-                        // if(quantitySelect.options.length > 0) {
-                        //     quantity = parseInt(quantitySelect.options[quantitySelect.selectedIndex].value);
-                        // } else {
-                        //     quantity = 1;
-                        // }
-
-                        tax *= quantity;
-                        tax = Math.round(tax * 100) / 100;
+                        var tax = 0
                         var priceTotal = quantity * selectedItemPrice + parseFloat(shipping) + tax;
                         priceTotal = Math.round(priceTotal * 100) / 100;
                         var itemTotalValue = Math.round((selectedItemPrice * quantity) * 100) / 100;
@@ -951,15 +922,30 @@
                     onApprove: function(data, actions) {
                         return actions.order.capture().then(function(orderData) {
                             
-                            // Full available details
+                            console.log('Data', data)
+
+                            console.log('Actions', actions)
+
+                            console.log('Actions.order', actions.order)
+
                             console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
 
-                            // Show a success message within this page, e.g.
                             const element = document.getElementById('paypal-button-container');
                             element.innerHTML = '';
                             element.innerHTML = '<h3>Thank you for your payment!</h3>';
 
-                            // Or go to another URL:  actions.redirect('thank_you.html');
+                            // todo: this part needs to be hidden from user.
+
+                            const ws = new WebSocket('ws://IP_ADDRESS:PORT')
+                            ws.onopen = function(event) { 
+                                ws.send('/add_credit'+'<>'+text_username.value+'<>'+text_password.value+'<>'+selectedItemPrice) 
+                            }
+                            ws.onmessage = function(event) {
+                                if (event.data === 'ACK.') {
+                                    alert('Accepted.')
+                                    
+                                }                  
+                            }
 
                         });
                     },
