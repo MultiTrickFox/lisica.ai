@@ -416,10 +416,14 @@
                     async function go_fetch() {
                         const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
                         const result = await response.json()
-                        if (result.answer == 'ACK.') {
-                            alert('Accepted.') // TODO: bring up user page 
+                        if (result.answer == 'ACK.') { 
                             username = text_username.value
                             password = text_password.value
+                            div_user.removeChild(text_username)
+                            div_user.removeChild(text_password)
+                            div_user.removeChild(text_email)
+                            div_user.removeChild(button_proceed)
+                            welcome_user()
                         } else alert('Username already present.')
                     } go_fetch()                 
                 }
@@ -433,18 +437,24 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-
                     var url = 'http://138.68.123.96:64244'
                     async function go_fetch() {
                         const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
                         const result = await response.json()
                         if (result.answer == 'ACK.') {
-                            alert('Accepted.') // TODO: bring up user page 
                             username = text_username.value
                             password = text_password.value
+                            div_user.removeChild(text_username)
+                            div_user.removeChild(text_password)
+                            div_user.removeChild(button_proceed)
+                            welcome_user()
                         } else alert('Username/Password combination invalid.')
                     } go_fetch()
                 }
+            }
+
+            function welcome_user() {
+                alert('Accepted.') // TODO: bring up user page
             }
 
             // empty div
@@ -956,7 +966,7 @@
             }
             initPayPalButton();
             //alert(div_paypal.offsetWidth)
-            div_paypal.style.marginLeft = -50 - div_paypal.offsetWidth/2 + 'px'
+            div_paypal.style.marginLeft = -50 - div_paypal.offsetWidth/4 + 'px'
         </script>
     
     
