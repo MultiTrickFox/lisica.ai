@@ -71,7 +71,6 @@
             title_lisica.innerHTML = 'Lisica'
 
             var description_lisica = document.createElement('div')
-            //div_lisica.appendChild(description_lisica)
             description_lisica.style.position = 'relative'
             description_lisica.style.top = '40px'  
             description_lisica.style.left = '20px'  
@@ -155,7 +154,6 @@
             title_PROJECT2.innerHTML = '//upcoming//'
 
             var description_PROJECT2 = document.createElement('div')
-            //div_PROJECT2.appendChild(description_PROJECT2)
             description_PROJECT2.style.position = 'relative'
             description_PROJECT2.style.top = '60px'  
             description_PROJECT2.style.left = '20px'  
@@ -239,7 +237,6 @@
             title_PROJECT3.innerHTML = '//upcoming//'
 
             var description_PROJECT3 = document.createElement('div')
-            //div_PROJECT3.appendChild(description_PROJECT3)
             description_PROJECT3.style.position = 'relative'
             description_PROJECT3.style.top = '60px'  
             description_PROJECT3.style.left = '20px'  
@@ -476,7 +473,6 @@
             div_tokens.style.marginLeft = 'auto'
             div_tokens.style.marginRight = 'auto'
 
-            //var div_token_mouseover = false
             var div_token1_appearing = false
             var div_token5_appearing = false
             var div_token10_appearing = false
@@ -529,7 +525,6 @@
             div_usd1_explanation.style.paddingRight = '20px'
 
             div_usd1.onmouseover = function() {
-                // div_token_mouseover = true
                 document.body.style.cursor = 'pointer'
                 if (!div_token1_appearing) {
                     div_token1_appearing = true
@@ -546,7 +541,6 @@
             }
 
             div_usd1.onmouseleave = function() {
-                //div_token_mouseover = false
                 document.body.style.cursor = 'auto'
             }
 
@@ -618,7 +612,6 @@
             div_usd5_explanation.style.paddingRight = '20px'
 
             div_usd5.onmouseover = function() {
-                // div_token_mouseover = true
                 document.body.style.cursor = 'pointer'
                 if (!div_token5_appearing) {
                     div_token5_appearing = true
@@ -635,7 +628,6 @@
             }
 
             div_usd5.onmouseleave = function() {
-                // div_token_mouseover = false
                 document.body.style.cursor = 'auto'
             }
 
@@ -707,7 +699,6 @@
             div_usd10_explanation.style.paddingRight = '20px'
 
             div_usd10.onmouseover = function() {
-                // div_token_mouseover = true
                 document.body.style.cursor = 'pointer'
                 if (!div_token10_appearing) {
                     div_token10_appearing = true
@@ -724,7 +715,6 @@
             }
 
             div_usd10.onmouseleave = function() {
-                // div_token_mouseover = false
                 document.body.style.cursor = 'auto'
             }
 
@@ -796,7 +786,6 @@
             div_usd20_explanation.style.paddingRight = '20px'
 
             div_usd20.onmouseover = function() {
-                // div_token_mouseover = true
                 document.body.style.cursor = 'pointer'
                 if (!div_token20_appearing) {
                     div_token20_appearing = true
@@ -813,7 +802,6 @@
             }
 
             div_usd20.onmouseleave = function() {
-                // div_token_mouseover = false
                 document.body.style.cursor = 'auto'
             }
 
@@ -853,25 +841,6 @@
             const sleep = sec => new Promise(r => setTimeout(r, sec*1_000))
 
         </script>
-
-        <!-- <div id="paypal-button-container"
-            style="
-            position: fixed;
-            left: 50%;
-            bottom: 20px;
-            transform: translate(-50%, -50%);
-            margin: 0 auto;
-            "></div> -->
-        <!-- <div id="smart-button-container">
-            <div style="text-align: center;">
-            <div style="margin-bottom: 1.25rem;">
-                <p></p>
-                <select id="item-options"><option value="6_500" price="1">6_500 - 1 USD</option><option value="35_000" price="5">35_000 - 5 USD</option><option value="85_000" price="10">85_000 - 10 USD</option><option value="220_000" price="20">220_000 - 20 USD</option></select>
-                <select style="visibility: hidden" id="quantitySelect"></select>
-            </div>
-            <div id="paypal-button-container"></div>
-            </div>
-        </div> -->
 
         <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
         <script>
@@ -965,15 +934,9 @@
                 }).render('#paypal-button-container');
             }
             initPayPalButton();
-            //alert(div_paypal.offsetWidth)
             div_paypal.style.marginLeft = -50 - div_paypal.offsetWidth/4 + 'px'
         </script>
     
-    
-
-
-        
-
     </body>    
 
 </html>
