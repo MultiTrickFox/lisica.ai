@@ -408,8 +408,7 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-
-                    var url = 'http://138.68.123.96:64244'
+                    var url = 'https://api.lisica.ai:64244/database'
                     async function go_fetch() {
                         const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
                         const result = await response.json()
@@ -434,9 +433,9 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    var url = 'http://138.68.123.96:64244'
+                    var url = 'https://api.lisica.ai:64244/database'
                     async function go_fetch() {
-                        const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
+                        const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value)
                         const result = await response.json()
                         if (result.answer == 'ACK.') {
                             username = text_username.value
@@ -451,6 +450,8 @@
             }
 
             function welcome_user() {
+                div_user.style.border = '1.6px solid silver'
+                div_user.style.borderRadius = '60px'
                 alert('Accepted.') // TODO: bring up user page
             }
 
