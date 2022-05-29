@@ -15,6 +15,8 @@
 
         <link rel="stylesheet" href="style.css">
 
+        <script src="https://js.stripe.com/v3/"></script>
+
         <script>
 
             // info
@@ -138,7 +140,7 @@
             project_div('//upcoming//', '//upcoming//:', "", '', '')
 
             project_div('//upcoming//', '//upcoming//:', "", '', '')
- 
+
             // user div
 
             var div_user = document.createElement('div')
@@ -153,160 +155,6 @@
             //div_user.style.border = '1.6px solid silver'
             //div_user.style.borderRadius = '60px'
             div_user.style.opacity = .666
-
-            var button_login = document.createElement('button')
-            div_user.appendChild(button_login)
-            button_login.innerHTML = 'Login'
-            button_login.style.color = 'white'
-            button_login.style.width = div_user.offsetWidth/6
-            button_login.style.height = button_login.offsetWidth/1.618
-            button_login.style.position = 'relative'
-            button_login.style.marginLeft = 'auto'
-            button_login.style.marginRight = 'auto'
-            button_login.style.marginTop = 'auto'
-            button_login.style.marginBottom = 'auto'
-            button_login.style.backgroundColor = 'transparent'
-            button_login.style.border = '2px solid white'
-            button_login.style.borderRadius = '20px'
-            button_login.style.fontFamily = 'Quicksand'
-            button_login.style.fontSize = '16px'
-            
-            var button_signup = document.createElement('button')
-            div_user.appendChild(button_signup)
-            button_signup.innerHTML = 'Signup'
-            button_signup.style.color = 'white'
-            button_signup.style.width = div_user.offsetWidth/6
-            button_signup.style.height = button_signup.offsetWidth/1.618
-            button_signup.style.position = 'relative'
-            button_signup.style.marginLeft = 'auto'
-            button_signup.style.marginRight = 'auto'
-            button_signup.style.marginTop = 'auto'
-            button_signup.style.marginBottom = 'auto'
-            button_signup.style.backgroundColor = 'transparent'
-            button_signup.style.border = '2px solid white'
-            button_signup.style.borderRadius = '20px'
-            button_signup.style.fontFamily = 'Quicksand'
-            button_signup.style.fontSize = '16px'
-
-            var text_username = document.createElement('input')
-            text_username.type = 'text'
-            text_username.placeholder = 'username'
-            text_username.style.color = 'white'
-            text_username.style.textAlign = 'center'
-            text_username.style.width = button_login.offsetWidth
-            text_username.style.height = button_login.offsetHeight
-            text_username.style.position = 'relative'
-            text_username.style.marginLeft = 'auto'
-            text_username.style.marginRight = 'auto'
-            text_username.style.marginTop = 'auto'
-            text_username.style.marginBottom = 'auto'
-            text_username.style.backgroundColor = 'transparent'
-            text_username.style.border = '2px solid white'
-            text_username.style.borderRadius = '20px'
-            text_username.style.fontFamily = 'Quicksand'
-            text_username.style.fontSize = '14px'
-            
-            var text_password = document.createElement('input')
-            text_password.type = 'password'
-            text_password.placeholder = 'password'
-            text_password.style.color = 'white'
-            text_password.style.textAlign = 'center'
-            text_password.style.width = button_login.offsetWidth
-            text_password.style.height = button_login.offsetHeight
-            text_password.style.position = 'relative'
-            text_password.style.marginLeft = 'auto'
-            text_password.style.marginRight = 'auto'
-            text_password.style.marginTop = 'auto'
-            text_password.style.marginBottom = 'auto'
-            text_password.style.backgroundColor = 'transparent'
-            text_password.style.border = '2px solid white'
-            text_password.style.borderRadius = '20px'
-            text_password.style.fontFamily = 'Quicksand'
-            text_password.style.fontSize = '14px'
-            
-            var text_email = document.createElement('input')
-            text_email.type = 'text'
-            text_email.placeholder = 'email (optional)'
-            text_email.style.color = 'white'
-            text_email.style.textAlign = 'center'
-            text_email.style.width = button_login.offsetWidth
-            text_email.style.height = button_login.offsetHeight
-            text_email.style.position = 'relative'
-            text_email.style.marginLeft = 'auto'
-            text_email.style.marginRight = 'auto'
-            text_email.style.marginTop = 'auto'
-            text_email.style.marginBottom = 'auto'
-            text_email.style.backgroundColor = 'transparent'
-            text_email.style.border = '2px solid white'
-            text_email.style.borderRadius = '20px'
-            text_email.style.fontFamily = 'Quicksand'
-            text_email.style.fontSize = '14px'
-
-            var button_proceed = document.createElement('button')
-            button_proceed.style.width = button_login.offsetWidth
-            button_proceed.style.height = button_login.offsetHeight
-            button_proceed.innerHTML = 'Proceed'
-            button_proceed.style.color = 'white'
-            button_proceed.style.position = 'relative'
-            button_proceed.style.marginLeft = 'auto'
-            button_proceed.style.marginRight = 'auto'
-            button_proceed.style.marginTop = 'auto'
-            button_proceed.style.marginBottom = 'auto'
-            button_proceed.style.backgroundColor = 'transparent'
-            button_proceed.style.border = '2px solid white'
-            button_proceed.style.borderRadius = '20px'
-            button_proceed.style.fontFamily = 'Quicksand'
-            button_proceed.style.fontSize = '16px'
-
-            button_signup.onclick = function() {
-                div_user.removeChild(button_login)
-                div_user.removeChild(button_signup)
-                div_user.appendChild(text_username)
-                div_user.appendChild(text_password)
-                div_user.appendChild(text_email)
-                div_user.appendChild(button_proceed)
-                button_proceed.onclick = function() {
-                    if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    var url = 'https://lisica.lisica.ai:64243/database'
-                    async function go_fetch() {
-                        const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
-                        const result = await response.json()
-                        if (result.answer == 'ACK.') { 
-                            username = text_username.value
-                            password = text_password.value
-                            div_user.removeChild(text_username)
-                            div_user.removeChild(text_password)
-                            div_user.removeChild(text_email)
-                            div_user.removeChild(button_proceed)
-                            welcome_user()
-                        } else alert('Username already present.')
-                    } go_fetch()                 
-                }
-            }
-
-            button_login.onclick = function() {
-                div_user.removeChild(button_login)
-                div_user.removeChild(button_signup)
-                div_user.appendChild(text_username)
-                div_user.appendChild(text_password)
-                div_user.appendChild(button_proceed)
-                button_proceed.onclick = function() {
-                    if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    var url = 'https://lisica.lisica.ai:64243/database'
-                    async function go_fetch() {
-                        const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value)
-                        const result = await response.json()
-                        if (result.answer == 'ACK.') {
-                            username = text_username.value
-                            password = text_password.value
-                            div_user.removeChild(text_username)
-                            div_user.removeChild(text_password)
-                            div_user.removeChild(button_proceed)
-                            welcome_user()
-                        } else alert('Username/Password combination invalid.')
-                    } go_fetch()
-                }
-            }
 
             function welcome_user() {
                 div_user.style.border = '1.6px solid silver'
@@ -326,6 +174,166 @@
                     // tdo: add 4 stats here, to left right top bot, and becomes brighter when u go there
 
                 } go_fetch()  
+            }
+
+            if (username != null && password != null) welcome_user()
+
+            else {
+
+                var button_login = document.createElement('button')
+                div_user.appendChild(button_login)
+                button_login.innerHTML = 'Login'
+                button_login.style.color = 'white'
+                button_login.style.width = div_user.offsetWidth/6
+                button_login.style.height = button_login.offsetWidth/1.618
+                button_login.style.position = 'relative'
+                button_login.style.marginLeft = 'auto'
+                button_login.style.marginRight = 'auto'
+                button_login.style.marginTop = 'auto'
+                button_login.style.marginBottom = 'auto'
+                button_login.style.backgroundColor = 'transparent'
+                button_login.style.border = '2px solid white'
+                button_login.style.borderRadius = '20px'
+                button_login.style.fontFamily = 'Quicksand'
+                button_login.style.fontSize = '16px'
+                
+                var button_signup = document.createElement('button')
+                div_user.appendChild(button_signup)
+                button_signup.innerHTML = 'Signup'
+                button_signup.style.color = 'white'
+                button_signup.style.width = div_user.offsetWidth/6
+                button_signup.style.height = button_signup.offsetWidth/1.618
+                button_signup.style.position = 'relative'
+                button_signup.style.marginLeft = 'auto'
+                button_signup.style.marginRight = 'auto'
+                button_signup.style.marginTop = 'auto'
+                button_signup.style.marginBottom = 'auto'
+                button_signup.style.backgroundColor = 'transparent'
+                button_signup.style.border = '2px solid white'
+                button_signup.style.borderRadius = '20px'
+                button_signup.style.fontFamily = 'Quicksand'
+                button_signup.style.fontSize = '16px'
+
+                var text_username = document.createElement('input')
+                text_username.type = 'text'
+                text_username.placeholder = 'username'
+                text_username.style.color = 'white'
+                text_username.style.textAlign = 'center'
+                text_username.style.width = button_login.offsetWidth
+                text_username.style.height = button_login.offsetHeight
+                text_username.style.position = 'relative'
+                text_username.style.marginLeft = 'auto'
+                text_username.style.marginRight = 'auto'
+                text_username.style.marginTop = 'auto'
+                text_username.style.marginBottom = 'auto'
+                text_username.style.backgroundColor = 'transparent'
+                text_username.style.border = '2px solid white'
+                text_username.style.borderRadius = '20px'
+                text_username.style.fontFamily = 'Quicksand'
+                text_username.style.fontSize = '14px'
+                
+                var text_password = document.createElement('input')
+                text_password.type = 'password'
+                text_password.placeholder = 'password'
+                text_password.style.color = 'white'
+                text_password.style.textAlign = 'center'
+                text_password.style.width = button_login.offsetWidth
+                text_password.style.height = button_login.offsetHeight
+                text_password.style.position = 'relative'
+                text_password.style.marginLeft = 'auto'
+                text_password.style.marginRight = 'auto'
+                text_password.style.marginTop = 'auto'
+                text_password.style.marginBottom = 'auto'
+                text_password.style.backgroundColor = 'transparent'
+                text_password.style.border = '2px solid white'
+                text_password.style.borderRadius = '20px'
+                text_password.style.fontFamily = 'Quicksand'
+                text_password.style.fontSize = '14px'
+                
+                var text_email = document.createElement('input')
+                text_email.type = 'text'
+                text_email.placeholder = 'email'
+                text_email.style.color = 'white'
+                text_email.style.textAlign = 'center'
+                text_email.style.width = button_login.offsetWidth
+                text_email.style.height = button_login.offsetHeight
+                text_email.style.position = 'relative'
+                text_email.style.marginLeft = 'auto'
+                text_email.style.marginRight = 'auto'
+                text_email.style.marginTop = 'auto'
+                text_email.style.marginBottom = 'auto'
+                text_email.style.backgroundColor = 'transparent'
+                text_email.style.border = '2px solid white'
+                text_email.style.borderRadius = '20px'
+                text_email.style.fontFamily = 'Quicksand'
+                text_email.style.fontSize = '14px'
+
+                var button_proceed = document.createElement('button')
+                button_proceed.style.width = button_login.offsetWidth
+                button_proceed.style.height = button_login.offsetHeight
+                button_proceed.innerHTML = 'Proceed'
+                button_proceed.style.color = 'white'
+                button_proceed.style.position = 'relative'
+                button_proceed.style.marginLeft = 'auto'
+                button_proceed.style.marginRight = 'auto'
+                button_proceed.style.marginTop = 'auto'
+                button_proceed.style.marginBottom = 'auto'
+                button_proceed.style.backgroundColor = 'transparent'
+                button_proceed.style.border = '2px solid white'
+                button_proceed.style.borderRadius = '20px'
+                button_proceed.style.fontFamily = 'Quicksand'
+                button_proceed.style.fontSize = '16px'
+
+                button_signup.onclick = function() {
+                    div_user.removeChild(button_login)
+                    div_user.removeChild(button_signup)
+                    div_user.appendChild(text_username)
+                    div_user.appendChild(text_password)
+                    div_user.appendChild(text_email)
+                    div_user.appendChild(button_proceed)
+                    button_proceed.onclick = function() {
+                        if (text_username.value == '' || text_password.value == '' || text_email.value == '') { alert('Username/Password/Mail is not complete.'); return}
+                        var url = 'https://lisica.lisica.ai:64243/database'
+                        async function go_fetch() {
+                            const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
+                            const result = await response.json()
+                            if (result.answer == 'ACK.') { 
+                                username = text_username.value
+                                password = text_password.value
+                                div_user.removeChild(text_username)
+                                div_user.removeChild(text_password)
+                                div_user.removeChild(text_email)
+                                div_user.removeChild(button_proceed)
+                                welcome_user()
+                            } else alert('Username already present.')
+                        } go_fetch()                 
+                    }
+                }
+
+                button_login.onclick = function() {
+                    div_user.removeChild(button_login)
+                    div_user.removeChild(button_signup)
+                    div_user.appendChild(text_username)
+                    div_user.appendChild(text_password)
+                    div_user.appendChild(button_proceed)
+                    button_proceed.onclick = function() {
+                        if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
+                        var url = 'https://lisica.lisica.ai:64243/database'
+                        async function go_fetch() {
+                            const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value)
+                            const result = await response.json()
+                            if (result.answer == 'ACK.') {
+                                username = text_username.value
+                                password = text_password.value
+                                div_user.removeChild(text_username)
+                                div_user.removeChild(text_password)
+                                div_user.removeChild(button_proceed)
+                                welcome_user()
+                            } else alert('Username/Password combination invalid.')
+                        } go_fetch()
+                    }
+                }
+
             }
 
             // empty div
@@ -694,15 +702,41 @@
 
             document.body.appendChild(empty_div())  
 
-            // paypal button div
+            // pay button div
 
-            var div_pay = document.createElement('div')
+            var div_pay = document.createElement('button')//div')
             document.body.appendChild(div_pay)
             div_pay.id = 'div_pay'
             div_pay.style.position = 'absolute'
             div_pay.style.left = '50%'
             div_pay.style.marginLeft = '-50px'
             div_pay.style.opacity = 0
+
+            var stripe = Stripe('pk_live_51L4pLcD1mkNNiGdjbPlxRAeGNNLGGtsxS2gXiiwGgqB8Ev2IJhDgWPercq8aR22LZyGlx5ZnYKCRQGWqoAisaigq00qsqNzagY')
+
+            div_pay.onclick = function() {
+
+                var price
+                switch (selectedItemPrice) {
+                    case '1': price = 'price_1L4qJ4D1mkNNiGdjtNmpYiac';  break
+                    case '5': price = 'price_1L4qJ4D1mkNNiGdjQJWs53ug';  break
+                    case '10': price = 'price_1L4qJ4D1mkNNiGdjRpnZ51dB';  break
+                    case '20': price = 'price_1L4qJ4D1mkNNiGdjWP3wAsvJ';  break
+                }
+
+                stripe.redirectToCheckout({
+                    lineItems: [
+                        {
+                            price: price,
+                            quantity: 1
+                        }
+                    ],
+                    mode: 'payment',
+                    successUrl: 'https://lisica.ai/checkout_success.html',
+                    cancelUrl: 'https://'+username,
+                })
+
+            }
 
             // empty div
 
@@ -722,101 +756,6 @@
 
         </script>
 
-        <script src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
-        <script>
-            function initPayPalButton() {
-                var shipping = 0;
-                var quantity = 1
-                var orderDescription = 'Item';
-
-                paypal.Buttons({
-                    style: {
-                    shape: 'pill',
-                    color: 'silver',
-                    layout: 'vertical',
-                    label: 'paypal',
-                    },
-                    createOrder: function(data, actions) {
-
-                        if (username == null || password == null) { alert("Not logged in.."); return }
-                        if (selectedItemDescription == null || selectedItemPrice == null) { alert("No item selected"); return }
-
-                        var tax = 0
-                        var priceTotal = quantity * selectedItemPrice + parseFloat(shipping) + tax;
-                        priceTotal = Math.round(priceTotal * 100) / 100;
-                        var itemTotalValue = Math.round((selectedItemPrice * quantity) * 100) / 100;
-
-                        return actions.order.create({
-                            purchase_units: [{
-                                description: orderDescription,
-                                amount: {
-                                    currency_code: 'USD',
-                                    value: priceTotal,
-                                    breakdown: {
-                                        item_total: {
-                                            currency_code: 'USD',
-                                            value: itemTotalValue,
-                                        },
-                                        shipping: {
-                                            currency_code: 'USD',
-                                            value: shipping,
-                                        },
-                                        tax_total: {
-                                            currency_code: 'USD',
-                                            value: tax,
-                                        }
-                                    }
-                                },
-                                items: [{
-                                    name: selectedItemDescription,
-                                    unit_amount: {
-                                        currency_code: 'USD',
-                                        value: selectedItemPrice,
-                                    },
-                                    quantity: quantity
-                                }]
-                            }]
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(orderData) {
-                            
-                            console.log('Data', data)
-
-                            console.log('Actions', actions)
-
-                            console.log('Actions.order', actions.order)
-
-                            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-                            const element = document.getElementById('div_pay');
-                            element.innerHTML = '';
-                            element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-                            // todo: this part needs to be hidden from user.
-
-                            const ws = new WebSocket('ws://IP_ADDRESS:PORT')
-                            ws.onopen = function(event) { 
-                                ws.send('/add_credit'+'<>'+text_username.value+'<>'+text_password.value+'<>'+selectedItemPrice) 
-                            }
-                            ws.onmessage = function(event) {
-                                if (event.data === 'ACK.') {
-                                    alert('Accepted.')
-                                    
-                                }                  
-                            }
-
-                        });
-                    },
-                    onError: function(err) {
-                    console.log(err);
-                    },
-                }).render('#div_pay');
-            }
-            initPayPalButton();
-            div_pay.style.marginLeft = -50 - div_pay.offsetWidth/4 + 'px'
-        </script>
-    
     </body>    
 
 </html>
