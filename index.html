@@ -50,7 +50,7 @@
             
             // project div
 
-            function project_div(title, description, background, link) {
+            function project_div(title, title_extended, description, background, link) {
 
                 var project_div = document.createElement('div')
                 project_div.style.display = 'flex'
@@ -97,7 +97,7 @@
                     document.body.style.cursor = 'pointer'
                     if (!project_description_appearing) {
                         project_description_appearing = true
-                        title_project.innerHTML = title+':'
+                        title_project.innerHTML = title_extended
                         const work = async () => {
                             project_div.removeChild(title_project)
                             project_div.appendChild(overlay)
@@ -134,13 +134,13 @@
 
             }
 
-            document.body.appendChild(project_div('Lisica', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai'))
+            document.body.appendChild(project_div('Lisica', 'Lisica:&emsp;a Literary / Spiritual AI', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai'))
             document.body.appendChild(empty_div())
 
-            document.body.appendChild(project_div('//upcoming//', "", '', ''))
+            document.body.appendChild(project_div('//upcoming//', '//upcoming//:', "", '', ''))
             document.body.appendChild(empty_div())
 
-            document.body.appendChild(project_div('//upcoming//', "", '', ''))
+            document.body.appendChild(project_div('//upcoming//', '//upcoming//:', "", '', ''))
             document.body.appendChild(empty_div())
  
             // user div
