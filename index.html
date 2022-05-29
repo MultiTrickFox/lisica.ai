@@ -86,10 +86,11 @@
                 description_project.style.color = '#fff'
                 description_project.innerHTML = description
                 description_project.style.overflowY = 'scroll'
-                description_project.style.height = description_project.offsetHeight-52+'px'
 
                 var project_mouseover = false
                 var project_description_appearing = false
+
+                var desc_height_set = false
 
                 project_div.onmouseover = function() {
                     project_mouseover = true
@@ -102,6 +103,7 @@
                             project_div.appendChild(overlay)
                             project_div.appendChild(title_project)
                             project_div.appendChild(description_project)
+                            if (!desc_height_set) { description_project.style.height = project_div.offsetHeight*2/3+'px'; desc_height_set = true }
                             var opacity = 0
                             for (var i = 0; i < 11; i++) {
                                 description_project.style.opacity = opacity
