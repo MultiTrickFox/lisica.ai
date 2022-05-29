@@ -435,7 +435,7 @@
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
                     var url = 'https://lisica.lisica.ai:64242/database'
                     async function go_fetch() {
-                        const response = await fetch(url+'/'+'check_user_pass'+'<>'+text_username.value+'<>'+text_password.value)
+                        const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value)
                         const result = await response.json()
                         if (result.answer == 'ACK.') {
                             username = text_username.value
