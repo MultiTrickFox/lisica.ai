@@ -474,7 +474,8 @@
                 async function go_fetch() {
                     const response = await fetch(url+'/'+'get_credit'+'<>'+text_username.value+'<>'+text_password.value)
                     const result = await response.json()
-                    div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
+                    // div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
+                    div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
                 } go_fetch()                
             }
 
