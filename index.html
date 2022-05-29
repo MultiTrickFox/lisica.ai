@@ -474,11 +474,12 @@
                 async function go_fetch() {
                     const response = await fetch(url+'/'+'get_credit'+'<>'+text_username.value+'<>'+text_password.value)
                     const result = await response.json()
-                    div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
-
+                    if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
+                    else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
+                    
                     // tdo: add 4 stats here, to left right top bot, and becomes brighter when u go there
 
-                } go_fetch()         
+                } go_fetch()  
             }
 
             // empty div
@@ -578,7 +579,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_paypal.style.opacity = opacity
+                        div_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -665,7 +666,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_paypal.style.opacity = opacity
+                        div_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -752,7 +753,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_paypal.style.opacity = opacity
+                        div_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -839,7 +840,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_paypal.style.opacity = opacity
+                        div_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -855,13 +856,13 @@
 
             // paypal button div
 
-            var div_paypal = document.createElement('div')
-            document.body.appendChild(div_paypal)
-            div_paypal.id = 'paypal-button-container'
-            div_paypal.style.position = 'absolute'
-            div_paypal.style.left = '50%'
-            div_paypal.style.marginLeft = '-50px'
-            div_paypal.style.opacity = 0
+            var div_pay = document.createElement('div')
+            document.body.appendChild(div_pay)
+            div_pay.id = 'paypal-button-container'
+            div_pay.style.position = 'absolute'
+            div_pay.style.left = '50%'
+            div_pay.style.marginLeft = '-50px'
+            div_pay.style.opacity = 0
 
             // helpers
 
@@ -961,7 +962,7 @@
                 }).render('#paypal-button-container');
             }
             initPayPalButton();
-            div_paypal.style.marginLeft = -50 - div_paypal.offsetWidth/4 + 'px'
+            div_pay.style.marginLeft = -50 - div_pay.offsetWidth/4 + 'px'
         </script>
     
     </body>    
