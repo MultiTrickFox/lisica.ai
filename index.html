@@ -408,7 +408,7 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    var url = 'https://lisica.lisica.ai:64242/database'
+                    var url = 'https://lisica.lisica.ai:64243/database'
                     async function go_fetch() {
                         const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
                         const result = await response.json()
@@ -433,7 +433,7 @@
                 div_user.appendChild(button_proceed)
                 button_proceed.onclick = function() {
                     if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
-                    var url = 'https://lisica.lisica.ai:64242/database'
+                    var url = 'https://lisica.lisica.ai:64243/database'
                     async function go_fetch() {
                         const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value)
                         const result = await response.json()
