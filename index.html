@@ -78,7 +78,7 @@
             description_lisica.style.fontFamily = 'Quicksand'
             description_lisica.style.fontSize = '14px' 
             description_lisica.style.color = '#fff'
-            description_lisica.innerHTML = "&emsp;Visit this Zen-inspired shrine and meet Lisica,<br>she is the shrine's keeper and friendly fox deity.<br>&emsp;Talk to her about anything that comes to mind;<br>from daily life to abstract thoughts, to even foxes.<br>&emsp;She's always happy to chat and be helpful to visitors.<br><br>Available modes include:<br>&emsp;- General chat<br>&emsp;- Meditation<br>&emsp;- Poetry<br>&emsp;- Storytelling"
+            description_lisica.innerHTML = "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper<br>Talk to her about anything that comes to mind;<br>&emsp;from daily life to abstract thoughts, to foxes even<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;- General chat<br>&emsp;- Meditation<br>&emsp;- Poetry<br>&emsp;- Storytelling"
 
             var lisica_mouseover = false
             var lisica_description_appearing = false
@@ -475,7 +475,10 @@
                     const response = await fetch(url+'/'+'get_credit'+'<>'+text_username.value+'<>'+text_password.value)
                     const result = await response.json()
                     div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
-                } go_fetch()                
+
+                    // tdo: add 4 stats here, to left right top bot, and becomes brighter when u go there
+
+                } go_fetch()         
             }
 
             // empty div
