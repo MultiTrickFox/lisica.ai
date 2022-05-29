@@ -53,6 +53,7 @@
             function project_div(title, title_extended, description, background, link) {
 
                 var project_div = document.createElement('div')
+                document.body.append(project_div)
                 project_div.style.display = 'flex'
                 project_div.style.flexDirection = 'column'
                 project_div.style.justifyContent = 'flex-start'
@@ -86,11 +87,10 @@
                 description_project.style.color = '#fff'
                 description_project.innerHTML = description
                 description_project.style.overflowY = 'scroll'
+                description_project.style.height = project_div.offsetHeight*2/3+'px'
 
                 var project_mouseover = false
                 var project_description_appearing = false
-
-                var desc_height_set = false
 
                 project_div.onmouseover = function() {
                     project_mouseover = true
@@ -103,7 +103,6 @@
                             project_div.appendChild(overlay)
                             project_div.appendChild(title_project)
                             project_div.appendChild(description_project)
-                            if (!desc_height_set) { description_project.style.height = project_div.offsetHeight*2/3+'px'; desc_height_set = true }
                             var opacity = 0
                             for (var i = 0; i < 11; i++) {
                                 description_project.style.opacity = opacity
@@ -130,18 +129,15 @@
                     window.location.href = link
                 }
 
-                return project_div
+                document.body.append(empty_div())
 
             }
 
-            document.body.appendChild(project_div('Lisica', 'Lisica:&emsp;a Literary / Spiritual AI', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai'))
-            document.body.appendChild(empty_div())
+            project_div('Lisica', 'Lisica:&emsp;a Spiritual / Literary AI', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai')
 
-            document.body.appendChild(project_div('//upcoming//', '//upcoming//:', "", '', ''))
-            document.body.appendChild(empty_div())
+            project_div('//upcoming//', '//upcoming//:', "", '', '')
 
-            document.body.appendChild(project_div('//upcoming//', '//upcoming//:', "", '', ''))
-            document.body.appendChild(empty_div())
+            project_div('//upcoming//', '//upcoming//:', "", '', '')
  
             // user div
 
@@ -393,7 +389,7 @@
             div_usd1_explanation.style.fontFamily = 'Quicksand'
             div_usd1_explanation.style.fontSize = '16px'    
             div_usd1_explanation.style.color = '#fff'
-            div_usd1_explanation.innerHTML = 'I would like to check out these projects'
+            div_usd1_explanation.innerHTML = 'I would like to check out these projects.'
             div_usd1_explanation.style.textAlign = 'center'
             div_usd1_explanation.style.opacity = 0
             div_usd1_explanation.style.paddingLeft = '20px'
