@@ -39,269 +39,108 @@
 
             // empty div
 
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%'
-
-            // lisica div
-
-            var div_lisica = document.createElement('div')
-            document.body.appendChild(div_lisica)
-            div_lisica.style.display = 'flex'
-            div_lisica.style.flexDirection = 'column'
-            div_lisica.style.justifyContent = 'flex-start'
-            div_lisica.style.height = '46.3535%'
-            div_lisica.style.width = '75%'
-            div_lisica.style.backgroundImage = "url('assets/lisica_background.jpeg')"
-            div_lisica.style.backgroundPosition = 'center'
-            div_lisica.style.backgroundSize = 'cover'
-            div_lisica.style.borderRadius = '10px'
-            div_lisica.style.marginLeft = 'auto'
-            div_lisica.style.marginRight = 'auto'
-            div_lisica.style.lineHeight = '140%'
-
-            var title_lisica = document.createElement('div')
-            div_lisica.appendChild(title_lisica)
-            title_lisica.style.position = 'relative'
-            title_lisica.style.top = '20px'  
-            title_lisica.style.left = '20px'  
-            title_lisica.style.fontFamily = 'Quicksand'
-            title_lisica.style.fontSize = '20px'    
-            title_lisica.style.fontWeight = 'bold'
-            title_lisica.style.color = '#fff'
-            title_lisica.innerHTML = 'Lisica'
-
-            var description_lisica = document.createElement('div')
-            description_lisica.style.position = 'relative'
-            description_lisica.style.top = '52px'  
-            description_lisica.style.left = '20px'  
-            description_lisica.style.fontFamily = 'Quicksand'
-            description_lisica.style.fontSize = '14px' 
-            description_lisica.style.color = '#fff'
-            description_lisica.innerHTML = "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling"
-            description_lisica.style.overflowY = 'scroll'
-            description_lisica.style.height = description_lisica.offsetHeight-52+'px'
-
-            var lisica_mouseover = false
-            var lisica_description_appearing = false
-
-            div_lisica.onmouseover = function() {
-                lisica_mouseover = true
-                document.body.style.cursor = 'pointer'
-                if (!lisica_description_appearing) {
-                    lisica_description_appearing = true
-                    title_lisica.innerHTML = "Lisica:"
-                    const work = async () => {
-                        div_lisica.removeChild(title_lisica)
-                        div_lisica.appendChild(overlay)
-                        div_lisica.appendChild(title_lisica)
-                        div_lisica.appendChild(description_lisica)
-                        var opacity = 0
-                        for (var i = 0; i < 11; i++) {
-                            description_lisica.style.opacity = opacity
-                            opacity += .077
-                            await sleep(.1)
-                            if (!lisica_mouseover) return
-                        }                
-                    }
-                    work()
-                }
+            function empty_div() {
+                var empty_div = document.createElement('div')
+                empty_div.style.height = '4.63535%'
+                empty_div.style.width = '75%'
+                return empty_div
             }
 
-            div_lisica.onmouseleave = function() {
-                lisica_mouseover = false
-                document.body.style.cursor = 'auto'
-                div_lisica.removeChild(description_lisica)
-                div_lisica.removeChild(overlay)
-                lisica_description_appearing = false
-                description_lisica.style.opacity = 0
-                title_lisica.innerHTML = "Lisica"
-            }
-
-            div_lisica.onclick = function() {
-                window.location.href = 'https://multitrickfox.itch.io/lisicaai'
-            }
-
-            // empty div
-
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%'
-
-            // the PROJECT2 div
-
-            var div_PROJECT2 = document.createElement('div')
-            document.body.appendChild(div_PROJECT2)
-            div_PROJECT2.style.display = 'flex'
-            div_PROJECT2.style.flexDirection = 'column'
-            div_PROJECT2.style.justifyContent = 'flex-start'
-            div_PROJECT2.style.height = '46.3535%'
-            div_PROJECT2.style.width = '75%'
-            //div_PROJECT2.style.backgroundImage = "url('assets/lisica_background.jpeg')"
-            div_PROJECT2.style.backgroundPosition = 'center'
-            div_PROJECT2.style.backgroundSize = 'cover'
-            div_PROJECT2.style.borderRadius = '10px'
-            div_PROJECT2.style.marginLeft = 'auto'
-            div_PROJECT2.style.marginRight = 'auto'
-            div_PROJECT2.style.lineHeight = '140%'
-
-            var title_PROJECT2 = document.createElement('div')
-            div_PROJECT2.appendChild(title_PROJECT2)
-            title_PROJECT2.style.position = 'relative'
-            title_PROJECT2.style.top = '20px'  
-            title_PROJECT2.style.left = '20px'  
-            title_PROJECT2.style.fontFamily = 'Quicksand'
-            title_PROJECT2.style.fontSize = '20px'    
-            title_PROJECT2.style.fontWeight = 'bold'
-            title_PROJECT2.style.color = '#fff'
-            title_PROJECT2.innerHTML = '//upcoming//'
-
-            var description_PROJECT2 = document.createElement('div')
-            description_PROJECT2.style.position = 'relative'
-            description_PROJECT2.style.top = '52px'  
-            description_PROJECT2.style.left = '20px'  
-            description_PROJECT2.style.fontFamily = 'Quicksand'
-            description_PROJECT2.style.fontSize = '14px' 
-            description_PROJECT2.style.color = '#fff'
-            description_PROJECT2.innerHTML = ""
-            description_PROJECT2.style.overflowY = 'scroll'
-            description_PROJECT2.style.height = description_PROJECT2.offsetHeight-52+'px'
-
-            var PROJECT2_mouseover = false
-            var PROJECT2_description_appearing = false
-
-            div_PROJECT2.onmouseover = function() {
-                PROJECT2_mouseover = true
-                document.body.style.cursor = 'pointer'
-                if (!PROJECT2_description_appearing) {
-                    PROJECT2_description_appearing = true
-                    title_PROJECT2.innerHTML = "//upcoming//:"
-                    const work = async () => {
-                        div_PROJECT2.removeChild(title_PROJECT2)
-                        div_PROJECT2.appendChild(overlay)
-                        div_PROJECT2.appendChild(title_PROJECT2)
-                        div_PROJECT2.appendChild(description_PROJECT2)
-                        var opacity = 0
-                        for (var i = 0; i < 11; i++) {
-                            description_PROJECT2.style.opacity = opacity
-                            opacity += .077
-                            await sleep(.1)
-                            if (!PROJECT2_mouseover) return
-                        }                
-                    }
-                    work()
-                }
-            }
-
-            div_PROJECT2.onmouseleave = function() {
-                PROJECT2_mouseover = false
-                document.body.style.cursor = 'auto'
-                div_PROJECT2.removeChild(description_PROJECT2)
-                div_PROJECT2.removeChild(overlay)
-                PROJECT2_description_appearing = false
-                description_PROJECT2.style.opacity = 0
-                title_PROJECT2.innerHTML = "//upcoming//"
-            }
-
-            div_PROJECT2.onclick = function() {
-                //window.location.href = 'https://multitrickfox.itch.io/PROJECT2ai'
-            }
-
-            // empty div
-
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%'
-
-            // the PROJECT3 div
-
-            var div_PROJECT3 = document.createElement('div')
-            document.body.appendChild(div_PROJECT3)
-            div_PROJECT3.style.display = 'flex'
-            div_PROJECT3.style.flexDirection = 'column'
-            div_PROJECT3.style.justifyContent = 'flex-start'
-            div_PROJECT3.style.height = '46.3535%'
-            div_PROJECT3.style.width = '75%'
-            //div_PROJECT3.style.backgroundImage = "url('assets/lisica_background.jpeg')"
-            div_PROJECT3.style.backgroundPosition = 'center'
-            div_PROJECT3.style.backgroundSize = 'cover'
-            div_PROJECT3.style.borderRadius = '10px'
-            div_PROJECT3.style.marginLeft = 'auto'
-            div_PROJECT3.style.marginRight = 'auto'
-            div_PROJECT3.style.lineHeight = '140%'
-
-            var title_PROJECT3 = document.createElement('div')
-            div_PROJECT3.appendChild(title_PROJECT3)
-            title_PROJECT3.style.position = 'relative'
-            title_PROJECT3.style.top = '20px'  
-            title_PROJECT3.style.left = '20px'  
-            title_PROJECT3.style.fontFamily = 'Quicksand'
-            title_PROJECT3.style.fontSize = '20px'    
-            title_PROJECT3.style.fontWeight = 'bold'
-            title_PROJECT3.style.color = '#fff'
-            title_PROJECT3.innerHTML = '//upcoming//'
-
-            var description_PROJECT3 = document.createElement('div')
-            description_PROJECT3.style.position = 'relative'
-            description_PROJECT3.style.top = '52px'  
-            description_PROJECT3.style.left = '20px'  
-            description_PROJECT3.style.fontFamily = 'Quicksand'
-            description_PROJECT3.style.fontSize = '14px' 
-            description_PROJECT3.style.color = '#fff'
-            description_PROJECT3.innerHTML = ""
-            description_PROJECT3.style.overflowY = 'scroll'
-            description_PROJECT3.style.height = description_PROJECT3.offsetHeight-52+'px'
-
-            var PROJECT3_mouseover = false
-            var PROJECT3_description_appearing = false
-
-            div_PROJECT3.onmouseover = function() {
-                PROJECT3_mouseover = true
-                document.body.style.cursor = 'pointer'
-                if (!PROJECT3_description_appearing) {
-                    PROJECT3_description_appearing = true
-                    title_PROJECT3.innerHTML = "//upcoming//:"
-                    const work = async () => {
-                        div_PROJECT3.removeChild(title_PROJECT3)
-                        div_PROJECT3.appendChild(overlay)
-                        div_PROJECT3.appendChild(title_PROJECT3)
-                        div_PROJECT3.appendChild(description_PROJECT3)
-                        var opacity = 0
-                        for (var i = 0; i < 11; i++) {
-                            description_PROJECT3.style.opacity = opacity
-                            opacity += .077
-                            await sleep(.1)
-                            if (!PROJECT3_mouseover) return
-                        }                
-                    }
-                    work()
-                }
-            }
-
-            div_PROJECT3.onmouseleave = function() {
-                PROJECT3_mouseover = false
-                document.body.style.cursor = 'auto'
-                div_PROJECT3.removeChild(description_PROJECT3)
-                div_PROJECT3.removeChild(overlay)
-                PROJECT3_description_appearing = false
-                description_PROJECT3.style.opacity = 0
-                title_PROJECT3.innerHTML = "//upcoming//"
-            }
-
-            div_PROJECT3.onclick = function() {
-                //window.location.href = 'https://multitrickfox.itch.io/PROJECT3ai'
-            }
-
-            // empty div
-
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%'  
+            document.body.appendChild(empty_div())
             
+            // project div
+
+            function project_div(title, description, background, link) {
+
+                var project_div = document.createElement('div')
+                project_div.style.display = 'flex'
+                project_div.style.flexDirection = 'column'
+                project_div.style.justifyContent = 'flex-start'
+                project_div.style.height = '46.3535%'
+                project_div.style.width = '75%'
+                project_div.style.backgroundImage = "url("+background+")"
+                project_div.style.backgroundPosition = 'center'
+                project_div.style.backgroundSize = 'cover'
+                project_div.style.borderRadius = '10px'
+                project_div.style.marginLeft = 'auto'
+                project_div.style.marginRight = 'auto'
+                project_div.style.lineHeight = '140%'
+
+                var title_project = document.createElement('div')
+                project_div.appendChild(title_project)
+                title_project.style.position = 'relative'
+                title_project.style.top = '20px'  
+                title_project.style.left = '20px'  
+                title_project.style.fontFamily = 'Quicksand'
+                title_project.style.fontSize = '20px'    
+                title_project.style.fontWeight = 'bold'
+                title_project.style.color = '#fff'
+                title_project.innerHTML = title
+
+                var description_project = document.createElement('div')
+                description_project.style.position = 'relative'
+                description_project.style.top = '52px'  
+                description_project.style.left = '20px'  
+                description_project.style.fontFamily = 'Quicksand'
+                description_project.style.fontSize = '14px' 
+                description_project.style.color = '#fff'
+                description_project.innerHTML = description
+                description_project.style.overflowY = 'scroll'
+                description_project.style.height = description_project.offsetHeight-52+'px'
+
+                var project_mouseover = false
+                var project_description_appearing = false
+
+                project_div.onmouseover = function() {
+                    project_mouseover = true
+                    document.body.style.cursor = 'pointer'
+                    if (!project_description_appearing) {
+                        project_description_appearing = true
+                        title_project.innerHTML = title+':'
+                        const work = async () => {
+                            project_div.removeChild(title_project)
+                            project_div.appendChild(overlay)
+                            project_div.appendChild(title_project)
+                            project_div.appendChild(description_project)
+                            var opacity = 0
+                            for (var i = 0; i < 11; i++) {
+                                description_project.style.opacity = opacity
+                                opacity += .077
+                                await sleep(.1)
+                                if (!project_mouseover) return
+                            }                
+                        }
+                        work()
+                    }
+                }
+
+                project_div.onmouseleave = function() {
+                    project_mouseover = false
+                    document.body.style.cursor = 'auto'
+                    project_div.removeChild(description_project)
+                    project_div.removeChild(overlay)
+                    project_description_appearing = false
+                    description_project.style.opacity = 0
+                    title_project.innerHTML = title
+                }
+
+                project_div.onclick = function() {
+                    window.location.href = link
+                }
+
+                return project_div
+
+            }
+
+            document.body.appendChild(project_div('Lisica', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai'))
+            document.body.appendChild(empty_div())
+
+            document.body.appendChild(project_div('//upcoming//', "", '', ''))
+            document.body.appendChild(empty_div())
+
+            document.body.appendChild(project_div('//upcoming//', "", '', ''))
+            document.body.appendChild(empty_div())
+ 
             // user div
 
             var div_user = document.createElement('div')
@@ -493,10 +332,7 @@
 
             // empty div
 
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%'  
+            document.body.appendChild(empty_div()) 
 
             // tokens div
 
@@ -858,16 +694,13 @@
 
             // empty div
 
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%'   
+            document.body.appendChild(empty_div())  
 
             // paypal button div
 
             var div_pay = document.createElement('div')
             document.body.appendChild(div_pay)
-            div_pay.id = 'paypal-button-container'
+            div_pay.id = 'div_pay'
             div_pay.style.position = 'absolute'
             div_pay.style.left = '50%'
             div_pay.style.marginLeft = '-50px'
@@ -875,19 +708,15 @@
 
             // empty div
 
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%' 
+            document.body.appendChild(empty_div())
 
-            // todo: community here; public@lisica.ai ; discord_link
+            // community div
+
+            // todo: public@lisica.ai ; discord_link
 
             // empty div
 
-            var empty_div = document.createElement('div')
-            document.body.appendChild(empty_div)
-            empty_div.style.height = '4.63535%'
-            empty_div.style.width = '75%' 
+            document.body.appendChild(empty_div())
 
             // helpers
 
@@ -962,7 +791,7 @@
 
                             console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
 
-                            const element = document.getElementById('paypal-button-container');
+                            const element = document.getElementById('div_pay');
                             element.innerHTML = '';
                             element.innerHTML = '<h3>Thank you for your payment!</h3>';
 
@@ -984,7 +813,7 @@
                     onError: function(err) {
                     console.log(err);
                     },
-                }).render('#paypal-button-container');
+                }).render('#div_pay');
             }
             initPayPalButton();
             div_pay.style.marginLeft = -50 - div_pay.offsetWidth/4 + 'px'
