@@ -321,6 +321,8 @@
             button_login.style.backgroundColor = 'transparent'
             button_login.style.border = '2px solid white'
             button_login.style.borderRadius = '20px'
+            button_login.style.fontFamily = 'Quicksand'
+            button_login.style.fontSize = '16px'
             
             var button_signup = document.createElement('button')
             div_user.appendChild(button_signup)
@@ -336,6 +338,8 @@
             button_signup.style.backgroundColor = 'transparent'
             button_signup.style.border = '2px solid white'
             button_signup.style.borderRadius = '20px'
+            button_signup.style.fontFamily = 'Quicksand'
+            button_signup.style.fontSize = '16px'
 
             var text_username = document.createElement('input')
             text_username.type = 'text'
@@ -352,6 +356,8 @@
             text_username.style.backgroundColor = 'transparent'
             text_username.style.border = '2px solid white'
             text_username.style.borderRadius = '20px'
+            text_username.style.fontFamily = 'Quicksand'
+            text_username.style.fontSize = '14px'
             
             var text_password = document.createElement('input')
             text_password.type = 'password'
@@ -368,6 +374,8 @@
             text_password.style.backgroundColor = 'transparent'
             text_password.style.border = '2px solid white'
             text_password.style.borderRadius = '20px'
+            text_password.style.fontFamily = 'Quicksand'
+            text_password.style.fontSize = '14px'
             
             var text_email = document.createElement('input')
             text_email.type = 'text'
@@ -384,6 +392,8 @@
             text_email.style.backgroundColor = 'transparent'
             text_email.style.border = '2px solid white'
             text_email.style.borderRadius = '20px'
+            text_email.style.fontFamily = 'Quicksand'
+            text_email.style.fontSize = '14px'
 
             var button_proceed = document.createElement('button')
             button_proceed.style.width = button_login.offsetWidth
@@ -398,6 +408,8 @@
             button_proceed.style.backgroundColor = 'transparent'
             button_proceed.style.border = '2px solid white'
             button_proceed.style.borderRadius = '20px'
+            button_proceed.style.fontFamily = 'Quicksand'
+            button_proceed.style.fontSize = '16px'
 
             button_signup.onclick = function() {
                 div_user.removeChild(button_login)
@@ -452,7 +464,17 @@
             function welcome_user() {
                 div_user.style.border = '1.6px solid silver'
                 div_user.style.borderRadius = '60px'
-                alert('Accepted.') // TODO: bring up user page
+                //alert('Accepted.') // bring up user page 
+                div_user.style.fontFamily = 'Quicksand'
+                div_user.style.fontSize = '16px'
+                div_user.style.color = 'white'
+                div_user.style.textAlign = 'center'
+                var url = 'https://lisica.lisica.ai:64243/database'
+                async function go_fetch() {
+                    const response = await fetch(url+'/'+'get_credit'+'<>'+text_username.value+'<>'+text_password.value)
+                    const result = await response.json()
+                    div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
+                } go_fetch()                
             }
 
             // empty div
