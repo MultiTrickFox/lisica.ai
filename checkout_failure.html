@@ -1,0 +1,42 @@
+<html>
+
+    <head>
+        <title>The Fox Den</title>
+        <link rel="icon" type="image/x-icon" href="assets/favicon.png">
+    </head>
+
+    <body style="
+    background-color: black;
+    margin: 0;
+    overflow-y: scroll;
+    cursor: auto;
+    -webkit-user-select: none;
+    ">
+
+        <link rel="stylesheet" href="style.css">
+
+        <script>
+
+            var div_lisica = document.createElement('div')
+            document.body.appendChild(div_lisica)
+            div_lisica.style.height = '100%'
+            div_lisica.style.width = '100%'
+            div_lisica.style.backgroundPosition = 'center'
+            div_lisica.style.backgroundSize = 'cover'
+            div_lisica.style.textAlign = 'center'
+            div_lisica.style.color = 'white'
+            div_lisica.style.fontSize = '30px'
+            div_lisica.style.fontFamily = 'Quicksand'
+            div_lisica.style.fontWeight = 'bold'
+            div_lisica.innerHTML = '<br>Failure.<br>'
+
+            document.body.style.cursor = 'wait'
+            setTimeout(function() {
+                window.location.href = 'https://lisica.ai'
+            }, 3000)
+
+        </script>
+
+    </body>
+
+</html>

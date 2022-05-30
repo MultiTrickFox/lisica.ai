@@ -430,7 +430,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_pay.style.opacity = opacity
+                        button_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -517,7 +517,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_pay.style.opacity = opacity
+                        button_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -604,7 +604,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_pay.style.opacity = opacity
+                        button_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -691,7 +691,7 @@
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
                         opacity += .1
-                        div_pay.style.opacity = opacity
+                        button_pay.style.opacity = opacity
                         await sleep(.06)
                     }                
                 }
@@ -704,17 +704,26 @@
 
             // pay button div
 
-            var div_pay = document.createElement('button')//div')
-            document.body.appendChild(div_pay)
-            div_pay.id = 'div_pay'
-            div_pay.style.position = 'absolute'
-            div_pay.style.left = '50%'
-            div_pay.style.marginLeft = '-50px'
-            div_pay.style.opacity = 0
+            var button_pay = document.createElement('button')
+            document.body.appendChild(button_pay)            
+            button_pay.style.opacity = 0
+            button_pay.style.width = div_usd1.offsetWidth*3/4
+            button_pay.style.height = button_pay.offsetWidth*3/4/1.618
+            button_pay.style.position = 'absolute'
+            button_pay.style.left = '50%'
+            button_pay.style.transform = 'translateX(-50%)'
+            button_pay.innerHTML = 'Stripe Checkout'
+            button_pay.style.color = 'white'
+            button_pay.style.textAlign = 'center'
+            button_pay.style.backgroundColor = 'transparent'
+            button_pay.style.border = '1px solid silver'
+            button_pay.style.borderRadius = '16px'
+            button_pay.style.fontFamily = 'Quicksand'
+            button_pay.style.fontSize = '16px'
 
             var stripe = Stripe('pk_live_51L4pLcD1mkNNiGdjbPlxRAeGNNLGGtsxS2gXiiwGgqB8Ev2IJhDgWPercq8aR22LZyGlx5ZnYKCRQGWqoAisaigq00qsqNzagY')
 
-            div_pay.onclick = function() {
+            button_pay.onclick = function() {
 
                 var price
                 switch (selectedItemPrice) {
@@ -733,7 +742,7 @@
                     ],
                     mode: 'payment',
                     successUrl: 'https://lisica.ai/checkout_success.html',
-                    cancelUrl: 'https://lisica.ai/'+username,
+                    cancelUrl: 'https://lisica.ai/checkout_failure.html?'+username,
                 })
 
             }
