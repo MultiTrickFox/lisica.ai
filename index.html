@@ -173,7 +173,8 @@
                     
                     // tdo: add 4 stats here, to left right top bot, and becomes brighter when u go there
 
-                } go_fetch()  
+                    document.body.style.cursor = 'auto'
+                } go_fetch()
             }
 
             if (username != null && password != null) welcome_user()
@@ -292,6 +293,7 @@
                     div_user.appendChild(text_email)
                     div_user.appendChild(button_proceed)
                     button_proceed.onclick = function() {
+                        document.body.style.cursor = 'wait'
                         if (text_username.value == '' || text_password.value == '' || text_email.value == '') { alert('Username/Password/Mail is not complete.'); return}
                         var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
@@ -317,6 +319,7 @@
                     div_user.appendChild(text_password)
                     div_user.appendChild(button_proceed)
                     button_proceed.onclick = function() {
+                        document.body.style.cursor = 'wait'
                         if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
                         var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
@@ -397,7 +400,7 @@
             div_usd1_explanation.style.fontFamily = 'Quicksand'
             div_usd1_explanation.style.fontSize = '16px'    
             div_usd1_explanation.style.color = '#fff'
-            div_usd1_explanation.innerHTML = 'I would like to check out these projects.'
+            div_usd1_explanation.innerHTML = "I just want to check out these projects."
             div_usd1_explanation.style.textAlign = 'center'
             div_usd1_explanation.style.opacity = 0
             div_usd1_explanation.style.paddingLeft = '20px'
@@ -720,19 +723,14 @@
             button_pay.style.opacity = 0
             button_pay.style.width = '100%' //div_usd1.offsetWidth*3/4
             button_pay.style.height = '100%' //button_pay.offsetWidth*3/4/1.618
-            button_pay.style.position = 'relative'
-            button_pay.marginLeft = 'auto'
-            button_pay.marginRight = 'auto'
-            // button_pay.style.left = '50%'
-            // button_pay.style.transform = 'translateX(-50%)'
             // button_pay.innerHTML = 'Stripe Checkout'
             // button_pay.style.color = 'white'
             // button_pay.style.textAlign = 'center'
+            // button_pay.style.fontFamily = 'Quicksand'
+            // button_pay.style.fontSize = '16px'
             // button_pay.style.backgroundColor = 'transparent'
             button_pay.style.border = '1px solid black'
             button_pay.style.borderRadius = '16px'
-            button_pay.style.fontFamily = 'Quicksand'
-            button_pay.style.fontSize = '16px'
             button_pay.style.backgroundImage = 'url(assets/stripe_banner.png)'
             button_pay.style.backgroundPosition = 'center'
             button_pay.style.backgroundSize = 'cover'
@@ -741,7 +739,6 @@
             var stripe = Stripe('pk_live_51L4pLcD1mkNNiGdjbPlxRAeGNNLGGtsxS2gXiiwGgqB8Ev2IJhDgWPercq8aR22LZyGlx5ZnYKCRQGWqoAisaigq00qsqNzagY')
 
             button_pay.onclick = function() {
-
                 var price
                 switch (selectedItemPrice) {
                     case '1': price = 'price_1L4vPqD1mkNNiGdjF22EtHGQ';  break
@@ -749,7 +746,6 @@
                     case '10': price = 'price_1L4vPqD1mkNNiGdjkqds9Pzw';  break
                     case '20': price = 'price_1L4vPqD1mkNNiGdjJDrCRjg6';  break
                 }
-
                 stripe.redirectToCheckout({
                     lineItems: [
                         {
@@ -761,7 +757,6 @@
                     successUrl: 'https://lisica.ai/checkout_success.html',
                     cancelUrl: 'https://lisica.ai/checkout_failure.html?'+username,
                 })
-
             }
 
             // empty div
@@ -770,7 +765,32 @@
 
             // community div
 
-            // todo: public@lisica.ai ; discord_link
+            var button_community_div = document.createElement('div')
+            document.body.appendChild(button_community_div)
+            button_community_div.style.width = div_usd1.offsetWidth*2/3
+            button_community_div.style.height = button_community_div.offsetWidth/1.618
+            button_community_div.style.marginLeft = 'auto'
+            button_community_div.style.marginRight = 'auto'
+
+            var button_community = document.createElement('button')
+            button_community_div.appendChild(button_community)           
+            button_community.style.width = '100%'
+            button_community.style.height = '100%'
+            button_community.style.position = 'relative'
+            button_community.marginLeft = 'auto'
+            button_community.marginRight = 'auto'
+            // button_community.innerHTML = 'Discord'
+            // button_community.style.color = 'white'
+            // button_community.style.textAlign = 'center'
+            button_community.style.backgroundColor = 'transparent'
+            // button_community.style.fontFamily = 'Quicksand'
+            // button_community.style.fontSize = '16px'
+            button_community.style.border = '1px solid black'
+            button_community.style.borderRadius = '16px'
+            button_community.style.backgroundImage = 'url(assets/discord_banner.png)'
+            button_community.style.backgroundPosition = 'center'
+            button_community.style.backgroundSize = 'cover'
+            button_community.style.cursor = 'pointer'
 
             // empty div
 
