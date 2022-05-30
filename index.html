@@ -135,7 +135,7 @@
 
             }
 
-            project_div('Lisica', 'Lisica:&emsp;a Spiritual / Literary AI', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai')
+            project_div('Lisica', '&emsp;&emsp;&emsp;a Spiritual / Literary AI', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai')
 
             project_div('//upcoming//', '//upcoming//:', "", '', '')
 
@@ -738,7 +738,11 @@
 
             var stripe = Stripe('pk_live_51L4pLcD1mkNNiGdjbPlxRAeGNNLGGtsxS2gXiiwGgqB8Ev2IJhDgWPercq8aR22LZyGlx5ZnYKCRQGWqoAisaigq00qsqNzagY')
 
+            var stripe_launched = false
             button_pay.onclick = function() {
+                if (stripe_launched) return
+                else stripe_launched = true
+
                 var price
                 switch (selectedItemPrice) {
                     case '1': price = 'price_1L4vPqD1mkNNiGdjF22EtHGQ';  break
