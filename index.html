@@ -294,7 +294,11 @@
                     div_user.appendChild(button_proceed)
                     button_proceed.onclick = function() {
                         document.body.style.cursor = 'wait'
-                        if (text_username.value == '' || text_password.value == '' || text_email.value == '') { alert('Username/Password/Mail is not complete.'); return}
+                        if (text_username.value == '' || text_password.value == '' || text_email.value == '') {
+                            alert('Username/Password/Mail is not complete.')
+                            document.body.style.cursor = 'auto'
+                            return
+                        }
                         var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
                             const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
@@ -307,7 +311,10 @@
                                 div_user.removeChild(text_email)
                                 div_user.removeChild(button_proceed)
                                 welcome_user()
-                            } else alert('Username already present.')
+                            } else { 
+                                alert('Username already present.')
+                                document.body.style.cursor = 'auto'
+                            }
                         } go_fetch()                 
                     }
                 }
@@ -320,7 +327,11 @@
                     div_user.appendChild(button_proceed)
                     button_proceed.onclick = function() {
                         document.body.style.cursor = 'wait'
-                        if (text_username.value == '' || text_password.value == '') { alert('Username/Password is not complete.'); return}
+                        if (text_username.value == '' || text_password.value == '') { 
+                            alert('Username/Password is not complete.')
+                            document.body.style.cursor = 'auto'
+                            return
+                        }
                         var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
                             const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value)
@@ -332,7 +343,10 @@
                                 div_user.removeChild(text_password)
                                 div_user.removeChild(button_proceed)
                                 welcome_user()
-                            } else alert('Username/Password combination invalid.')
+                            } else {
+                                alert('Username/Password combination invalid.')
+                                document.body.style.cursor = 'auto'
+                            }
                         } go_fetch()
                     }
                 }
