@@ -426,6 +426,7 @@
             div_usd1.onclick = function() {
                 selectedItemPrice = '1'
                 selectedItemDescription = '1 USD'
+                button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -513,6 +514,7 @@
             div_usd5.onclick = function() {
                 selectedItemPrice = '5'
                 selectedItemDescription = '5 USD'
+                button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -600,6 +602,7 @@
             div_usd10.onclick = function() {
                 selectedItemPrice = '10'
                 selectedItemDescription = '10 USD'
+                button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -687,6 +690,7 @@
             div_usd20.onclick = function() {
                 selectedItemPrice = '20'
                 selectedItemDescription = '20 USD'
+                button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -704,22 +708,35 @@
 
             // pay button div
 
+            var button_pay_div = document.createElement('div')
+            document.body.appendChild(button_pay_div)
+            button_pay_div.style.width = div_usd1.offsetWidth*2/3
+            button_pay_div.style.height = button_pay_div.offsetWidth/1.618
+            button_pay_div.style.marginLeft = 'auto'
+            button_pay_div.style.marginRight = 'auto'
+
             var button_pay = document.createElement('button')
-            document.body.appendChild(button_pay)            
+            //button_pay_div.appendChild(button_pay)           
             button_pay.style.opacity = 0
-            button_pay.style.width = div_usd1.offsetWidth*3/4
-            button_pay.style.height = button_pay.offsetWidth*3/4/1.618
-            button_pay.style.position = 'absolute'
-            button_pay.style.left = '50%'
-            button_pay.style.transform = 'translateX(-50%)'
-            button_pay.innerHTML = 'Stripe Checkout'
-            button_pay.style.color = 'white'
-            button_pay.style.textAlign = 'center'
-            button_pay.style.backgroundColor = 'transparent'
-            button_pay.style.border = '1px solid silver'
+            button_pay.style.width = '100%' //div_usd1.offsetWidth*3/4
+            button_pay.style.height = '100%' //button_pay.offsetWidth*3/4/1.618
+            button_pay.style.position = 'relative'
+            button_pay.marginLeft = 'auto'
+            button_pay.marginRight = 'auto'
+            // button_pay.style.left = '50%'
+            // button_pay.style.transform = 'translateX(-50%)'
+            // button_pay.innerHTML = 'Stripe Checkout'
+            // button_pay.style.color = 'white'
+            // button_pay.style.textAlign = 'center'
+            // button_pay.style.backgroundColor = 'transparent'
+            button_pay.style.border = '1px solid black'
             button_pay.style.borderRadius = '16px'
             button_pay.style.fontFamily = 'Quicksand'
             button_pay.style.fontSize = '16px'
+            button_pay.style.backgroundImage = 'url(assets/stripe_banner.png)'
+            button_pay.style.backgroundPosition = 'center'
+            button_pay.style.backgroundSize = 'cover'
+            button_pay.style.cursor = 'pointer'
 
             var stripe = Stripe('pk_live_51L4pLcD1mkNNiGdjbPlxRAeGNNLGGtsxS2gXiiwGgqB8Ev2IJhDgWPercq8aR22LZyGlx5ZnYKCRQGWqoAisaigq00qsqNzagY')
 
