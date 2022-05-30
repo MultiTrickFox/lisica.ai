@@ -27,18 +27,6 @@
             var selectedItemDescription
             var selectedItemPrice
 
-            // general dark div
-
-            var overlay = document.createElement('div')
-            overlay.style.position = 'absolute'
-            overlay.style.height = '46.3535%'
-            overlay.style.width = '75%'
-            overlay.style.backgroundColor = '#000'
-            overlay.style.opacity = '0.6'
-            overlay.style.borderRadius = '10px'
-            overlay.style.marginLeft = 'auto'
-            overlay.style.marginRight = 'auto'
-
             // empty div
 
             function empty_div() {
@@ -50,7 +38,35 @@
 
             document.body.appendChild(empty_div())
             
+            // // fiction div
+            
+            // function title_div(title) {
+            //     var title_div = document.createElement('div')
+            //     title_div.style.height = '4.63535%'
+            //     title_div.style.width = '16.66%'
+            //     title_div.innerHTML = title
+            //     title_div.style.color = 'silver'
+            //     title_div.style.textAlign = 'center'
+            //     title_div.style.fontFamily = 'Quicksand'
+            //     title_div.style.fontSize = '26px'
+            //     title_div.style.backgroundColor = 'transparent'
+            //     document.body.append(title_div)
+            //     document.body.append(empty_div())
+            // }
+
+            // title_div('Fiction')
+
             // project div
+
+            var overlay = document.createElement('div')
+            overlay.style.position = 'absolute'
+            overlay.style.height = '46.3535%'
+            overlay.style.width = '75%'
+            overlay.style.backgroundColor = '#000'
+            overlay.style.opacity = '0.6'
+            overlay.style.borderRadius = '10px'
+            overlay.style.marginLeft = 'auto'
+            overlay.style.marginRight = 'auto'
 
             function project_div(title, title_extended, description, background, link) {
 
@@ -135,7 +151,7 @@
 
             }
 
-            project_div('Lisica', '&emsp;&emsp;&emsp;a Spiritual / Literary AI', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai')
+            project_div('Lisica', 'Lisica', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai')
 
             project_div('//upcoming//', '//upcoming//:', "", '', '')
 
@@ -753,7 +769,11 @@
             var stripe = Stripe('pk_live_51L4pLcD1mkNNiGdjbPlxRAeGNNLGGtsxS2gXiiwGgqB8Ev2IJhDgWPercq8aR22LZyGlx5ZnYKCRQGWqoAisaigq00qsqNzagY')
 
             var stripe_launched = false
+
             button_pay.onclick = function() {
+
+                if (username == null || password == null) { alert('Not logged in.'); return }
+
                 if (stripe_launched) return
                 else stripe_launched = true
 
@@ -775,6 +795,7 @@
                     successUrl: 'https://lisica.ai/checkout_success.html',
                     cancelUrl: 'https://lisica.ai/checkout_failure.html?'+username,
                 })
+
             }
 
             // empty div
@@ -783,32 +804,36 @@
 
             // community div
 
-            var button_community_div = document.createElement('div')
-            document.body.appendChild(button_community_div)
-            button_community_div.style.width = div_usd1.offsetWidth*2/3
-            button_community_div.style.height = button_community_div.offsetWidth/1.618
-            button_community_div.style.marginLeft = 'auto'
-            button_community_div.style.marginRight = 'auto'
+            // var button_community_div = document.createElement('div')
+            // document.body.appendChild(button_community_div)
+            // button_community_div.style.width = div_usd1.offsetWidth*1/3
+            // button_community_div.style.height = button_community_div.offsetWidth/1.618
+            // button_community_div.style.marginLeft = '10%'
+            // // button_community_div.style.marginRight = 'auto'
 
-            var button_community = document.createElement('button')
-            button_community_div.appendChild(button_community)           
-            button_community.style.width = '100%'
-            button_community.style.height = '100%'
-            button_community.style.position = 'relative'
-            button_community.marginLeft = 'auto'
-            button_community.marginRight = 'auto'
+            // var button_community = document.createElement('button')
+            // button_community_div.appendChild(button_community)           
+            // button_community.style.width = '100%'
+            // button_community.style.height = '100%'
+            // button_community.style.position = 'relative'
+            // button_community.marginLeft = 'auto'
+            // button_community.marginRight = 'auto'
             // button_community.innerHTML = 'Discord'
             // button_community.style.color = 'white'
             // button_community.style.textAlign = 'center'
-            button_community.style.backgroundColor = 'transparent'
+            // button_community.style.backgroundColor = 'transparent'
             // button_community.style.fontFamily = 'Quicksand'
             // button_community.style.fontSize = '16px'
-            button_community.style.border = '1px solid black'
-            button_community.style.borderRadius = '16px'
-            button_community.style.backgroundImage = 'url(assets/discord_banner.png)'
-            button_community.style.backgroundPosition = 'center'
-            button_community.style.backgroundSize = 'cover'
-            button_community.style.cursor = 'pointer'
+            // button_community.style.border = '1px solid black'
+            // button_community.style.borderRadius = '16px'
+            // // button_community.style.backgroundImage = 'url(assets/discord_banner.png)'
+            // // button_community.style.backgroundPosition = 'center'
+            // // button_community.style.backgroundSize = 'cover'
+            // button_community.style.cursor = 'pointer'
+
+            // button_community.onclick = function() {
+            //     window.open('https://discord.gg/Unmu79D7h4', '_blank').focus()
+            // }
 
             // empty div
 
