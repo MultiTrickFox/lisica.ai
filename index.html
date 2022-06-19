@@ -184,7 +184,7 @@
                 async function go_fetch() {
 
                     var xhr = new XMLHttpRequest();
-                    xhr.open("POST", "url", true)
+                    xhr.open("GET", url, true)
                     xhr.setRequestHeader("username", text_username.value)
                     xhr.setRequestHeader("password", text_password.value)
                     xhr.setRequestHeader("cmd", "get_credit")
@@ -333,7 +333,7 @@
                         async function go_fetch() {
 
                             var xhr = new XMLHttpRequest();
-                            xhr.open("POST", "url", true)
+                            xhr.open("GET", url, true)
                             xhr.setRequestHeader("username", text_username.value)
                             xhr.setRequestHeader("password", text_password.value)
                             xhr.setRequestHeader("params", text_email.value)
@@ -376,11 +376,11 @@
                             document.body.style.cursor = 'auto'
                             return
                         }
-                        var url = 'https://lisica.lisica.ai:64243/database/'
+                        var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
 
                             var xhr = new XMLHttpRequest();
-                            xhr.open("GET", "url", true)
+                            xhr.open("GET", url, true)
                             xhr.setRequestHeader("username", text_username.value)
                             xhr.setRequestHeader("password", text_password.value)
                             xhr.setRequestHeader("cmd", "check_user")
