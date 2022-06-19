@@ -190,7 +190,7 @@
                     xhr.setRequestHeader("cmd", "get_credit")
                             
                     xhr.onreadystatechange = function() {
-                        if (xhr.readyState == 4) {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
                             var result = JSON.parse(xhr.responseText)
 
                             if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
@@ -340,7 +340,7 @@
                             xhr.setRequestHeader("cmd", "add_user")
                             
                             xhr.onreadystatechange = function() {
-                                if (xhr.readyState == 4) {
+                                if (xhr.readyState == XMLHttpRequest.DONE) {
                                     var result = JSON.parse(xhr.responseText)
                                     if (result.answer == 'ACK.') { 
                                         username = text_username.value
@@ -376,7 +376,7 @@
                             document.body.style.cursor = 'auto'
                             return
                         }
-                        var url = 'https://lisica.lisica.ai:64243/database'
+                        var url = 'https://lisica.lisica.ai:64243/database/'
                         async function go_fetch() {
 
                             var xhr = new XMLHttpRequest();
@@ -387,7 +387,7 @@
 
                             xhr.onreadystatechange = function() {
 
-                                if (xhr.readyState == 4) {
+                                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                                     var result = JSON.parse(xhr.responseText)
                                     if (result.answer == 'ACK.') {
                                         username = text_username.value
