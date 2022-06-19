@@ -182,12 +182,26 @@
                 div_user.style.textAlign = 'center'
                 var url = 'https://lisica.lisica.ai:64243/database'
                 async function go_fetch() {
-                    const response = await fetch(url+'/'+'get_credit'+'<>'+text_username.value+'<>'+text_password.value)
-                    const result = await response.json()
-                    if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
-                    else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "url", true)
+                    xhr.setRequestHeader("username", text_username.value)
+                    xhr.setRequestHeader("password", text_password.value)
+                    xhr.setRequestHeader("cmd", "get_credit")
+                            
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == 4) {
+                            var result = JSON.parse(xhr.responseText)
+
+                            if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
+                            else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
                     
-                    // tdo: add 4 stats here, to left right top bot, and becomes brighter when u go there
+                            // TODO: add 4 stats here, to left right top bot, and becomes brighter when u go there
+
+                        }
+                    }
+
+                    xhr.send()
 
                     document.body.style.cursor = 'auto'
                 } go_fetch()
@@ -317,20 +331,34 @@
                         }
                         var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
-                            const response = await fetch(url+'/'+'add_user'+'<>'+text_username.value+'<>'+text_password.value+'<>'+text_email.value)
-                            const result = await response.json()
-                            if (result.answer == 'ACK.') { 
-                                username = text_username.value
-                                password = text_password.value
-                                div_user.removeChild(text_username)
-                                div_user.removeChild(text_password)
-                                div_user.removeChild(text_email)
-                                div_user.removeChild(button_proceed)
-                                welcome_user()
-                            } else { 
-                                alert('Username already present.')
-                                document.body.style.cursor = 'auto'
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("POST", "url", true)
+                            xhr.setRequestHeader("username", text_username.value)
+                            xhr.setRequestHeader("password", text_password.value)
+                            xhr.setRequestHeader("params", text_email.value)
+                            xhr.setRequestHeader("cmd", "add_user")
+                            
+                            xhr.onreadystatechange = function() {
+                                if (xhr.readyState == 4) {
+                                    var result = JSON.parse(xhr.responseText)
+                                    if (result.answer == 'ACK.') { 
+                                        username = text_username.value
+                                        password = text_password.value
+                                        div_user.removeChild(text_username)
+                                        div_user.removeChild(text_password)
+                                        div_user.removeChild(text_email)
+                                        div_user.removeChild(button_proceed)
+                                        welcome_user()
+                                    } else { 
+                                        alert('Username already present.')
+                                        document.body.style.cursor = 'auto'
+                                    }
+                                }
                             }
+
+                            xhr.send()
+
                         } go_fetch()                 
                     }
                 }
@@ -350,19 +378,33 @@
                         }
                         var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
-                            const response = await fetch(url+'/'+'check_user'+'<>'+text_username.value+'<>'+text_password.value)
-                            const result = await response.json()
-                            if (result.answer == 'ACK.') {
-                                username = text_username.value
-                                password = text_password.value
-                                div_user.removeChild(text_username)
-                                div_user.removeChild(text_password)
-                                div_user.removeChild(button_proceed)
-                                welcome_user()
-                            } else {
-                                alert('Username/Password combination invalid.')
-                                document.body.style.cursor = 'auto'
+
+                            var xhr = new XMLHttpRequest();
+                            xhr.open("GET", "url", true)
+                            xhr.setRequestHeader("username", text_username.value)
+                            xhr.setRequestHeader("password", text_password.value)
+                            xhr.setRequestHeader("cmd", "check_user")
+
+                            xhr.onreadystatechange = function() {
+
+                                if (xhr.readyState == 4) {
+                                    var result = JSON.parse(xhr.responseText)
+                                    if (result.answer == 'ACK.') {
+                                        username = text_username.value
+                                        password = text_password.value
+                                        div_user.removeChild(text_username)
+                                        div_user.removeChild(text_password)
+                                        div_user.removeChild(button_proceed)
+                                        welcome_user()
+                                    } else {
+                                        alert('Username/Password combination invalid.')
+                                        document.body.style.cursor = 'auto'
+                                    }
+                                }
                             }
+
+                            xhr.send()
+
                         } go_fetch()
                     }
                 }
@@ -801,39 +843,54 @@
             // empty div
 
             document.body.appendChild(empty_div())
+            document.body.appendChild(empty_div())
 
             // community div
 
-            // var button_community_div = document.createElement('div')
-            // document.body.appendChild(button_community_div)
-            // button_community_div.style.width = div_usd1.offsetWidth*1/3
-            // button_community_div.style.height = button_community_div.offsetWidth/1.618
-            // button_community_div.style.marginLeft = '10%'
-            // // button_community_div.style.marginRight = 'auto'
+            var button_community_div = document.createElement('div')
+            document.body.appendChild(button_community_div)
+            button_community_div.style.width = div_usd1.offsetWidth*1/6
+            button_community_div.style.height = button_community_div.offsetWidth///1.618
+            button_community_div.style.marginLeft = 'auto'
+            button_community_div.style.marginRight = '3%'
+            button_community_div.style.display = 'flex'
+            button_community_div.style.flexDirection = 'row'
+            //button_community_div.style.justifyContent = 'center'
 
-            // var button_community = document.createElement('button')
-            // button_community_div.appendChild(button_community)           
-            // button_community.style.width = '100%'
-            // button_community.style.height = '100%'
-            // button_community.style.position = 'relative'
-            // button_community.marginLeft = 'auto'
-            // button_community.marginRight = 'auto'
+            var button_community = document.createElement('button')
+            button_community_div.appendChild(button_community)           
+            button_community.style.width = '100%'
+            button_community.style.height = '100%'
+            button_community.style.position = 'relative'
+            button_community.marginLeft = 'auto'
+            button_community.marginRight = 'auto'
             // button_community.innerHTML = 'Discord'
-            // button_community.style.color = 'white'
-            // button_community.style.textAlign = 'center'
-            // button_community.style.backgroundColor = 'transparent'
-            // button_community.style.fontFamily = 'Quicksand'
-            // button_community.style.fontSize = '16px'
-            // button_community.style.border = '1px solid black'
-            // button_community.style.borderRadius = '16px'
-            // // button_community.style.backgroundImage = 'url(assets/discord_banner.png)'
-            // // button_community.style.backgroundPosition = 'center'
-            // // button_community.style.backgroundSize = 'cover'
-            // button_community.style.cursor = 'pointer'
+            button_community.style.color = 'white'
+            button_community.style.textAlign = 'center'
+            button_community.style.backgroundColor = 'transparent'
+            button_community.style.fontFamily = 'Quicksand'
+            button_community.style.fontSize = '16px'
+            button_community.style.border = '.6px solid black'
+            button_community.style.borderRadius = '66px'
+            button_community.style.backgroundImage = 'url(assets/discord_banner.png)'
+            button_community.style.backgroundPosition = 'center'
+            button_community.style.backgroundSize = 'cover'
+            button_community.style.cursor = 'pointer'
+            button_community.style.backgroundColor = 'rgba(255, 255, 255, .96)'
 
-            // button_community.onclick = function() {
-            //     window.open('https://discord.gg/Unmu79D7h4', '_blank').focus()
-            // }
+            button_community.onmouseover = function() {
+                //button_community.style.backgroundColor = 'rgba(86, 98, 246, 1)'
+                button_community.style.backgroundColor = 'rgba(255, 255, 255, 1)'
+            }
+
+            button_community.onmouseleave = function() {
+                //button_community.style.backgroundColor = 'rgba(86, 98, 246, 0)'
+                button_community.style.backgroundColor = 'rgba(255, 255, 255, .96)'
+            }
+
+            button_community.onclick = function() {
+                window.open('https://discord.gg/Unmu79D7h4', '_blank').focus()
+            }
 
             // empty div
 
