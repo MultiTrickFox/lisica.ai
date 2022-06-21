@@ -151,7 +151,7 @@
 
             }
 
-            project_div('Lisica', 'Lisica', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai')
+            project_div('Lisica', 'Lisica', "Visit this Zen-inspired shrine and meet Lisica,<br>&emsp;she is a friendly fox deity and the shrine's keeper.<br>Talk to her about anything that comes to mind,<br>&emsp;from daily life to abstract thoughts, to foxes even.<br>She's always welcoming towards all the visitors..<br><br>Available modes include:<br>&emsp;General chat<br>&emsp;Meditation<br>&emsp;Poetry<br>&emsp;Storytelling<br>&emsp;Zen Koans", 'assets/lisica_background.jpeg', 'https://multitrickfox.itch.io/lisicaai')
 
             project_div('//upcoming//', '//upcoming//:', "", '', '')
 
@@ -432,6 +432,8 @@
             var div_token10_appearing = false
             var div_token20_appearing = false
 
+            var stripe_appearing = false
+
             //
 
             var div_usd1 = document.createElement('div')
@@ -501,6 +503,8 @@
             div_usd1.onclick = function() {
                 selectedItemPrice = '1'
                 selectedItemDescription = '1 USD'
+                if (stripe_appearing) return
+                else stripe_appearing = true
                 button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
@@ -508,7 +512,8 @@
                         opacity += .1
                         button_pay.style.opacity = opacity
                         await sleep(.06)
-                    }                
+                    }  
+                    stripe_appearing = false              
                 }
                 work()
             }
@@ -589,6 +594,8 @@
             div_usd5.onclick = function() {
                 selectedItemPrice = '5'
                 selectedItemDescription = '5 USD'
+                if (stripe_appearing) return
+                else stripe_appearing = true
                 button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
@@ -596,7 +603,8 @@
                         opacity += .1
                         button_pay.style.opacity = opacity
                         await sleep(.06)
-                    }                
+                    }   
+                    stripe_appearing = false             
                 }
                 work()
             }
@@ -677,6 +685,8 @@
             div_usd10.onclick = function() {
                 selectedItemPrice = '10'
                 selectedItemDescription = '10 USD'
+                if (stripe_appearing) return
+                else stripe_appearing = true
                 button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
@@ -684,7 +694,8 @@
                         opacity += .1
                         button_pay.style.opacity = opacity
                         await sleep(.06)
-                    }                
+                    }              
+                    stripe_appearing = false  
                 }
                 work()
             }
@@ -765,6 +776,8 @@
             div_usd20.onclick = function() {
                 selectedItemPrice = '20'
                 selectedItemDescription = '20 USD'
+                if (stripe_appearing) return
+                else stripe_appearing = true
                 button_pay_div.appendChild(button_pay)
                 const work = async () => {
                     var opacity = 0                    
@@ -772,7 +785,8 @@
                         opacity += .1
                         button_pay.style.opacity = opacity
                         await sleep(.06)
-                    }                
+                    }
+                    stripe_appearing = false               
                 }
                 work()
             }
@@ -852,10 +866,11 @@
             button_community_div.style.width = div_usd1.offsetWidth*1/6
             button_community_div.style.height = button_community_div.offsetWidth///1.618
             button_community_div.style.marginLeft = 'auto'
-            button_community_div.style.marginRight = '3%'
+            //button_community_div.style.marginRight = '3%'
+            button_community_div.style.marginRight = 'auto'
             button_community_div.style.display = 'flex'
             button_community_div.style.flexDirection = 'row'
-            //button_community_div.style.justifyContent = 'center'
+            button_community_div.style.justifyContent = 'center'
 
             var button_community = document.createElement('button')
             button_community_div.appendChild(button_community)           
