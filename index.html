@@ -144,7 +144,8 @@
                 }
 
                 project_div.onclick = function() {
-                    window.location.href = link
+                    //window.location.href = link
+                    window.open(link, '_blank')
                 }
 
                 document.body.append(empty_div())
@@ -196,6 +197,23 @@
                             if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
                             else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
                     
+                            // repeat get_credit
+
+                            setInterval(() => {
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("GET", url, true)
+                                xhr.setRequestHeader("username", text_username.value)
+                                xhr.setRequestHeader("password", text_password.value)
+                                xhr.setRequestHeader("cmd", "get_credit")
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == XMLHttpRequest.DONE) {
+                                        var result = JSON.parse(xhr.responseText)
+                                        if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
+                            else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
+                                    }
+                                }
+                            }, 5000)
+
                             // TODO: add 4 stats here, to left right top bot, and becomes brighter when u go there
 
                         }
@@ -857,7 +875,6 @@
             // empty div
 
             document.body.appendChild(empty_div())
-            document.body.appendChild(empty_div())
 
             // community div
 
@@ -865,9 +882,10 @@
             document.body.appendChild(button_community_div)
             button_community_div.style.width = div_usd1.offsetWidth*1/6
             button_community_div.style.height = button_community_div.offsetWidth///1.618
-            button_community_div.style.marginLeft = 'auto'
+            //button_community_div.style.marginLeft = 'auto'
             //button_community_div.style.marginRight = '3%'
-            button_community_div.style.marginRight = 'auto'
+            //button_community_div.style.marginRight = 'auto'
+            //button_community_div.style.marginLeft = '1%'
             button_community_div.style.display = 'flex'
             button_community_div.style.flexDirection = 'row'
             button_community_div.style.justifyContent = 'center'
@@ -879,6 +897,7 @@
             button_community.style.position = 'relative'
             button_community.marginLeft = 'auto'
             button_community.marginRight = 'auto'
+            button_community.style.opacity = '.77'
             // button_community.innerHTML = 'Discord'
             button_community.style.color = 'white'
             button_community.style.textAlign = 'center'
@@ -891,16 +910,16 @@
             button_community.style.backgroundPosition = 'center'
             button_community.style.backgroundSize = 'cover'
             button_community.style.cursor = 'pointer'
-            button_community.style.backgroundColor = 'rgba(255, 255, 255, .96)'
+            button_community.style.backgroundColor = 'rgba(255, 255, 255, .92)'
 
             button_community.onmouseover = function() {
                 //button_community.style.backgroundColor = 'rgba(86, 98, 246, 1)'
-                button_community.style.backgroundColor = 'rgba(255, 255, 255, 1)'
+                button_community.style.backgroundColor = 'rgba(255, 255, 255, .96)'
             }
 
             button_community.onmouseleave = function() {
                 //button_community.style.backgroundColor = 'rgba(86, 98, 246, 0)'
-                button_community.style.backgroundColor = 'rgba(255, 255, 255, .96)'
+                button_community.style.backgroundColor = 'rgba(255, 255, 255, .92)'
             }
 
             button_community.onclick = function() {
@@ -909,7 +928,7 @@
 
             // empty div
 
-            document.body.appendChild(empty_div())
+            //document.body.appendChild(empty_div())
 
             // helpers
 
