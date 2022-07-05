@@ -199,7 +199,7 @@
                     
                             // repeat get_credit
 
-                            setInterval(() => {
+                            setInterval(function() {
                                 var xhr = new XMLHttpRequest();
                                 xhr.open("GET", url, true)
                                 xhr.setRequestHeader("username", text_username.value)
@@ -209,9 +209,10 @@
                                     if (xhr.readyState == XMLHttpRequest.DONE) {
                                         var result = JSON.parse(xhr.responseText)
                                         if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
-                            else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
+                                        else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
                                     }
                                 }
+                                xhr.send()
                             }, 5000)
 
                             // TODO: add 4 stats here, to left right top bot, and becomes brighter when u go there
@@ -523,7 +524,7 @@
                 selectedItemDescription = '1 USD'
                 if (stripe_appearing) return
                 else stripe_appearing = true
-                button_pay_div.appendChild(button_pay)
+                button_pay.disabled = false
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -614,7 +615,7 @@
                 selectedItemDescription = '5 USD'
                 if (stripe_appearing) return
                 else stripe_appearing = true
-                button_pay_div.appendChild(button_pay)
+                button_pay.disabled = false
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -705,7 +706,7 @@
                 selectedItemDescription = '10 USD'
                 if (stripe_appearing) return
                 else stripe_appearing = true
-                button_pay_div.appendChild(button_pay)
+                button_pay.disabled = false
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -796,7 +797,7 @@
                 selectedItemDescription = '20 USD'
                 if (stripe_appearing) return
                 else stripe_appearing = true
-                button_pay_div.appendChild(button_pay)
+                button_pay.disabled = false
                 const work = async () => {
                     var opacity = 0                    
                     for (var i = 0; i < 10; i++) {
@@ -823,7 +824,8 @@
             button_pay_div.style.marginRight = 'auto'
 
             var button_pay = document.createElement('button')
-            //button_pay_div.appendChild(button_pay)           
+            button_pay_div.appendChild(button_pay)
+            button_pay.disabled = true         
             button_pay.style.opacity = 0
             button_pay.style.width = '100%' //div_usd1.offsetWidth*3/4
             button_pay.style.height = '100%' //button_pay.offsetWidth*3/4/1.618
