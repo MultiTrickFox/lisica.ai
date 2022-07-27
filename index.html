@@ -173,60 +173,92 @@
             //div_user.style.borderRadius = '60px'
             div_user.style.opacity = .666
 
-            function welcome_user() {
+            function show_home() {
+
                 div_user.style.border = '1.6px solid silver'
                 div_user.style.borderRadius = '60px'
-                //alert('Accepted.') // bring up user page 
+
+                //alert('Accepted.') 
+                // bring up user page 
+
                 div_user.style.fontFamily = 'Quicksand'
                 div_user.style.fontSize = '16px'
                 div_user.style.color = 'white'
                 div_user.style.textAlign = 'center'
-                var url = 'https://lisica.lisica.ai:64243/database'
-                async function go_fetch() {
 
+                var url = 'https://lisica.lisica.ai:64243/database'
+
+                var hm_credits = '0'
+                var is_memories_on = 'offline'
+                var memories = ''
+
+                const firefox = navigator.userAgent.match(/firefox|fxios/i)
+
+                async function show_user_info() {
+
+                    if (firefox) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + hm_credits + '\n\n\nMemories:&emsp;' + is_memories_on + '</pre>'
+                    else 
+                    div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits + '<br><br><br>Memories:&emsp;' + is_memories_on
+
+                }
+                setInterval(show_user_info, 2000)
+
+                async function fetch_credits() {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true)
                     xhr.setRequestHeader("username", text_username.value)
                     xhr.setRequestHeader("password", text_password.value)
                     xhr.setRequestHeader("cmd", "get_credit")
-                            
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == XMLHttpRequest.DONE) {
-                            var result = JSON.parse(xhr.responseText)
-
-                            if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
-                            else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
-                    
-                            // repeat get_credit
-
-                            setInterval(function() {
-                                var xhr = new XMLHttpRequest();
-                                xhr.open("GET", url, true)
-                                xhr.setRequestHeader("username", text_username.value)
-                                xhr.setRequestHeader("password", text_password.value)
-                                xhr.setRequestHeader("cmd", "get_credit")
-                                xhr.onreadystatechange = function() {
-                                    if (xhr.readyState == XMLHttpRequest.DONE) {
-                                        var result = JSON.parse(xhr.responseText)
-                                        if (navigator.userAgent.match(/firefox|fxios/i)) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + result.answer + '</pre>'
-                                        else div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + result.answer
-                                    }
-                                }
-                                xhr.send()
-                            }, 5000)
-
-                            // TODO: add 4 stats here, to left right top bot, and becomes brighter when u go there
-
+                            hm_credits = JSON.parse(xhr.responseText).answer
                         }
                     }
-
                     xhr.send()
+                }
+                fetch_credits()
+                setInterval(fetch_credits, 5000)                
+                
+                async function fetch_memories() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true)
+                    xhr.setRequestHeader("username", text_username.value)
+                    xhr.setRequestHeader("password", text_password.value)
+                    xhr.setRequestHeader("cmd", "is_memories_on")
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            is_memories_on = JSON.parse(xhr.responseText).answer
+                            console.log("is memories on; " + is_memories_on) // todo: rm me
+                            if (is_memories_on == 'True') is_memories_on = 'online'
+                            else is_memories_on = 'offline'
+                        }
+                    }
+                    xhr.send()
+                    var xhr2 = new XMLHttpRequest();
+                    xhr2.open("GET", url, true)
+                    xhr2.setRequestHeader("username", text_username.value)
+                    xhr2.setRequestHeader("password", text_password.value)
+                    xhr2.setRequestHeader("cmd", "get_memories")
+                    xhr2.onreadystatechange = function() {
+                        if (xhr2.readyState == XMLHttpRequest.DONE) {
+                            memories = JSON.parse(xhr2.responseText).answer
+                            if (memories != "None") {
+                                memories = memories.split("<>")
+                                var mstr = ''
+                                for (let i = 0; i < memories.length; i++) mstr += memories[i] + (firefox ? '\n' : '<br>')
+                                memories = mstr
+                            }
+                            console.log("memories after: " + memories)
+                        }
+                    }
+                    xhr2.send()
+                }
+                fetch_memories()
+                setInterval(fetch_memories, 5000)  
 
-                    document.body.style.cursor = 'auto'
-                } go_fetch()
             }
 
-            if (username != null && password != null) welcome_user()
+            if (username != null && password != null) show_home()
 
             else {
 
@@ -368,11 +400,11 @@
                                         div_user.removeChild(text_password)
                                         div_user.removeChild(text_email)
                                         div_user.removeChild(button_proceed)
-                                        welcome_user()
+                                        show_home()
                                     } else { 
                                         alert('Username already present.')
-                                        document.body.style.cursor = 'auto'
                                     }
+                                    document.body.style.cursor = 'auto'
                                 }
                             }
 
@@ -414,11 +446,11 @@
                                         div_user.removeChild(text_username)
                                         div_user.removeChild(text_password)
                                         div_user.removeChild(button_proceed)
-                                        welcome_user()
+                                        show_home()
                                     } else {
                                         alert('Username/Password combination invalid.')
-                                        document.body.style.cursor = 'auto'
                                     }
+                                    document.body.style.cursor = 'auto'
                                 }
                             }
 
