@@ -1021,7 +1021,7 @@
             document.body.appendChild(button_community_div)
             button_community_div.style.width = div_usd1.offsetWidth*1/6
             button_community_div.style.height = button_community_div.offsetWidth///1.618
-            //button_community_div.style.marginLeft = 'auto'
+            button_community_div.style.marginLeft = window.screen.height * 2.31/100 + 'px' //'auto' //'auto'
             //button_community_div.style.marginRight = '3%'
             //button_community_div.style.marginRight = 'auto'
             //button_community_div.style.marginLeft = '1%'
@@ -1033,9 +1033,6 @@
             button_community_div.appendChild(button_community)           
             button_community.style.width = '100%'
             button_community.style.height = '100%'
-            button_community.style.position = 'relative'
-            button_community.marginLeft = 'auto'
-            button_community.marginRight = 'auto'
             button_community.style.opacity = '.77'
             // button_community.innerHTML = 'Discord'
             button_community.style.color = 'white'
@@ -1068,6 +1065,10 @@
             // empty div
 
             //document.body.appendChild(empty_div())
+            var bottom_empty_div = document.createElement('div')
+            document.body.appendChild(bottom_empty_div)
+            bottom_empty_div.style.height = '2.31%'
+            bottom_empty_div.style.width = '75%'
 
             // helpers
 
