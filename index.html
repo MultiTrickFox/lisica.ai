@@ -578,8 +578,8 @@
             div_tokens.style.display = 'flex'
             div_tokens.style.flexDirection = 'row'
             div_tokens.style.justifyContent = 'center'
-            div_tokens.style.width = '75%'
-            div_tokens.style.height = '46.3535%'
+            div_tokens.style.width = window.innerWidth > window.innerHeight ? '75%' : '46.3535%'
+            div_tokens.style.height = window.innerWidth > window.innerHeight ? '46.3535%' : '75%'
             div_tokens.style.marginLeft = 'auto'
             div_tokens.style.marginRight = 'auto'
 
