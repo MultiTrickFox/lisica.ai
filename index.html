@@ -189,6 +189,7 @@
                 button_left_up.style.height = div_left.offsetHeight/2
                 button_left_up.style.backgroundColor = 'transparent'
                 button_left_up.style.border = 'none'
+                button_left_up.style.borderRadius = '66px'
                 button_left_up.style.outline = 'none'
                 button_left_up.style.fontFamily = 'Quicksand'
                 button_left_up.style.fontSize = '16px'
@@ -202,6 +203,7 @@
                 button_left_down.style.height = div_left.offsetHeight/2
                 button_left_down.style.backgroundColor = 'transparent'
                 button_left_down.style.border = 'none'
+                button_left_down.style.borderRadius = '66px'
                 button_left_down.style.outline = 'none'
                 button_left_down.style.fontFamily = 'Quicksand'
                 button_left_down.style.fontSize = '16px'
@@ -227,6 +229,7 @@
                 button_right_up.style.height = div_right.offsetHeight/2
                 button_right_up.style.backgroundColor = 'transparent'
                 button_right_up.style.border = 'none'
+                button_right_up.style.borderRadius = '66px'
                 button_right_up.style.outline = 'none'
                 button_right_up.style.fontFamily = 'Quicksand'
                 button_right_up.style.fontSize = '16px'
@@ -240,6 +243,7 @@
                 button_right_down.style.height = div_right.offsetHeight/2
                 button_right_down.style.backgroundColor = 'transparent'
                 button_right_down.style.border = 'none'
+                button_right_down.style.borderRadius = '66px'
                 button_right_down.style.outline = 'none'
                 button_right_down.style.fontFamily = 'Quicksand'
                 button_right_down.style.fontSize = '16px'
@@ -248,6 +252,7 @@
 
                 const buttons = [button_left_up, button_right_up, button_left_down, button_right_down]
 
+                var prev_menu = 'Home' // todo: act wrt this. (inside display info) && also change how many per sec display info
                 var current_menu = 'Home'
 
                 button_left_up.innerHTML = 'Home'
@@ -387,7 +392,7 @@
                 button_login.style.marginBottom = 'auto'
                 button_login.style.backgroundColor = 'transparent'
                 // button_login.style.border = '2px solid white'
-                // button_login.style.borderRadius = '20px'
+                button_login.style.borderRadius = '20px'
                 button_login.style.border = 'none'
                 button_login.style.outline = 'none'
                 button_login.style.fontFamily = 'Quicksand'
@@ -406,7 +411,7 @@
                 button_signup.style.marginBottom = 'auto'
                 button_signup.style.backgroundColor = 'transparent'
                 // button_signup.style.border = '2px solid white'
-                // button_signup.style.borderRadius = '20px'
+                button_signup.style.borderRadius = '20px'
                 button_signup.style.border = 'none'
                 button_signup.style.outline = 'none'
                 button_signup.style.fontFamily = 'Quicksand'
@@ -478,7 +483,7 @@
                 button_proceed.style.marginBottom = 'auto'
                 button_proceed.style.backgroundColor = 'transparent'
                 // button_proceed.style.border = '2px solid white'
-                // button_proceed.style.borderRadius = '20px'
+                button_proceed.style.borderRadius = '20px'
                 button_proceed.style.border = 'none'
                 button_proceed.style.outline = 'none'
                 button_proceed.style.fontFamily = 'Quicksand'
