@@ -178,32 +178,89 @@
                 div_user.style.border = '1.6px solid silver'
                 div_user.style.borderRadius = '60px'
 
-                //alert('Accepted.') 
-                // bring up user page 
+                var div_left = document.createElement('div')
+                div_user.appendChild(div_left)
+                div_left.style.flex = '1'
+                var button_left_up = document.createElement('button')
+                div_left.appendChild(button_left_up)
+                button_left_up.innerHTML = ''
+                button_left_up.style.color = 'white'
+                button_left_up.style.width = div_user.offsetWidth/6
+                button_left_up.style.height = div_left.offsetHeight/2
+                button_left_up.style.backgroundColor = 'transparent'
+                button_left_up.style.border = '0px solid white'
+                button_left_up.style.borderRadius = '60px'
+                button_left_up.style.fontFamily = 'Quicksand'
+                button_left_up.style.fontSize = '16px'
+                var button_left_down = document.createElement('button')
+                div_left.appendChild(button_left_down)
+                button_left_down.innerHTML = ''
+                button_left_down.style.color = 'white'
+                button_left_down.style.width = div_user.offsetWidth/6
+                button_left_down.style.height = div_left.offsetHeight/2
+                button_left_down.style.backgroundColor = 'transparent'
+                button_left_down.style.border = '0px solid white'
+                button_left_down.style.borderRadius = '60px'
+                button_left_down.style.fontFamily = 'Quicksand'
+                button_left_down.style.fontSize = '16px'
 
-                div_user.style.fontFamily = 'Quicksand'
-                div_user.style.fontSize = '16px'
-                div_user.style.color = 'white'
-                div_user.style.textAlign = 'center'
+                var div_info = document.createElement('div')
+                div_user.appendChild(div_info)
+                div_info.style.flex = '4'
+                div_info.style.fontFamily = 'Quicksand'
+                div_info.style.fontSize = '16px'
+                div_info.style.color = 'white'
+                div_info.style.textAlign = 'center'
+
+                var div_right = document.createElement('div')
+                div_user.appendChild(div_right)
+                div_right.style.flex = '1'
+                var button_right_up = document.createElement('button')
+                div_right.appendChild(button_right_up)
+                button_right_up.innerHTML = ''
+                button_right_up.style.color = 'white'
+                button_right_up.style.width = div_user.offsetWidth/6
+                button_right_up.style.height = div_right.offsetHeight/2
+                button_right_up.style.backgroundColor = 'transparent'
+                button_right_up.style.border = '0px solid white'
+                button_right_up.style.borderRadius = '60px'
+                button_right_up.style.fontFamily = 'Quicksand'
+                button_right_up.style.fontSize = '16px'
+                var button_right_down = document.createElement('button')
+                div_right.appendChild(button_right_down)
+                button_right_down.style.position = 'relative'
+                button_right_down.style.bottom = '0px'
+                button_right_down.innerHTML = ''
+                button_right_down.style.color = 'white'
+                button_right_down.style.width = div_user.offsetWidth/6
+                button_right_down.style.height = div_right.offsetHeight/2
+                button_right_down.style.backgroundColor = 'transparent'
+                button_right_down.style.border = '0px solid white'
+                button_right_down.style.borderRadius = '60px'
+                button_right_down.style.fontFamily = 'Quicksand'
+                button_right_down.style.fontSize = '16px'
+
+                var current_menu = 'Home'
+
+                button_left_up.innerHTML = 'Home'
+                button_right_up.innerHTML = 'Memories'
+                button_left_down.innerHTML = 'Placeholder'
+                button_right_down.innerHTML = 'Settings'
+
+                button_left_up.onclick = () => { current_menu = button_left_up.innerHTML.value }
+                button_right_up.onclick = () => { current_menu = button_right_up.innerHTML.value }
+                button_left_down.onclick = () => { current_menu = button_left_down.innerHTML.value }
+                button_right_down.onclick = () => { current_menu = button_right_down.innerHTML.value }
+
+                //alert('Accepted.') 
+                // bring up user page
+
+                const firefox = navigator.userAgent.match(/firefox|fxios/i)
 
                 var url = 'https://lisica.lisica.ai:64243/database'
 
                 var hm_credits = '0'
-                var is_memories_on = 'offline'
-                var memories = ''
-
-                const firefox = navigator.userAgent.match(/firefox|fxios/i)
-
-                async function show_user_info() {
-
-                    if (firefox) div_user.innerHTML = '<pre>' + '\n\n\nWelcome,\n\n' + username + '\n\n\nTokens:&emsp;' + hm_credits + '\n\n\nMemories:&emsp;' + is_memories_on + '</pre>'
-                    else 
-                    div_user.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits + '<br><br><br>Memories:&emsp;' + is_memories_on
-
-                }
-                setInterval(show_user_info, 2000)
-
-                async function fetch_credits() {
+                async function fetch_hm_credits() {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true)
                     xhr.setRequestHeader("username", text_username.value)
@@ -215,10 +272,11 @@
                         }
                     }
                     xhr.send()
+                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.5)
                 }
-                fetch_credits()
-                setInterval(fetch_credits, 5000)                
-                
+
+                var is_memories_on = 'offline'
+                var memories = ''
                 async function fetch_memories() {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true)
@@ -252,9 +310,58 @@
                         }
                     }
                     xhr2.send()
+                    while (xhr.readyState != XMLHttpRequest.DONE || xhr2.readyState != XMLHttpRequest.DONE) await sleep(.5)
                 }
-                fetch_memories()
-                setInterval(fetch_memories, 5000)  
+
+                async function display_info() {
+                    
+                    while (true) {
+
+                        await fetch_hm_credits()
+
+                        div_info.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
+
+
+
+                        await sleep(3)
+
+                    }
+
+                }
+
+                display_info()
+                
+            }
+
+            function show_memories() {
+
+                div_user.style.flexDirection = 'column'
+
+                div_user.innerHTML = '<br><br><br>Memories of,<br><br>' + username + '<br><br><br>'
+
+                var div_status = document.createElement('div')
+                div_user.appendChild(div_status)
+                div_status.style.fontFamily = 'Quicksand'
+                div_status.style.fontSize = '16px'
+                div_status.style.color = 'white'
+                div_status.style.textAlign = 'center'
+
+                var div_memories = document.createElement('div')
+                div_user.appendChild(div_memories)
+                
+                
+
+
+                var url = 'https://lisica.lisica.ai:64243/database'
+
+                
+                async function display_info() {
+                    div_status.innerHTML = '<br><br>Status:&emsp;' + is_memories_on
+                    
+                }
+                setInterval(display_info, 1000)
+
+                
 
             }
 
