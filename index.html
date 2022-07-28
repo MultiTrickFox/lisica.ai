@@ -188,10 +188,12 @@
                 button_left_up.style.width = div_user.offsetWidth/6
                 button_left_up.style.height = div_left.offsetHeight/2
                 button_left_up.style.backgroundColor = 'transparent'
-                button_left_up.style.border = '0px solid white'
-                button_left_up.style.borderRadius = '60px'
+                button_left_up.style.border = 'none'
+                button_left_up.style.outline = 'none'
                 button_left_up.style.fontFamily = 'Quicksand'
                 button_left_up.style.fontSize = '16px'
+                button_left_up.style.cursor = 'pointer'
+                button_left_up.style.opacity = 0
                 var button_left_down = document.createElement('button')
                 div_left.appendChild(button_left_down)
                 button_left_down.innerHTML = ''
@@ -199,10 +201,12 @@
                 button_left_down.style.width = div_user.offsetWidth/6
                 button_left_down.style.height = div_left.offsetHeight/2
                 button_left_down.style.backgroundColor = 'transparent'
-                button_left_down.style.border = '0px solid white'
-                button_left_down.style.borderRadius = '60px'
+                button_left_down.style.border = 'none'
+                button_left_down.style.outline = 'none'
                 button_left_down.style.fontFamily = 'Quicksand'
                 button_left_down.style.fontSize = '16px'
+                button_left_down.style.cursor = 'pointer'
+                button_left_down.style.opacity = 0
 
                 var div_info = document.createElement('div')
                 div_user.appendChild(div_info)
@@ -222,35 +226,53 @@
                 button_right_up.style.width = div_user.offsetWidth/6
                 button_right_up.style.height = div_right.offsetHeight/2
                 button_right_up.style.backgroundColor = 'transparent'
-                button_right_up.style.border = '0px solid white'
-                button_right_up.style.borderRadius = '60px'
+                button_right_up.style.border = 'none'
+                button_right_up.style.outline = 'none'
                 button_right_up.style.fontFamily = 'Quicksand'
                 button_right_up.style.fontSize = '16px'
+                button_right_up.style.cursor = 'pointer'
+                button_right_up.style.opacity = 0
                 var button_right_down = document.createElement('button')
                 div_right.appendChild(button_right_down)
-                button_right_down.style.position = 'relative'
-                button_right_down.style.bottom = '0px'
                 button_right_down.innerHTML = ''
                 button_right_down.style.color = 'white'
                 button_right_down.style.width = div_user.offsetWidth/6
                 button_right_down.style.height = div_right.offsetHeight/2
                 button_right_down.style.backgroundColor = 'transparent'
-                button_right_down.style.border = '0px solid white'
-                button_right_down.style.borderRadius = '60px'
+                button_right_down.style.border = 'none'
+                button_right_down.style.outline = 'none'
                 button_right_down.style.fontFamily = 'Quicksand'
                 button_right_down.style.fontSize = '16px'
+                button_right_down.style.cursor = 'pointer'
+                button_right_down.style.opacity = 0
+
+                const buttons = [button_left_up, button_right_up, button_left_down, button_right_down]
 
                 var current_menu = 'Home'
 
                 button_left_up.innerHTML = 'Home'
                 button_right_up.innerHTML = 'Memories'
-                button_left_down.innerHTML = 'Placeholder'
+                button_left_down.innerHTML = 'About'
                 button_right_down.innerHTML = 'Settings'
 
-                button_left_up.onclick = () => { current_menu = button_left_up.innerHTML.value }
-                button_right_up.onclick = () => { current_menu = button_right_up.innerHTML.value }
-                button_left_down.onclick = () => { current_menu = button_left_down.innerHTML.value }
-                button_right_down.onclick = () => { current_menu = button_right_down.innerHTML.value }
+                button_left_up.onclick = () => { current_menu = button_left_up.innerHTML }
+                button_right_up.onclick = () => { current_menu = button_right_up.innerHTML }
+                button_left_down.onclick = () => { current_menu = button_left_down.innerHTML }
+                button_right_down.onclick = () => { current_menu = button_right_down.innerHTML }
+
+                div_user.onmousemove = (event) => {
+                    for (var i = 0; i < buttons.length; i++) {
+                        var buttonRect = buttons[i].getBoundingClientRect()
+                        var buttonCenterX = buttonRect.left + buttonRect.width/2
+                        var buttonCenterY = buttonRect.top + buttonRect.height/2
+                        buttons[i].style.opacity = 1 - Math.sqrt(
+                            Math.pow(event.clientX - buttonCenterX, 2) + 
+                            Math.pow(event.clientY - buttonCenterY, 2)
+                        ) / Math.sqrt(Math.pow(div_user.getBoundingClientRect().width,2)+Math.pow(div_user.getBoundingClientRect().height,2))
+                    }
+                }
+
+                div_user.onmouseleave = () => { for (var i = 0; i < buttons.length; i++) buttons[i].style.opacity = 0 }
 
                 //alert('Accepted.') 
                 // bring up user page
@@ -276,6 +298,25 @@
                 }
 
                 var is_memories_on = 'offline'
+                async function fetch_is_memories_on() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true)
+                    xhr.setRequestHeader("username", text_username.value)
+                    xhr.setRequestHeader("password", text_password.value)
+                    xhr.setRequestHeader("cmd", "get_memories")
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            memories = JSON.parse(xhr.responseText).answer
+                            memories = memories.split("<>")
+                            var mstr = ''
+                            for (let i = 0; i < memories.length; i++) mstr += memories[i] + '.\n'
+                            memories = mstr
+                        }
+                    }
+                    xhr.send()
+                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.5)
+                }
+
                 var memories = ''
                 async function fetch_memories() {
                     var xhr = new XMLHttpRequest();
@@ -286,44 +327,40 @@
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == XMLHttpRequest.DONE) {
                             is_memories_on = JSON.parse(xhr.responseText).answer
-                            console.log("is memories on; " + is_memories_on) // todo: rm me
                             if (is_memories_on == 'True') is_memories_on = 'online'
                             else is_memories_on = 'offline'
                         }
                     }
                     xhr.send()
-                    var xhr2 = new XMLHttpRequest();
-                    xhr2.open("GET", url, true)
-                    xhr2.setRequestHeader("username", text_username.value)
-                    xhr2.setRequestHeader("password", text_password.value)
-                    xhr2.setRequestHeader("cmd", "get_memories")
-                    xhr2.onreadystatechange = function() {
-                        if (xhr2.readyState == XMLHttpRequest.DONE) {
-                            memories = JSON.parse(xhr2.responseText).answer
-                            if (memories != "None") {
-                                memories = memories.split("<>")
-                                var mstr = ''
-                                for (let i = 0; i < memories.length; i++) mstr += memories[i] + (firefox ? '\n' : '<br>')
-                                memories = mstr
-                            }
-                            console.log("memories after: " + memories)
-                        }
-                    }
-                    xhr2.send()
-                    while (xhr.readyState != XMLHttpRequest.DONE || xhr2.readyState != XMLHttpRequest.DONE) await sleep(.5)
+                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.5)
                 }
 
                 async function display_info() {
                     
                     while (true) {
 
-                        await fetch_hm_credits()
+                        console.log(current_menu)
 
-                        div_info.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
+                        if (current_menu == 'Home') {
+
+                            await fetch_hm_credits()
+
+                            div_info.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
+
+                        } else if (current_menu == 'Memories') {
+
+                            await fetch_is_memories_on()
+                            await fetch_memories()
+
+                            div_info.innerHTML = '<br><br><br>Memories of<br><br>' + username + '<br><br><br>' + memories
+
+                        }
+
+                        
 
 
 
-                        await sleep(3)
+                        await sleep(1)
 
                     }
 
@@ -331,38 +368,6 @@
 
                 display_info()
                 
-            }
-
-            function show_memories() {
-
-                div_user.style.flexDirection = 'column'
-
-                div_user.innerHTML = '<br><br><br>Memories of,<br><br>' + username + '<br><br><br>'
-
-                var div_status = document.createElement('div')
-                div_user.appendChild(div_status)
-                div_status.style.fontFamily = 'Quicksand'
-                div_status.style.fontSize = '16px'
-                div_status.style.color = 'white'
-                div_status.style.textAlign = 'center'
-
-                var div_memories = document.createElement('div')
-                div_user.appendChild(div_memories)
-                
-                
-
-
-                var url = 'https://lisica.lisica.ai:64243/database'
-
-                
-                async function display_info() {
-                    div_status.innerHTML = '<br><br>Status:&emsp;' + is_memories_on
-                    
-                }
-                setInterval(display_info, 1000)
-
-                
-
             }
 
             if (username != null && password != null) show_home()
@@ -381,8 +386,10 @@
                 button_login.style.marginTop = 'auto'
                 button_login.style.marginBottom = 'auto'
                 button_login.style.backgroundColor = 'transparent'
-                button_login.style.border = '2px solid white'
-                button_login.style.borderRadius = '20px'
+                // button_login.style.border = '2px solid white'
+                // button_login.style.borderRadius = '20px'
+                button_login.style.border = 'none'
+                button_login.style.outline = 'none'
                 button_login.style.fontFamily = 'Quicksand'
                 button_login.style.fontSize = '16px'
                 
@@ -398,8 +405,10 @@
                 button_signup.style.marginTop = 'auto'
                 button_signup.style.marginBottom = 'auto'
                 button_signup.style.backgroundColor = 'transparent'
-                button_signup.style.border = '2px solid white'
-                button_signup.style.borderRadius = '20px'
+                // button_signup.style.border = '2px solid white'
+                // button_signup.style.borderRadius = '20px'
+                button_signup.style.border = 'none'
+                button_signup.style.outline = 'none'
                 button_signup.style.fontFamily = 'Quicksand'
                 button_signup.style.fontSize = '16px'
 
@@ -416,8 +425,8 @@
                 text_username.style.marginTop = 'auto'
                 text_username.style.marginBottom = 'auto'
                 text_username.style.backgroundColor = 'transparent'
-                text_username.style.border = '2px solid white'
-                text_username.style.borderRadius = '20px'
+                text_username.style.border = 'none'
+                text_username.style.outline = 'none'
                 text_username.style.fontFamily = 'Quicksand'
                 text_username.style.fontSize = '14px'
                 
@@ -434,8 +443,8 @@
                 text_password.style.marginTop = 'auto'
                 text_password.style.marginBottom = 'auto'
                 text_password.style.backgroundColor = 'transparent'
-                text_password.style.border = '2px solid white'
-                text_password.style.borderRadius = '20px'
+                text_password.style.border = 'none'
+                text_password.style.outline = 'none'
                 text_password.style.fontFamily = 'Quicksand'
                 text_password.style.fontSize = '14px'
                 
@@ -468,8 +477,10 @@
                 button_proceed.style.marginTop = 'auto'
                 button_proceed.style.marginBottom = 'auto'
                 button_proceed.style.backgroundColor = 'transparent'
-                button_proceed.style.border = '2px solid white'
-                button_proceed.style.borderRadius = '20px'
+                // button_proceed.style.border = '2px solid white'
+                // button_proceed.style.borderRadius = '20px'
+                button_proceed.style.border = 'none'
+                button_proceed.style.outline = 'none'
                 button_proceed.style.fontFamily = 'Quicksand'
                 button_proceed.style.fontSize = '16px'
 
@@ -487,16 +498,14 @@
                             document.body.style.cursor = 'auto'
                             return
                         }
-                        var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
-
+                            var url = 'https://lisica.lisica.ai:64243/database'
                             var xhr = new XMLHttpRequest();
                             xhr.open("GET", url, true)
                             xhr.setRequestHeader("username", text_username.value)
                             xhr.setRequestHeader("password", text_password.value)
                             xhr.setRequestHeader("params", text_email.value)
                             xhr.setRequestHeader("cmd", "add_user")
-                            
                             xhr.onreadystatechange = function() {
                                 if (xhr.readyState == XMLHttpRequest.DONE) {
                                     var result = JSON.parse(xhr.responseText)
@@ -508,15 +517,11 @@
                                         div_user.removeChild(text_email)
                                         div_user.removeChild(button_proceed)
                                         show_home()
-                                    } else { 
-                                        alert('Username already present.')
-                                    }
+                                    } else alert('Username already present.')
                                     document.body.style.cursor = 'auto'
                                 }
                             }
-
                             xhr.send()
-
                         } go_fetch()                 
                     }
                 }
@@ -534,17 +539,14 @@
                             document.body.style.cursor = 'auto'
                             return
                         }
-                        var url = 'https://lisica.lisica.ai:64243/database'
                         async function go_fetch() {
-
+                            var url = 'https://lisica.lisica.ai:64243/database'
                             var xhr = new XMLHttpRequest();
                             xhr.open("GET", url, true)
                             xhr.setRequestHeader("username", text_username.value)
                             xhr.setRequestHeader("password", text_password.value)
                             xhr.setRequestHeader("cmd", "check_user")
-
                             xhr.onreadystatechange = function() {
-
                                 if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
                                     var result = JSON.parse(xhr.responseText)
                                     if (result.answer == 'ACK.') {
@@ -554,15 +556,11 @@
                                         div_user.removeChild(text_password)
                                         div_user.removeChild(button_proceed)
                                         show_home()
-                                    } else {
-                                        alert('Username/Password combination invalid.')
-                                    }
+                                    } else alert('Username/Password combination invalid.')
                                     document.body.style.cursor = 'auto'
                                 }
                             }
-
                             xhr.send()
-
                         } go_fetch()
                     }
                 }
