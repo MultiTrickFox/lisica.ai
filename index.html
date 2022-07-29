@@ -329,15 +329,45 @@
                 div_settings.style.fontSize = '16px'
                 div_settings.style.color = 'white'
                 div_settings.style.textAlign = 'center'
+                div_settings.style.alignItems = 'center'
                 var toggle_make_memories = document.createElement('button')
                 toggle_make_memories.style.backgroundColor = 'transparent'
-                toggle_make_memories.style.border = '2px solid white' //'none'
+                toggle_make_memories.style.border = '1.2px solid silver' //'none'
+                toggle_make_memories.style.borderRadius = '22px'
                 toggle_make_memories.style.outline = 'none'
                 toggle_make_memories.style.fontFamily = 'Quicksand'
                 toggle_make_memories.style.fontSize = '16px'
                 toggle_make_memories.style.color = 'white'
                 toggle_make_memories.style.textAlign = 'center'
                 toggle_make_memories.style.cursor = 'pointer'
+                toggle_make_memories.style.width = div_user_inner.offsetWidth*2/3
+                toggle_make_memories.style.height = div_user_inner.offsetWidth*2/3/1.618+'px'
+                var toggle_use_memories = document.createElement('button')
+                toggle_use_memories.style.backgroundColor = 'transparent'
+                toggle_use_memories.style.border = '1.2px solid silver' //'none'
+                toggle_use_memories.style.borderRadius = '22px'
+                toggle_use_memories.style.outline = 'none'
+                toggle_use_memories.style.fontFamily = 'Quicksand'
+                toggle_use_memories.style.fontSize = '16px'
+                toggle_use_memories.style.color = 'white'
+                toggle_use_memories.style.textAlign = 'center'
+                toggle_use_memories.style.cursor = 'pointer'
+                toggle_use_memories.style.width = div_user_inner.offsetWidth*2/3
+                toggle_use_memories.style.height = div_user_inner.offsetWidth*2/3/1.618+'px'
+                var reset_memories = document.createElement('button')
+                reset_memories.style.backgroundColor = 'transparent'
+                reset_memories.style.border = '1.2px solid silver' //'none'
+                reset_memories.style.borderRadius = '22px'
+                reset_memories.style.outline = 'none'
+                reset_memories.style.fontFamily = 'Quicksand'
+                reset_memories.style.fontSize = '16px'
+                reset_memories.style.color = 'white'
+                reset_memories.style.textAlign = 'center'
+                reset_memories.style.cursor = 'pointer'
+                reset_memories.style.width = div_user_inner.offsetWidth*2/3
+                reset_memories.style.height = div_user_inner.offsetWidth*2/3/1.618+'px'
+                reset_memories.innerHTML = '<br>!! reset all memories !!<br><br>'
+
                 toggle_make_memories.onclick = () => {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true)
@@ -347,21 +377,12 @@
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == XMLHttpRequest.DONE) {
                             document.body.style.cursor = 'auto'
-                            toggle_make_memories.innerHTML = 'learn new memories:<br>' + (toggle_make_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
+                            toggle_make_memories.innerHTML = '<br>learn new memories:<br>' + (toggle_make_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
                         }
                     }
                     xhr.send()
                     document.body.style.cursor = 'wait'
                 }
-                var toggle_use_memories = document.createElement('button')
-                toggle_use_memories.style.backgroundColor = 'transparent'
-                toggle_use_memories.style.border = '2px solid white' //'none'
-                toggle_use_memories.style.outline = 'none'
-                toggle_use_memories.style.fontFamily = 'Quicksand'
-                toggle_use_memories.style.fontSize = '16px'
-                toggle_use_memories.style.color = 'white'
-                toggle_use_memories.style.textAlign = 'center'
-                toggle_use_memories.style.cursor = 'pointer'
                 toggle_use_memories.onclick = () => {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true)
@@ -371,7 +392,22 @@
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == XMLHttpRequest.DONE) {
                             document.body.style.cursor = 'auto'
-                            toggle_use_memories.innerHTML = 'use learned memories:<br>' + (toggle_use_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
+                            toggle_use_memories.innerHTML = 'br<>use learned memories:<br>' + (toggle_use_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
+                        }
+                    }
+                    xhr.send()
+                    document.body.style.cursor = 'wait'
+                }
+                reset_memories.onclick = () => {
+                    if (confirm("\t Are you sure..?\n\t\t All those memories will be lost,\n\t\t\t like tears in rain.") == false) return
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true)
+                    xhr.setRequestHeader("username", text_username.value)
+                    xhr.setRequestHeader("password", text_password.value)
+                    xhr.setRequestHeader("cmd", "reset_memory")
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            document.body.style.cursor = 'auto'
                         }
                     }
                     xhr.send()
@@ -462,6 +498,7 @@
                                 await fetch_hm_credits()
 
                                 div_home.innerHTML = 'Tokens:&emsp;' + hm_credits
+                                if (username=='Jia') div_home.innerHTML += '<br><br><br><br><br><br>' + 'wo ai ni.' // hello jia..
 
                             } 
                             
@@ -486,8 +523,9 @@
                                 div_settings.innerHTML = ''
                                 div_settings.appendChild(toggle_make_memories)
                                 div_settings.appendChild(toggle_use_memories)
-                                toggle_make_memories.innerHTML = 'learn new memories:<br>' + is_make_memories + '<br><br>'
-                                toggle_use_memories.innerHTML = 'use learned memories:<br>' + is_use_memories + '<br><br>'
+                                div_settings.appendChild(reset_memories)
+                                toggle_make_memories.innerHTML = '<br>learn new memories:<br>' + is_make_memories + '<br><br>'
+                                toggle_use_memories.innerHTML = '<br>use learned memories:<br>' + is_use_memories + '<br><br>'
 
                             }
 
