@@ -218,13 +218,13 @@
                 button_left_down.style.cursor = 'pointer'
                 button_left_down.style.opacity = 0
 
-                var div_info = document.createElement('div')
-                div_user.appendChild(div_info)
-                div_info.style.flex = '4'
-                // div_info.style.fontFamily = 'Quicksand'
-                // div_info.style.fontSize = '16px'
-                // div_info.style.color = 'white'
-                // div_info.style.textAlign = 'center'
+                var div_user_inner = document.createElement('div')
+                div_user.appendChild(div_user_inner)
+                div_user_inner.style.flex = '4'
+                // div_user_inner.style.fontFamily = 'Quicksand'
+                // div_user_inner.style.fontSize = '16px'
+                // div_user_inner.style.color = 'white'
+                // div_user_inner.style.textAlign = 'center'
 
                 var div_right = document.createElement('div')
                 div_user.appendChild(div_right)
@@ -295,13 +295,22 @@
 
                 div_user.onmouseleave = () => { for (var i = 0; i < buttons.length; i++) buttons[i].style.opacity = 0 }
                 
-                var div_info_header = document.createElement('div')
-                div_info.appendChild(div_info_header)
-                div_info_header.style.fontFamily = 'Quicksand'
-                div_info_header.style.fontSize = '16px'
-                div_info_header.style.color = 'white'
-                div_info_header.style.textAlign = 'center'
-                div_info_header.innerHTML = '<br><br><br>Welcome,<br><br>' + username
+                var div_user_title = document.createElement('div')
+                div_user_inner.appendChild(div_user_title)
+                div_user_title.style.fontFamily = 'Quicksand'
+                div_user_title.style.fontSize = '16px'
+                div_user_title.style.color = 'white'
+                div_user_title.style.textAlign = 'center'
+
+                var div_home = document.createElement('div')
+                div_user_inner.appendChild(div_home)
+                div_home.style.overflowY = 'scroll'
+                div_home.style.height = div_user.offsetHeight*1/2+'px'
+                div_home.style.fontFamily = 'Quicksand'
+                div_home.style.fontSize = '16px'
+                div_home.style.color = 'white'
+                div_home.style.textAlign = 'center'
+                div_home.innerHTML = '.&emsp;.&emsp;.'
 
                 var div_memories = document.createElement('div')
                 div_memories.style.overflowY = 'scroll'
@@ -314,11 +323,60 @@
                 var div_settings = document.createElement('div')
                 div_settings.style.overflowY = 'scroll'
                 div_settings.style.height = div_user.offsetHeight*1/2+'px'
+                div_settings.style.display = 'flex'
+                div_settings.style.flexDirection = 'column'
                 div_settings.style.fontFamily = 'Quicksand'
                 div_settings.style.fontSize = '16px'
                 div_settings.style.color = 'white'
                 div_settings.style.textAlign = 'center'
-                // todo: multiple divs for settings here ..
+                var toggle_make_memories = document.createElement('button')
+                toggle_make_memories.style.backgroundColor = 'transparent'
+                toggle_make_memories.style.border = '2px solid white' //'none'
+                toggle_make_memories.style.outline = 'none'
+                toggle_make_memories.style.fontFamily = 'Quicksand'
+                toggle_make_memories.style.fontSize = '16px'
+                toggle_make_memories.style.color = 'white'
+                toggle_make_memories.style.textAlign = 'center'
+                toggle_make_memories.style.cursor = 'pointer'
+                toggle_make_memories.onclick = () => {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true)
+                    xhr.setRequestHeader("username", text_username.value)
+                    xhr.setRequestHeader("password", text_password.value)
+                    xhr.setRequestHeader("cmd", "toggle_make_memories")
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            document.body.style.cursor = 'auto'
+                            toggle_make_memories.innerHTML = 'learn new memories:<br>' + (toggle_make_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
+                        }
+                    }
+                    xhr.send()
+                    document.body.style.cursor = 'wait'
+                }
+                var toggle_use_memories = document.createElement('button')
+                toggle_use_memories.style.backgroundColor = 'transparent'
+                toggle_use_memories.style.border = '2px solid white' //'none'
+                toggle_use_memories.style.outline = 'none'
+                toggle_use_memories.style.fontFamily = 'Quicksand'
+                toggle_use_memories.style.fontSize = '16px'
+                toggle_use_memories.style.color = 'white'
+                toggle_use_memories.style.textAlign = 'center'
+                toggle_use_memories.style.cursor = 'pointer'
+                toggle_use_memories.onclick = () => {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true)
+                    xhr.setRequestHeader("username", text_username.value)
+                    xhr.setRequestHeader("password", text_password.value)
+                    xhr.setRequestHeader("cmd", "toggle_use_memories")
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            document.body.style.cursor = 'auto'
+                            toggle_use_memories.innerHTML = 'use learned memories:<br>' + (toggle_use_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
+                        }
+                    }
+                    xhr.send()
+                    document.body.style.cursor = 'wait'
+                }
 
                 //alert('Accepted.') 
                 // bring up user page
@@ -343,59 +401,73 @@
                     while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.1)
                 }
 
-                var is_memories_on = 'offline'
-                async function fetch_is_memories_on() {
+                var memories = ''
+                async function fetch_memories() {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true)
                     xhr.setRequestHeader("username", text_username.value)
                     xhr.setRequestHeader("password", text_password.value)
-                    xhr.setRequestHeader("cmd", "is_memories_on")
+                    xhr.setRequestHeader("cmd", "get_memories")
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == XMLHttpRequest.DONE) {
-                            is_memories_on = JSON.parse(xhr.responseText).answer
-                            if (is_memories_on == 'True') is_memories_on = 'online'
-                            else is_memories_on = 'offline'
+                            memories = JSON.parse(xhr.responseText).answer
                         }
                     }
                     xhr.send()
                     while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.1)
                 }
 
-                var memories = ''
-                async function fetch_memories() {
+                var is_make_memories = ''
+                var is_use_memories = ''
+                async function fetch_memories_on() {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true)
+                    xhr.setRequestHeader("username", text_username.value)
+                    xhr.setRequestHeader("password", text_password.value)
+                    xhr.setRequestHeader("cmd", "is_make_memories")
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                            is_make_memories = JSON.parse(xhr.responseText).answer
+                            if (is_make_memories == 'True') is_make_memories = 'Online'
+                            else is_make_memories = 'Offline'
+                        }
+                    }
+                    xhr.send()
                     var xhr2 = new XMLHttpRequest();
                     xhr2.open("GET", url, true)
                     xhr2.setRequestHeader("username", text_username.value)
                     xhr2.setRequestHeader("password", text_password.value)
-                    xhr2.setRequestHeader("cmd", "get_memories")
+                    xhr2.setRequestHeader("cmd", "is_use_memories")
                     xhr2.onreadystatechange = function() {
                         if (xhr2.readyState == XMLHttpRequest.DONE) {
-                            memories = JSON.parse(xhr2.responseText).answer
+                            is_use_memories = JSON.parse(xhr2.responseText).answer
+                            if (is_use_memories == 'True') is_use_memories = 'Online'
+                            else is_use_memories = 'Offline'
                         }
                     }
                     xhr2.send()
-                    while (xhr2.readyState != XMLHttpRequest.DONE) await sleep(.1)
+                    while (xhr.readyState != XMLHttpRequest.DONE || xhr2.readyState != XMLHttpRequest.DONE) await sleep(.1)
                 }
 
                 async function display_info() {
                     
                     while (true) {
 
-                        console.log(current_menu) // todo: rm me finally
-
                         if (current_menu == prev_menu) {
 
                             if (current_menu == 'Home') {
 
-                                div_info_header.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>. . .'
+                                div_user_title.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>'
 
                                 await fetch_hm_credits()
 
-                                div_info_header.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
+                                div_home.innerHTML = 'Tokens:&emsp;' + hm_credits
 
-                            } else if (current_menu == 'Memories') {
+                            } 
+                            
+                            else if (current_menu == 'Memories') {
 
-                                div_info_header.innerHTML = '<br><br><br>Memories of<br><br>' + username + '<br><br><br>'
+                                div_user_title.innerHTML = '<br><br><br>Memories of<br><br>' + username + '<br><br><br>'
 
                                 await fetch_memories()
 
@@ -403,17 +475,25 @@
                                 if (memories != 'None') for (let line of memories.split("<>")) div_memories.innerHTML += line + '. ' //+ '<br>'
                                 else div_memories.innerHTML = 'Nothing yet..<br>Memories about you will form dynamically as you interact.<br>You need to enable memories from the settings first.'
 
-                            } else if (current_menu == 'About') {
+                            }
+                            
+                            else if (current_menu == 'Settings') {
 
-                                div_info_header.innerHTML = '<br><br><br>Developed by<br><br>MultiTrickFox<br><br>2022<br><br>'
+                                div_user_title.innerHTML = '<br><br><br>Settings for<br><br>' + username + '<br><br><br>'
 
-                            } else if (current_menu == 'Settings') {
+                                await fetch_memories_on()
 
-                                div_info_header.innerHTML = '<br><br><br>Settings for<br><br>' + username + '<br><br><br>'
+                                div_settings.innerHTML = ''
+                                div_settings.appendChild(toggle_make_memories)
+                                div_settings.appendChild(toggle_use_memories)
+                                toggle_make_memories.innerHTML = 'learn new memories:<br>' + is_make_memories + '<br><br>'
+                                toggle_use_memories.innerHTML = 'use learned memories:<br>' + is_use_memories + '<br><br>'
 
-                                //await fetch_settings() & then div_settings.innerHTML = ''  & other stuffs
+                            }
 
-                                div_settings.innerHTML = '# todo'
+                            else if (current_menu == 'About') {
+
+                                div_user_title.innerHTML = '<br><br><br>Developer<br><br>MultiTrickFox<br><br>2022'
 
                             }
 
@@ -426,24 +506,31 @@
 
                         } else {
 
-                            for (let button of buttons) if (button.innerHTML == current_menu) button.innerHTML = prev_menu
+                            //for (let button of buttons) if (button.innerHTML == current_menu) button.innerHTML = prev_menu
 
-                            if (prev_menu == 'Memories') {
-                                div_info.removeChild(div_memories)
+                            if (prev_menu == 'Home') {
+                                div_user_inner.removeChild(div_home)
+                            }
+                            if (current_menu == 'Home') {
+                                div_user_inner.appendChild(div_home)
+                                div_home.innerHTML = '.&emsp;.&emsp;.'   
                             }
 
+                            if (prev_menu == 'Memories') {
+                                div_user_inner.removeChild(div_memories)
+                            }
                             if (current_menu == 'Memories') {
-                                div_info.appendChild(div_memories)
-                                div_memories.innerHTML = '. . .'                               
+                                div_user_inner.appendChild(div_memories)
+                                div_memories.innerHTML = '.&emsp;.&emsp;.'                               
                             }
 
                             if (prev_menu == 'Settings') {
-                                div_info.removeChild(div_settings)
+                                div_user_inner.removeChild(div_settings)
+                                while (div_settings.children.length > 0) div_settings.removeChild(div_settings.children[0])
                             }
-
                             if (current_menu == 'Settings') {
-                                div_info.appendChild(div_settings)    
-                                div_settings.innerHTML = '. . .'                            
+                                div_user_inner.appendChild(div_settings)    
+                                div_settings.innerHTML = '.&emsp;.&emsp;.'                           
                             }
 
                             prev_menu = current_menu
