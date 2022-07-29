@@ -186,7 +186,7 @@
                 button_left_up.innerHTML = ''
                 button_left_up.style.color = 'white'
                 button_left_up.style.width = div_user.offsetWidth/6
-                button_left_up.style.height = div_left.offsetHeight/2
+                button_left_up.style.height = div_left.offsetHeight/3
                 button_left_up.style.backgroundColor = 'transparent'
                 button_left_up.style.border = 'none'
                 button_left_up.style.borderRadius = '66px'
@@ -195,12 +195,20 @@
                 button_left_up.style.fontSize = '16px'
                 button_left_up.style.cursor = 'pointer'
                 button_left_up.style.opacity = 0
+                var button_left_middle = document.createElement('button')
+                div_left.appendChild(button_left_middle)
+                button_left_middle.style.width = div_user.offsetWidth/6
+                button_left_middle.style.height = div_left.offsetHeight/3
+                button_left_middle.style.opacity = 0
+                button_left_middle.style.border = 'none'
+                button_left_middle.style.borderRadius = '66px'
+                button_left_middle.style.outline = 'none'
                 var button_left_down = document.createElement('button')
                 div_left.appendChild(button_left_down)
                 button_left_down.innerHTML = ''
                 button_left_down.style.color = 'white'
                 button_left_down.style.width = div_user.offsetWidth/6
-                button_left_down.style.height = div_left.offsetHeight/2
+                button_left_down.style.height = div_left.offsetHeight/3
                 button_left_down.style.backgroundColor = 'transparent'
                 button_left_down.style.border = 'none'
                 button_left_down.style.borderRadius = '66px'
@@ -226,7 +234,7 @@
                 button_right_up.innerHTML = ''
                 button_right_up.style.color = 'white'
                 button_right_up.style.width = div_user.offsetWidth/6
-                button_right_up.style.height = div_right.offsetHeight/2
+                button_right_up.style.height = div_right.offsetHeight/3
                 button_right_up.style.backgroundColor = 'transparent'
                 button_right_up.style.border = 'none'
                 button_right_up.style.borderRadius = '66px'
@@ -235,12 +243,20 @@
                 button_right_up.style.fontSize = '16px'
                 button_right_up.style.cursor = 'pointer'
                 button_right_up.style.opacity = 0
+                var button_right_middle = document.createElement('button')
+                div_right.appendChild(button_right_middle)
+                button_right_middle.style.width = div_user.offsetWidth/6
+                button_right_middle.style.height = div_right.offsetHeight/3
+                button_right_middle.style.opacity = 0
+                button_right_middle.style.border = 'none'
+                button_right_middle.style.borderRadius = '66px'
+                button_right_middle.style.outline = 'none'
                 var button_right_down = document.createElement('button')
                 div_right.appendChild(button_right_down)
                 button_right_down.innerHTML = ''
                 button_right_down.style.color = 'white'
                 button_right_down.style.width = div_user.offsetWidth/6
-                button_right_down.style.height = div_right.offsetHeight/2
+                button_right_down.style.height = div_right.offsetHeight/3
                 button_right_down.style.backgroundColor = 'transparent'
                 button_right_down.style.border = 'none'
                 button_right_down.style.borderRadius = '66px'
@@ -252,7 +268,7 @@
 
                 const buttons = [button_left_up, button_right_up, button_left_down, button_right_down]
 
-                var prev_menu = 'Home' // todo: act wrt this. (inside display info) && also change how many per sec display info
+                var prev_menu = 'Home' // TODO: act wrt this. (inside display info) && also change how many per sec display info
                 var current_menu = 'Home'
 
                 button_left_up.innerHTML = 'Home'
@@ -260,10 +276,10 @@
                 button_left_down.innerHTML = 'About'
                 button_right_down.innerHTML = 'Settings'
 
-                button_left_up.onclick = () => { current_menu = button_left_up.innerHTML }
-                button_right_up.onclick = () => { current_menu = button_right_up.innerHTML }
-                button_left_down.onclick = () => { current_menu = button_left_down.innerHTML }
-                button_right_down.onclick = () => { current_menu = button_right_down.innerHTML }
+                button_left_up.onclick = () => { current_menu = button_left_up.innerHTML ; document.body.style.cursor = 'wait' }
+                button_right_up.onclick = () => { current_menu = button_right_up.innerHTML ; document.body.style.cursor = 'wait' }
+                button_left_down.onclick = () => { current_menu = button_left_down.innerHTML ; document.body.style.cursor = 'wait' }
+                button_right_down.onclick = () => { current_menu = button_right_down.innerHTML ; document.body.style.cursor = 'wait' }
 
                 div_user.onmousemove = (event) => {
                     for (var i = 0; i < buttons.length; i++) {
@@ -278,6 +294,16 @@
                 }
 
                 div_user.onmouseleave = () => { for (var i = 0; i < buttons.length; i++) buttons[i].style.opacity = 0 }
+
+                var div_memory_status = document.createElement('div')
+                div_memory_status.style.fontFamily = 'Quicksand'
+                div_memory_status.style.fontSize = '16px'
+                div_memory_status.style.color = 'white'
+                div_memory_status.style.textAlign = 'center'
+                
+                var div_memory = document.createElement('div')
+                div_memory.style.fontFamily = 'Quicksand'
+                div_memory.style.fontSize = '16px'
 
                 //alert('Accepted.') 
                 // bring up user page
@@ -303,25 +329,6 @@
                 }
 
                 var is_memories_on = 'offline'
-                async function fetch_is_memories_on() {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open("GET", url, true)
-                    xhr.setRequestHeader("username", text_username.value)
-                    xhr.setRequestHeader("password", text_password.value)
-                    xhr.setRequestHeader("cmd", "get_memories")
-                    xhr.onreadystatechange = function() {
-                        if (xhr.readyState == XMLHttpRequest.DONE) {
-                            memories = JSON.parse(xhr.responseText).answer
-                            memories = memories.split("<>")
-                            var mstr = ''
-                            for (let i = 0; i < memories.length; i++) mstr += memories[i] + '.\n'
-                            memories = mstr
-                        }
-                    }
-                    xhr.send()
-                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.5)
-                }
-
                 var memories = ''
                 async function fetch_memories() {
                     var xhr = new XMLHttpRequest();
@@ -337,35 +344,82 @@
                         }
                     }
                     xhr.send()
-                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.5)
+                    var xhr2 = new XMLHttpRequest();
+                    xhr2.open("GET", url, true)
+                    xhr2.setRequestHeader("username", text_username.value)
+                    xhr2.setRequestHeader("password", text_password.value)
+                    xhr2.setRequestHeader("cmd", "get_memories")
+                    xhr2.onreadystatechange = function() {
+                        if (xhr2.readyState == XMLHttpRequest.DONE) {
+                            memories = JSON.parse(xhr2.responseText).answer
+                            memories = memories.split("<>")
+                            var mstr = ''
+                            for (let i = 0; i < memories.length; i++) mstr += memories[i] + '.\n'
+                            memories = mstr
+                        }
+                    }
+                    xhr2.send()
+                    while (xhr.readyState != XMLHttpRequest.DONE || xhr2.readyState != XMLHttpRequest.DONE) await sleep(.5)
                 }
 
                 async function display_info() {
                     
                     while (true) {
 
-                        console.log(current_menu)
+                        console.log(current_menu) // todo: rm me finally
 
-                        if (current_menu == 'Home') {
+                        if (current_menu == prev_menu) {
 
-                            await fetch_hm_credits()
+                            if (current_menu == 'Home') {
 
-                            div_info.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
+                                await fetch_hm_credits()
 
-                        } else if (current_menu == 'Memories') {
+                                div_info.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
 
-                            await fetch_is_memories_on()
-                            await fetch_memories()
+                            } else if (current_menu == 'Memories') {
 
-                            div_info.innerHTML = '<br><br><br>Memories of<br><br>' + username + '<br><br><br>' + memories
+                                await fetch_memories()
+
+                                div_memory_status.innerHTML = '<br><br><br>Memories of<br><br>' + username
+
+                                console.log('changed mems')
+
+                            } else if (current_menu == 'About') {
+
+                                div_info.innerHTML = '<br><br><br>Developed by<br><br>MultiTrickFox<br><br>2022<br><br>'
+
+                            } else if (current_menu == 'Settings') {
+
+                                div_info.innerHTML = '<br><br><br>Settings for<br><br>' + username
+
+                            }
+
+                            document.body.style.cursor = 'auto'
+
+                            for (let i = 0; i < 6; i++) {
+                                await sleep(.5)
+                                if (current_menu != prev_menu) break
+                            }
+
+                        } else {
+
+                            for (let button of buttons) if (button.innerHTML == current_menu) button.innerHTML = prev_menu
+
+                            if (prev_menu == 'Memories') {
+                                div_memory_status.innerHTML = ''
+                                div_info.removeChild(div_memory_status)
+                                div_info.removeChild(div_memory)
+                            }
+
+                            else if (current_menu == 'Memories') {
+                                div_info.innerHTML = ''
+                                div_info.appendChild(div_memory_status)
+                                div_info.appendChild(div_memory)                                
+                            }
+
+                            prev_menu = current_menu
 
                         }
-
-                        
-
-
-
-                        await sleep(1)
 
                     }
 
@@ -391,9 +445,9 @@
                 button_login.style.marginTop = 'auto'
                 button_login.style.marginBottom = 'auto'
                 button_login.style.backgroundColor = 'transparent'
-                // button_login.style.border = '2px solid white'
+                button_login.style.border = '2px solid white'
                 button_login.style.borderRadius = '20px'
-                button_login.style.border = 'none'
+                //button_login.style.border = 'none'
                 button_login.style.outline = 'none'
                 button_login.style.fontFamily = 'Quicksand'
                 button_login.style.fontSize = '16px'
@@ -410,9 +464,9 @@
                 button_signup.style.marginTop = 'auto'
                 button_signup.style.marginBottom = 'auto'
                 button_signup.style.backgroundColor = 'transparent'
-                // button_signup.style.border = '2px solid white'
+                button_signup.style.border = '2px solid white'
                 button_signup.style.borderRadius = '20px'
-                button_signup.style.border = 'none'
+                //button_signup.style.border = 'none'
                 button_signup.style.outline = 'none'
                 button_signup.style.fontFamily = 'Quicksand'
                 button_signup.style.fontSize = '16px'
@@ -482,9 +536,9 @@
                 button_proceed.style.marginTop = 'auto'
                 button_proceed.style.marginBottom = 'auto'
                 button_proceed.style.backgroundColor = 'transparent'
-                // button_proceed.style.border = '2px solid white'
+                button_proceed.style.border = '2px solid white'
                 button_proceed.style.borderRadius = '20px'
-                button_proceed.style.border = 'none'
+                //button_proceed.style.border = 'none'
                 button_proceed.style.outline = 'none'
                 button_proceed.style.fontFamily = 'Quicksand'
                 button_proceed.style.fontSize = '16px'
@@ -1022,49 +1076,83 @@
 
             // community div
 
-            var button_community_div = document.createElement('div')
-            document.body.appendChild(button_community_div)
-            button_community_div.style.width = div_usd1.offsetWidth*1/6
-            button_community_div.style.height = button_community_div.offsetWidth///1.618
-            button_community_div.style.marginLeft = window.screen.height * 2.31/100 + 'px' //'auto' //'auto'
-            //button_community_div.style.marginRight = '3%'
-            //button_community_div.style.marginRight = 'auto'
-            //button_community_div.style.marginLeft = '1%'
-            button_community_div.style.display = 'flex'
-            button_community_div.style.flexDirection = 'row'
-            button_community_div.style.justifyContent = 'center'
+            var community_div = document.createElement('div')
+            document.body.appendChild(community_div)
+            community_div.style.width = '75%' //div_usd1.offsetWidth*1/6
+            community_div.style.height = div_usd1.offsetWidth*1/6 //community_div.offsetWidth
+            community_div.style.marginLeft = window.screen.height * 2.31/100 + 'px'
+            community_div.style.display = 'flex'
+            community_div.style.flexDirection = 'row'
+            //community_div.style.justifyContent = 'center'
 
-            var button_community = document.createElement('button')
-            button_community_div.appendChild(button_community)           
-            button_community.style.width = '100%'
-            button_community.style.height = '100%'
-            button_community.style.opacity = '.77'
-            // button_community.innerHTML = 'Discord'
-            button_community.style.color = 'white'
-            button_community.style.textAlign = 'center'
-            button_community.style.backgroundColor = 'transparent'
-            button_community.style.fontFamily = 'Quicksand'
-            button_community.style.fontSize = '16px'
-            button_community.style.border = '.6px solid black'
-            button_community.style.borderRadius = '66px'
-            button_community.style.backgroundImage = 'url(assets/discord_banner.png)'
-            button_community.style.backgroundPosition = 'center'
-            button_community.style.backgroundSize = 'cover'
-            button_community.style.cursor = 'pointer'
-            button_community.style.backgroundColor = 'rgba(255, 255, 255, .92)'
+            var button_discord_div = document.createElement('div')
+            community_div.appendChild(button_discord_div)
+            button_discord_div.style.height = '100%'
+            button_discord_div.style.width = button_discord_div.offsetHeight
 
-            button_community.onmouseover = function() {
-                //button_community.style.backgroundColor = 'rgba(86, 98, 246, 1)'
-                button_community.style.backgroundColor = 'rgba(255, 255, 255, .96)'
+            var button_discord = document.createElement('button')
+            button_discord_div.appendChild(button_discord)           
+            button_discord.style.width = '100%'
+            button_discord.style.height = '100%'
+            button_discord.style.opacity = '.77'
+            // button_discord.innerHTML = 'Discord'
+            button_discord.style.color = 'white'
+            button_discord.style.textAlign = 'center'
+            button_discord.style.backgroundColor = 'transparent'
+            button_discord.style.fontFamily = 'Quicksand'
+            button_discord.style.fontSize = '16px'
+            button_discord.style.border = '.6px solid black'
+            button_discord.style.borderRadius = '66px'
+            button_discord.style.backgroundImage = 'url(assets/discord_banner.png)'
+            button_discord.style.backgroundPosition = 'center'
+            button_discord.style.backgroundSize = 'cover'
+            button_discord.style.cursor = 'pointer'
+            button_discord.style.backgroundColor = 'rgba(255, 255, 255, .92)'
+            button_discord.onmouseover = function() {
+                //button_discord.style.backgroundColor = 'rgba(86, 98, 246, 1)'
+                button_discord.style.backgroundColor = 'rgba(255, 255, 255, .96)'
             }
-
-            button_community.onmouseleave = function() {
-                //button_community.style.backgroundColor = 'rgba(86, 98, 246, 0)'
-                button_community.style.backgroundColor = 'rgba(255, 255, 255, .92)'
+            button_discord.onmouseleave = function() {
+                //button_discord.style.backgroundColor = 'rgba(86, 98, 246, 0)'
+                button_discord.style.backgroundColor = 'rgba(255, 255, 255, .92)'
             }
-
-            button_community.onclick = function() {
+            button_discord.onclick = function() {
                 window.open('https://discord.gg/Unmu79D7h4', '_blank').focus()
+            }
+
+            var button_github_div = document.createElement('div')
+            community_div.appendChild(button_github_div)
+            button_github_div.style.height = '100%'
+            button_github_div.style.width = button_github_div.offsetHeight
+
+            var button_github = document.createElement('button')
+            button_github_div.appendChild(button_github)           
+            button_github.style.width = '100%'
+            button_github.style.height = '100%'
+            button_github.style.opacity = '.77'
+            // button_github.innerHTML = 'GitHub'
+            button_github.style.color = 'white'
+            button_github.style.textAlign = 'center'
+            button_github.style.backgroundColor = 'transparent'
+            button_github.style.fontFamily = 'Quicksand'
+            button_github.style.fontSize = '16px'
+            button_github.style.border = '.6px solid black'
+            button_github.style.borderRadius = '66px'
+            button_github.style.backgroundImage = 'url(assets/github_banner.png)'
+            button_github.style.backgroundPosition = 'center'
+            button_github.style.backgroundSize = 'cover'
+            button_github.style.cursor = 'pointer'
+            button_github.style.backgroundColor = 'rgba(255, 255, 255, .92)'
+            button_github.onmouseover = function() {
+                //button_github.style.backgroundColor = 'rgba(86, 98, 246, 1)'
+                button_github.style.backgroundColor = 'rgba(255, 255, 255, .96)'
+            }
+            button_github.onmouseleave = function() {
+                //button_github.style.backgroundColor = 'rgba(86, 98, 246, 0)'
+                button_github.style.backgroundColor = 'rgba(255, 255, 255, .92)'
+            }
+            button_github.onclick = function() {
+                window.open('https://github.com/multitrickfox', '_blank').focus()
             }
 
             // empty div
