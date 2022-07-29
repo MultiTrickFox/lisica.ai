@@ -268,7 +268,7 @@
 
                 const buttons = [button_left_up, button_right_up, button_left_down, button_right_down]
 
-                var prev_menu = 'Home' // TODO: act wrt this. (inside display info) && also change how many per sec display info
+                var prev_menu = 'Home'
                 var current_menu = 'Home'
 
                 button_left_up.innerHTML = 'Home'
@@ -392,7 +392,7 @@
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == XMLHttpRequest.DONE) {
                             document.body.style.cursor = 'auto'
-                            toggle_use_memories.innerHTML = 'br<>use learned memories:<br>' + (toggle_use_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
+                            toggle_use_memories.innerHTML = '<br>use learned memories:<br>' + (toggle_use_memories.innerHTML.includes('Online') ? 'Offline' : 'Online') + '<br><br>'
                         }
                     }
                     xhr.send()
