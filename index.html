@@ -221,10 +221,10 @@
                 var div_info = document.createElement('div')
                 div_user.appendChild(div_info)
                 div_info.style.flex = '4'
-                div_info.style.fontFamily = 'Quicksand'
-                div_info.style.fontSize = '16px'
-                div_info.style.color = 'white'
-                div_info.style.textAlign = 'center'
+                // div_info.style.fontFamily = 'Quicksand'
+                // div_info.style.fontSize = '16px'
+                // div_info.style.color = 'white'
+                // div_info.style.textAlign = 'center'
 
                 var div_right = document.createElement('div')
                 div_user.appendChild(div_right)
@@ -294,16 +294,31 @@
                 }
 
                 div_user.onmouseleave = () => { for (var i = 0; i < buttons.length; i++) buttons[i].style.opacity = 0 }
-
-                var div_memory_status = document.createElement('div')
-                div_memory_status.style.fontFamily = 'Quicksand'
-                div_memory_status.style.fontSize = '16px'
-                div_memory_status.style.color = 'white'
-                div_memory_status.style.textAlign = 'center'
                 
-                var div_memory = document.createElement('div')
-                div_memory.style.fontFamily = 'Quicksand'
-                div_memory.style.fontSize = '16px'
+                var div_info_header = document.createElement('div')
+                div_info.appendChild(div_info_header)
+                div_info_header.style.fontFamily = 'Quicksand'
+                div_info_header.style.fontSize = '16px'
+                div_info_header.style.color = 'white'
+                div_info_header.style.textAlign = 'center'
+                div_info_header.innerHTML = '<br><br><br>Welcome,<br><br>' + username
+
+                var div_memories = document.createElement('div')
+                div_memories.style.overflowY = 'scroll'
+                div_memories.style.height = div_user.offsetHeight*1/2+'px'
+                div_memories.style.fontFamily = 'Quicksand'
+                div_memories.style.fontSize = '16px'
+                div_memories.style.color = 'white'
+                div_memories.style.textAlign = 'center'
+
+                var div_settings = document.createElement('div')
+                div_settings.style.overflowY = 'scroll'
+                div_settings.style.height = div_user.offsetHeight*1/2+'px'
+                div_settings.style.fontFamily = 'Quicksand'
+                div_settings.style.fontSize = '16px'
+                div_settings.style.color = 'white'
+                div_settings.style.textAlign = 'center'
+                // todo: multiple divs for settings here ..
 
                 //alert('Accepted.') 
                 // bring up user page
@@ -325,12 +340,11 @@
                         }
                     }
                     xhr.send()
-                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.5)
+                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.1)
                 }
 
                 var is_memories_on = 'offline'
-                var memories = ''
-                async function fetch_memories() {
+                async function fetch_is_memories_on() {
                     var xhr = new XMLHttpRequest();
                     xhr.open("GET", url, true)
                     xhr.setRequestHeader("username", text_username.value)
@@ -344,6 +358,11 @@
                         }
                     }
                     xhr.send()
+                    while (xhr.readyState != XMLHttpRequest.DONE) await sleep(.1)
+                }
+
+                var memories = ''
+                async function fetch_memories() {
                     var xhr2 = new XMLHttpRequest();
                     xhr2.open("GET", url, true)
                     xhr2.setRequestHeader("username", text_username.value)
@@ -352,14 +371,10 @@
                     xhr2.onreadystatechange = function() {
                         if (xhr2.readyState == XMLHttpRequest.DONE) {
                             memories = JSON.parse(xhr2.responseText).answer
-                            memories = memories.split("<>")
-                            var mstr = ''
-                            for (let i = 0; i < memories.length; i++) mstr += memories[i] + '.\n'
-                            memories = mstr
                         }
                     }
                     xhr2.send()
-                    while (xhr.readyState != XMLHttpRequest.DONE || xhr2.readyState != XMLHttpRequest.DONE) await sleep(.5)
+                    while (xhr2.readyState != XMLHttpRequest.DONE) await sleep(.1)
                 }
 
                 async function display_info() {
@@ -372,25 +387,33 @@
 
                             if (current_menu == 'Home') {
 
+                                div_info_header.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>. . .'
+
                                 await fetch_hm_credits()
 
-                                div_info.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
+                                div_info_header.innerHTML = '<br><br><br>Welcome,<br><br>' + username + '<br><br><br>Tokens:&emsp;' + hm_credits
 
                             } else if (current_menu == 'Memories') {
 
+                                div_info_header.innerHTML = '<br><br><br>Memories of<br><br>' + username + '<br><br><br>'
+
                                 await fetch_memories()
 
-                                div_memory_status.innerHTML = '<br><br><br>Memories of<br><br>' + username
-
-                                console.log('changed mems')
+                                div_memories.innerHTML = ''
+                                if (memories != 'None') for (let line of memories.split("<>")) div_memories.innerHTML += line + '. ' //+ '<br>'
+                                else div_memories.innerHTML = 'Nothing yet..<br>Memories about you will form dynamically as you interact.<br>You need to enable memories from the settings first.'
 
                             } else if (current_menu == 'About') {
 
-                                div_info.innerHTML = '<br><br><br>Developed by<br><br>MultiTrickFox<br><br>2022<br><br>'
+                                div_info_header.innerHTML = '<br><br><br>Developed by<br><br>MultiTrickFox<br><br>2022<br><br>'
 
                             } else if (current_menu == 'Settings') {
 
-                                div_info.innerHTML = '<br><br><br>Settings for<br><br>' + username
+                                div_info_header.innerHTML = '<br><br><br>Settings for<br><br>' + username + '<br><br><br>'
+
+                                //await fetch_settings() & then div_settings.innerHTML = ''  & other stuffs
+
+                                div_settings.innerHTML = '# todo'
 
                             }
 
@@ -406,15 +429,21 @@
                             for (let button of buttons) if (button.innerHTML == current_menu) button.innerHTML = prev_menu
 
                             if (prev_menu == 'Memories') {
-                                div_memory_status.innerHTML = ''
-                                div_info.removeChild(div_memory_status)
-                                div_info.removeChild(div_memory)
+                                div_info.removeChild(div_memories)
                             }
 
-                            else if (current_menu == 'Memories') {
-                                div_info.innerHTML = ''
-                                div_info.appendChild(div_memory_status)
-                                div_info.appendChild(div_memory)                                
+                            if (current_menu == 'Memories') {
+                                div_info.appendChild(div_memories)
+                                div_memories.innerHTML = '. . .'                               
+                            }
+
+                            if (prev_menu == 'Settings') {
+                                div_info.removeChild(div_settings)
+                            }
+
+                            if (current_menu == 'Settings') {
+                                div_info.appendChild(div_settings)    
+                                div_settings.innerHTML = '. . .'                            
                             }
 
                             prev_menu = current_menu
