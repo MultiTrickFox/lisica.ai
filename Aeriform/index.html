@@ -1111,11 +1111,15 @@
 
                                     }
 
+                                    var populations_entity_positions = []
+
                                     let population_ctr = -1
                                     for (const population of populations) {
                                         population_ctr +=1
 
                                         if (population != null) {
+
+                                            populations_entity_positions.push([])
 
                                             let entity_theta = Math.PI * Math.random()
 
@@ -1149,6 +1153,10 @@
                                                 m.rotation.x = Math.PI/2
                                                 m.rotation.z = Math.PI-entity_theta
 
+                                                populations_entity_positions[populations_entity_positions.length-1].push([
+                                                    m.position.x, m.position.y, m.position.z, m.rotation.x, m.rotation.z,
+                                                ])
+
                                             }
 
                                             textmeshes_inscene.push(write_smt(
@@ -1159,13 +1167,15 @@
                                                 0, 0, 0
                                             ))
 
-                                        }
+                                        } else populations_entity_positions.push(null)
 
                                     }
 
                                 }
 
                                 async function check_generate() {
+
+                                    let last_picked_entity = null
 
                                     while (true) {
 
@@ -1175,13 +1185,18 @@
 
                                             population_ctr +=1
 
-                                            if (Math.sqrt(Math.pow(camera.position.x-centroid[0],2)+Math.pow(camera.position.z-centroid[2],2)) < 2) {
+                                            let population = populations[population_ctr]
+                                            let population_entity_positions = populations_entity_positions[population_ctr]
+
+                                            if (Math.sqrt(Math.pow(camera.position.x-centroid[0],2)+Math.pow(camera.position.z-centroid[2],2)) < 2.4) {
                                         
                                                 if (username != null) {
 
                                                     document.body.style.cursor = 'wait'
 
-                                                    let entity_id = Math.floor(Math.random()*populations[population_ctr].length)
+                                                    let entity_id = Math.floor(Math.random()*population.length)
+                                                    while (entity_id == last_picked_entity) entity_id = Math.floor(Math.random()*population.length)
+                                                    last_picked_entity = entity_id
 
                                                     console.log('in the zone ' + population_ctr + ' generating for ' + entity_id) // todo: rm me
 
@@ -1206,11 +1221,20 @@
                                                     while (response == null) await sleep(.1)
 
                                                     document.body.style.cursor = 'auto'
-
-                                                    // todo: write smt response to text_meshes_inscene2
                                                     
+                                                    scene.remove(textmeshes_inscene_2[0])
                                                     
-
+                                                    textmeshes_inscene_2[0] = //.push(
+                                                        write_smt(
+                                                            response,   // Todo: put this to real entity position
+                                                            population_entity_positions[entity_id][0], 
+                                                            population_entity_positions[entity_id][1]+2, 
+                                                            population_entity_positions[entity_id][2], 
+                                                            0,
+                                                            0,
+                                                            0,
+                                                        )
+                                                    //)
 
                                                     await sleep(5)
 
@@ -1227,21 +1251,6 @@
                                     }
 
                                 } check_generate()
-
-
-                                
-                                
-                                // textmeshes_inscene.push(
-                                        //     write_smt(
-                                        //         entity_seeds[entity_id],
-                                        //         poopulation_centers[i][0], 
-                                        //         poopulation_centers[i][1], 
-                                        //         poopulation_centers[i][2], 
-                                        //         poopulation_centers[i][3]+Math.PI,
-                                        //         poopulation_centers[i][4],
-                                        //         poopulation_centers[i][5]
-                                        //     )
-                                        // ) 
 
                             }
 
