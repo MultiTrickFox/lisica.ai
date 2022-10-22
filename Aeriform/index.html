@@ -821,7 +821,7 @@
                             div.appendChild(button_empty2)
                             div.appendChild(button_entity3)
                             div.appendChild(button_empty3)
-                            document.body.appendChild(button_entitymulti)
+                            if (username=='Zer0') document.body.appendChild(button_entitymulti)
                             button_entitymulti.style.width = button_entity2.offsetWidth+'px'
             
                             while (stage==1) await sleep(.1)
@@ -838,7 +838,7 @@
                             div.removeChild(button_empty2)
                             div.removeChild(button_entity3)
                             div.removeChild(button_empty3)
-                            document.body.removeChild(button_entitymulti)
+                            try { document.body.removeChild(button_entitymulti) } catch { }
 
                             if (entity_type!='the obscure ones') {
 
