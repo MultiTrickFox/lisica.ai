@@ -935,7 +935,7 @@
                             reply.style.outline = 'none'
                             reply.style.border = 'none'
                             reply.placeholder = ' leave empty to keep generating ..'
-                            document.body.appendChild(reply)
+                            //document.body.appendChild(reply)
                             if (username==null) reply.readOnly = true
                             reply.addEventListener("keydown", (e) => { if (e.code === "Enter")  send.onclick() })
 
