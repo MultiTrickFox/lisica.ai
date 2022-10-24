@@ -955,10 +955,25 @@
                             send.style.cursor = 'pointer'
                             document.body.appendChild(send)
 
+                            var refresh = document.createElement('button')
+                            refresh.style.position = 'absolute'
+                            refresh.style.bottom = '6.666%'
+                            refresh.style.right = '16.6%'
+                            refresh.style.width = '33.6px'
+                            refresh.style.height = '33.6px'
+                            refresh.style.border = 'none'
+                            refresh.style.cursor = 'pointer'
+                            refresh.style.backgroundColor = 'rgba(0,0,0,.0)'
+                            refresh.style.backgroundImage = 'url(refresh.png)'
+                            refresh.style.backgroundSize = 'contain'
+                            refresh.style.backgroundPosition = 'center'
+                            refresh.style.backgroundRepeat = 'no-repeat'
+                            document.body.appendChild(refresh)
+
                             var reset = document.createElement('button')
                             reset.style.position = 'absolute'
                             reset.style.bottom = '6.666%'
-                            reset.style.right = '16.6%'
+                            reset.style.right = '11.6%'
                             reset.style.width = '33.6px'
                             reset.style.height = '33.6px'
                             reset.style.border = 'none'
@@ -979,7 +994,7 @@
                                 if (username!=null) {
 
                                     response.innerHTML = '. . .'
-                                    xhr = new XMLHttpRequest();
+                                    xhr = new XMLHttpRequest()
                                     xhr.open("GET", 'https://lisica.lisica.ai:64244/aeriform', true)
                                     xhr.setRequestHeader("username", username)
                                     xhr.setRequestHeader("password", password)
@@ -1008,6 +1023,60 @@
 
                             }
 
+                            refresh.onclick = () => {
+
+                                if (response.innerHTML=='. . .') return
+
+                                document.body.style.cursor = 'wait'
+
+                                if (username!=null) {
+
+                                    response.innerHTML = '. . .'
+                                    reply.value = ''
+
+                                    var xhr = new XMLHttpRequest()
+                                    xhr.open("GET", 'https://lisica.lisica.ai:64244/aeriform', true)
+                                    xhr.setRequestHeader("username", username)
+                                    xhr.setRequestHeader("password", password)
+                                    xhr.setRequestHeader("cmd", "init")
+                                    xhr.setRequestHeader("template", entity_type)
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == XMLHttpRequest.DONE) {
+                                            var result = JSON.parse(xhr.responseText)
+                                            console.log(result)
+                                            
+                                            xhr2 = new XMLHttpRequest()
+                                            xhr2.open("GET", 'https://lisica.lisica.ai:64244/aeriform', true)
+                                            xhr2.setRequestHeader("username", username)
+                                            xhr2.setRequestHeader("password", password)
+                                            xhr2.setRequestHeader("cmd", "generate")
+                                            xhr2.setRequestHeader("reply", reply.value)
+                                            xhr2.setRequestHeader("template", entity_type)
+                                            xhr2.onreadystatechange = function() {
+                                                if (xhr2.readyState == XMLHttpRequest.DONE) {
+                                                    var result2 = JSON.parse(xhr2.responseText)
+                                                    response.innerHTML = result2.response
+                                                    document.body.style.cursor = 'auto'
+                                                    document.body.appendChild(reply)
+                                                }
+                                            }
+                                            xhr2.send()
+
+                                        }
+                                    }
+                                    xhr.send()
+
+                                } else {
+
+                                    document.body.style.cursor = 'auto'
+                                    response.innerHTML = demos[entity_type][Math.floor(Math.random()*demos[entity_type].length)]
+                                    reply.value = ''
+                                    document.body.appendChild(reply)
+
+                                }
+
+                            }
+
                             reset.onclick = () => {
 
                                 if (response.innerHTML=='. . .') return
@@ -1023,6 +1092,7 @@
                                 scene.remove(model_spirit)
 
                                 try { document.body.removeChild(reset) } catch { } 
+                                try { document.body.removeChild(refresh) } catch { } 
                                 try { document.body.removeChild(reply) } catch { } 
                                 try { document.body.removeChild(send) } catch { }
 
@@ -1060,6 +1130,7 @@
                                 movement_enabled = true
 
                                 document.body.appendChild(reset)
+                                document.body.removeChild(refresh)
                                 document.body.removeChild(send)
 
                                 if (model_stairs == null) {
