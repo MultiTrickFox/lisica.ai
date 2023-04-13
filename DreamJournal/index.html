@@ -1,5 +1,5 @@
 <html>
-    
+
 <head>
     <title>DreamJournal</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
@@ -15,86 +15,197 @@
 
     <script>
 
+        // UI elements
+
         const canvas = document.createElement("canvas")
         document.body.appendChild(canvas)
-        canvas.width = 720 
-        canvas.height = 500
-
+        canvas.width = document.body.clientWidth 
+        canvas.height = document.body.clientHeight
         const ctx  = canvas.getContext("2d")
-        // ctx.fillStyle = "black"
-        // ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-        const img = new Image()
-        img.crossOrigin = "Anonymous"
-        img.src = "https://i.natgeofe.com/n/9b97e60e-e8db-4961-853b-d68ba28d7629/red-fox_thumb.JPG"
-        img.onload = function() {
+    </script>
 
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+    <script>
 
+        var is_request_running
 
-            // Get the pixel data of the canvas
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
+        const sleep = sec => new Promise(r => setTimeout(r, sec*1_000))
 
-            // Create an array of particles, each with a random position and velocity
-            const particles = [];
-            for (let i = 0; i < data.length; i += 4) {
-                const x = (i / 4) % canvas.width;
-                const y = Math.floor(i / 4 / canvas.width);
-                const r = data[i];
-                const g = data[i + 1];
-                const b = data[i + 2];
-                const a = data[i + 3];
-                if (a > 0) { // Only create a particle if the pixel is not transparent
-                particles.push({
-                    x: x,
-                    y: y,
-                    vx: Math.random() * 2 - 1, // Random horizontal velocity
-                    vy: Math.random() * 2 - 1, // Random vertical velocity
-                    r: r,
-                    g: g,
-                    b: b,
-                    a: a
-                });
+        async function fetch_dreams() {
+
+            if (is_request_running) return
+            else is_request_running = true
+            document.body.style.cursor = 'wait'
+
+            let xhr = new XMLHttpRequest()
+            let response = null
+            xhr.open("GET", 'https://lisica.lisica.ai:64243/dreamjournal', true)
+            xhr.setRequestHeader("cmd", "dreams")
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    let result = JSON.parse(xhr.responseText)
+                    response = result.answer
+                    console.log('response received:',response)
                 }
             }
+            xhr.send()
+            while (response == null) await sleep(.1)
 
-            // Animate the particles
-            let angle = 0;
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let i = 0; i < particles.length; i++) {
-                const particle = particles[i];
+            is_request_running = false
+            document.body.style.cursor = 'auto'
+            return response
 
-                // Move the particle based on its velocity
-                particle.x += particle.vx;
-                particle.y += particle.vy;
+        }
 
-                // Make the particle sway back and forth
-                particle.y += Math.sin(angle + particle.x / 20) * 2;
+        async function fetch_until() {
 
-                // Fade in/out some particles randomly
-                if (Math.random() < 0.1) {
-                    particle.a = particle.a === 0 ? 255 : 0;
+            // if (is_request_running) return
+            // else is_request_running = true
+            //document.body.style.cursor = 'wait'
+
+            let xhr = new XMLHttpRequest()
+            let response = null
+            xhr.open("GET", 'https://lisica.lisica.ai:64243/dreamjournal', true)
+            xhr.setRequestHeader("cmd", "until")
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    let result = JSON.parse(xhr.responseText)
+                    response = result.answer
+                    console.log('response received:',response)
                 }
-
-                // Draw the particle on the canvas
-                ctx.fillStyle = `rgba(${particle.r}, ${particle.g}, ${particle.b}, ${particle.a})`;
-                ctx.fillRect(particle.x, particle.y, 1, 1);
-                }
-
-                // Increase the angle to make the particles sway back and forth
-                angle += 0.1;
-
-                requestAnimationFrame(animate);
             }
+            xhr.send()
+            while (response == null) await sleep(.1)
 
-            animate()
+            // is_request_running = false
+            //document.body.style.cursor = 'auto'
+            return response
+
+        }
+
+        async function fetch_search(text) {
+
+            if (is_request_running) return
+            else is_request_running = true
+            document.body.style.cursor = 'wait'
+
+            let xhr = new XMLHttpRequest()
+            let response = null
+            xhr.open("GET", 'https://lisica.lisica.ai:64243/dreamjournal', true)
+            xhr.setRequestHeader("cmd", "until")
+            xhr.setRequestHeader("text", text)
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                    let result = JSON.parse(xhr.responseText)
+                    response = result.answer
+                    console.log('response received:',response)
+                }
+            }
+            xhr.send()
+            while (response == null) await sleep(.1)
+
+            is_request_running = false
+            document.body.style.cursor = 'auto'
+            return response
 
         }
 
     </script>
 
+    <script>
+
+        async function main() {
+
+            let dreams = await fetch_dreams()
+
+            //console.log(dreams)
+            //console.log(dreams['2023-04-12 21:12:35.340700'])
+
+            let dream_ids = Object.keys(dreams)
+            console.log('dream_ids:',dream_ids)
+
+            let dream_id = dream_ids[Math.floor(Math.random()*dream_ids.length)]
+            console.log('dream_id:',dream_id)
+
+            let dream = dreams[dream_id]
+            let chunks = dream['chunks']
+            let images = dream['images']
+            
+            // for (let i = 0; i < chunks.length; i++) {
+            //     alert(chunks[i])                
+            // }
+
+            for (let i = 0; i < chunks.length; i++) {
+
+                let chunk = chunks[i]
+                let image = images[i]
+
+                const img = new Image()        
+                img.src = 'data:image/png;base64,'+image
+                img.onload = function() {
+                    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height)
+                    // ctx.fillStyle = 'black'
+                    // ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+                    let x = canvas.width / 2 - img.width / 2
+                    let y = canvas.height / 2 - img.height / 2
+                    ctx.drawImage(img, x, y)
+
+                    let punto = 16
+                    ctx.font = `${punto}px Quicksand`
+                    ctx.fillStyle = 'white'
+                    ctx.textAlign = 'center'
+                    ctx.textBaseline = 'middle'
+
+                    let thresholdWidth = img.width / 2
+
+                    let words = chunk.split(" ")
+                    let line = ""
+                    let lines = []
+                    let lineCount = 0
+
+                    for (let i = 0; i < words.length; i++) {
+                        let testLine = line + words[i] + " "
+                        let testLineWidth = ctx.measureText(testLine).width
+                        if (testLineWidth > thresholdWidth) {
+                            lines.push(line.trim())
+                            line = words[i] + " "
+                            lineCount++
+                        } else {
+                            line = testLine
+                        }
+                    }
+
+                    if (line.trim().length > 0) {
+                        lines.push(line.trim())
+                        lineCount++
+                    }
+
+                    x = canvas.width / 2
+                    y = canvas.height / 2 - ((lineCount - 1) * punto / 2)
+
+                    for (let i = 0; i < lines.length; i++) {
+                        const textY = y + (i * punto)
+                        ctx.fillText(lines[i], x, textY)
+                    }
+
+                }
+
+                await sleep(12)
+
+            }
+
+
+        }
+
+    </script>
+
+    <script>
+
+        main()
+
+    </script>
 
 </body>
 </html>

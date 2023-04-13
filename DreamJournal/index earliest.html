@@ -1,0 +1,160 @@
+<html>
+
+<head>
+    <title>DreamJournal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+</head>
+
+<body style="
+    background-color: black;
+    margin: 0;
+    overflow-y: scroll;
+    cursor: auto;
+    -webkit-user-select: none;
+    ">
+
+    <script>
+
+        const canvas = document.createElement("canvas")
+        document.body.appendChild(canvas)
+        canvas.width = document.body.clientWidth 
+        canvas.height = document.body.clientHeight
+
+        const ctx  = canvas.getContext("2d")
+        // ctx.fillStyle = "black"
+        // ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+        const img = new Image()
+        img.crossOrigin = "Anonymous"
+        img.src = "https://i.natgeofe.com/n/9b97e60e-e8db-4961-853b-d68ba28d7629/red-fox_thumb.JPG"
+
+        img.onload = function() {
+
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+            animateParticles();
+
+            // const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+            // const pixels = imageData.data
+		
+            // const particles = []
+
+            // for (let i = 0; i < pixels.length; i += 4) {
+
+            //     const x = (i / 4) % canvas.width
+            //     const y = Math.floor(i / 4 / canvas.width)
+
+            //     const r = pixels[i]
+            //     const g = pixels[i+1]
+            //     const b = pixels[i+2]
+            //     const a = pixels[i+3]
+
+            //     // if (a > 0) { // Only create a particle if the pixel is not transparent
+            //     //     particles.push({
+            //     //         x: x,
+            //     //         y: y,
+            //     //         r: r,
+            //     //         g: g,
+            //     //         b: b,
+            //     //         a: a,
+            //     //         vx: Math.random() * 2 - 1, // Random horizontal velocity
+            //     //         vy: Math.random() * 2 - 1, // Random vertical velocity
+            //     //     })
+            //     // }
+
+            }
+
+            // // Animate the particles
+            // let angle = 0;
+            // function animate() {
+            //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+            //     for (let i = 0; i < particles.length; i++) {
+            //     const particle = particles[i];
+
+            //     // Move the particle based on its velocity
+            //     particle.x += particle.vx;
+            //     particle.y += particle.vy;
+
+            //     // Make the particle sway back and forth
+            //     particle.y += Math.sin(angle + particle.x / 20) * 2;
+
+            //     // Fade in/out some particles randomly
+            //     if (Math.random() < 0.1) {
+            //         particle.a = particle.a === 0 ? 255 : 0;
+            //     }
+
+            //     // Draw the particle on the canvas
+            //     ctx.fillStyle = `rgba(${particle.r}, ${particle.g}, ${particle.b}, ${particle.a})`;
+            //     ctx.fillRect(particle.x, particle.y, 1, 1);
+            //     }
+
+            //     // Increase the angle to make the particles sway back and forth
+            //     angle += 0.1;
+
+            //     requestAnimationFrame(animate);
+            // }
+
+            // animate()
+
+            // Animate the particles
+            function animateParticles() {
+            // Get the pixel data from the canvas
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+
+            // Create an array of particles
+            const particles = [];
+            for (let i = 0; i < pixels.length; i += 4) {
+                const x = (i / 4) % canvas.width;
+                const y = Math.floor((i / 4) / canvas.width);
+                const r = pixels[i];
+                const g = pixels[i + 1];
+                const b = pixels[i + 2];
+                const a = pixels[i + 3];
+                if (a > 0) {
+                particles.push({
+                    x,
+                    y,
+                    angle: Math.random() * Math.PI * 2,
+                    velocity: Math.random() * 2,
+                    color: `rgba(${r}, ${g}, ${b}, ${a})`,
+                });
+                }
+            }
+
+            // Clear the canvas on each frame
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Loop through the particles and update their positions and angles
+            particles.forEach((particle) => {
+                const { x, y, angle, velocity, color } = particle;
+                const sway = Math.sin(angle);
+                const newX = x + sway;
+                const newY = y + Math.cos(angle) * 10;
+                const newAngle = angle + Math.random() * 0.1 - 0.05;
+                particle.x = newX;
+                particle.y = newY;
+                particle.angle = newAngle;
+
+                // Draw the particle on the canvas
+                ctx.fillStyle = color;
+                ctx.fillRect(newX, newY, 2, 2);
+            });
+
+            // Request the next animation frame
+            requestAnimationFrame(animateParticles);
+
+        }
+
+    </script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+

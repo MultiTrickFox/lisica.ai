@@ -1,0 +1,103 @@
+<html>
+
+<head>
+    <title>DreamJournal</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+</head>
+
+<body style="
+    background-color: black;
+    margin: 0;
+    overflow-y: scroll;
+    cursor: auto;
+    -webkit-user-select: none;
+    ">
+
+    <script>
+
+        const canvas = document.createElement("canvas")
+        document.body.appendChild(canvas)
+        canvas.width = document.body.clientWidth 
+        canvas.height = document.body.clientHeight
+
+        const ctx  = canvas.getContext("2d")
+        // ctx.fillStyle = "black"
+        // ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+        const img = new Image()
+        img.crossOrigin = "Anonymous"
+        img.src = "https://media.istockphoto.com/id/516318760/tr/foto%C4%9Fraf/red-fox-vulpes-vulpes.jpg?s=612x612&w=0&k=20&c=I-cZqa-hA_lVK94hlCYEGOm4zQdEwRMSf3cSX99NjH0="
+
+        var imageData
+        var pixels
+        var particles
+
+        img.onload = function() {
+
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+            imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+            pixels = imageData.data
+
+            particles = []
+
+            for (let i = 0; i < pixels.length; i += 4) {
+
+                let x = (i / 4) % canvas.width
+                let y = Math.floor(i / 4 / canvas.width)
+
+                let r = pixels[i]
+                let g = pixels[i+1]
+                let b = pixels[i+2]
+                let a = pixels[i+3]
+
+                //if (a > 0) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    r: r,
+                    g: g,
+                    b: b,
+                    a: a,
+                })
+                //}
+
+            }
+
+            animate()
+
+        }
+
+        //
+
+        function animate() {
+
+            let ii =-1
+            for (let i = 0; i < pixels.length; i += 4) {
+                ii +=1
+
+                let particle = particles[ii]
+
+                pixels[i] = particle.r
+                pixels[i+1] = particle.g
+                pixels[i+2] = particle.b
+                pixels[i+3] = particle.a
+
+            }
+
+            ctx.putImageData(imageData, 0, 0)
+            requestAnimationFrame(animate)
+
+        }
+
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
