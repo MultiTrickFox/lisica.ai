@@ -16,33 +16,6 @@
 
     <script>
 
-        const canvas = document.createElement("canvas")
-        document.body.appendChild(canvas)
-        canvas.width = document.body.clientWidth 
-        canvas.height = document.body.clientHeight
-        const ctx  = canvas.getContext("2d")
-
-        const upper_textbox = document.createElement("div")
-        document.body.appendChild(upper_textbox)
-        upper_textbox.style.position = 'absolute'
-        upper_textbox.style.top = '33%'
-        upper_textbox.style.left = '50%'
-        upper_textbox.style.transform = 'translate(-50%, -50%)'
-        upper_textbox.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
-        upper_textbox.style.color = 'white'
-        upper_textbox.style.fontFamily = 'Quicksand'
-        upper_textbox.style.fontSize = '14pt'
-        upper_textbox.style.textAlign = 'center'
-        upper_textbox.style.border = 'none'
-        upper_textbox.style.outline = 'none'
-        upper_textbox.style.padding = '10px'
-        //upper_textbox.textContent = 'Hello there'
-
-
-    </script>
-
-    <script>
-
         var is_request_running
 
         const sleep = sec => new Promise(r => setTimeout(r, sec*1_000))
@@ -156,15 +129,102 @@
 
     <script>
 
-        async function main() {
+        const canvas = document.createElement("canvas")
+        document.body.appendChild(canvas)
+        canvas.width = document.body.clientWidth 
+        canvas.height = document.body.clientHeight
+        const ctx = canvas.getContext("2d")
+
+        const canvas_noise = document.createElement("canvas")
+        document.body.appendChild(canvas_noise)
+        canvas_noise.width = document.body.clientWidth 
+        canvas_noise.height = document.body.clientHeight
+        const ctx_noise = canvas_noise.getContext("2d")
+
+        const upper_textbox = document.createElement("div")
+        document.body.appendChild(upper_textbox)
+        upper_textbox.style.position = 'absolute'
+        upper_textbox.style.top = '33%'
+        upper_textbox.style.left = '50%'
+        upper_textbox.style.transform = 'translate(-50%, -50%)'
+        upper_textbox.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
+        upper_textbox.style.color = 'white'
+        upper_textbox.style.fontFamily = 'Quicksand'
+        upper_textbox.style.fontSize = '14pt'
+        upper_textbox.style.textAlign = 'center'
+        upper_textbox.style.border = 'none'
+        upper_textbox.style.outline = 'none'
+        upper_textbox.style.padding = '10px'
+        //upper_textbox.textContent = 'Hello there'
+
+        const lower_textbox = document.createElement("div")
+        document.body.appendChild(lower_textbox)
+        lower_textbox.style.position = 'absolute'
+        lower_textbox.style.bottom = '33%'
+        lower_textbox.style.left = '50%'
+        lower_textbox.style.transform = 'translate(-50%, -50%)'
+        lower_textbox.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
+        lower_textbox.style.color = 'white'
+        lower_textbox.style.fontFamily = 'Quicksand'
+        lower_textbox.style.fontSize = '14pt'
+        lower_textbox.style.textAlign = 'center'
+        lower_textbox.style.border = 'none'
+        lower_textbox.style.outline = 'none'
+        lower_textbox.style.padding = '10px'
+        //lower_textbox.textContent = 'Hello there'
+
+    </script>
+
+    <script src='perlin.js'></script>
+
+    <script>
+
+
+        // create an independent fn for perlin field here that updates 2nd canvas every n seconds
+        
+        var perlin_time = 2
+
+        function apply_perlin_mist() {
+
+            perlin_time +=1/100
+
+            image = ctx_noise.getImageData(0, 0, canvas_noise.width, canvas_noise.height)
+            pixels = image.data
+
+            for (let x = 0; x < canvas_noise.width; x+=4) {
+                for (let y = 0; y < canvas_noise.height; y+=4) {
+
+                    let value = noise.simplex3(x / 100, y / 100, perlin_time)
+                    value = Math.abs(value) * 256
+
+                    var cell = (x + y * canvas_noise.width) * 4
+                    pixels[cell] = pixels[cell+1] = pixels[cell+2] = value
+                    pixels[cell+3] = 255 // alpha.
+
+                }
+            }
+
+            ctx_noise.putImageData(image, 0, 0)
+
+        }
+
+        setInterval(apply_perlin_mist, 60)
+
+        
+
+
+
+
+
+
+
+        async function play_a_dream() {
 
             dreams = await fetch_dreams()
 
             let dream_ids = Object.keys(dreams)
-            console.log('dream_ids:',dream_ids)
-
+            
             let dream_id = dream_ids[Math.floor(Math.random()*dream_ids.length)]
-            console.log('dream_id:',dream_id)
 
             let dream = dreams[dream_id]
             let chunks = dream['chunks']
@@ -173,7 +233,6 @@
             for (let i = 0; i < chunks.length; i++) {
                 let chunk = chunks[i]
                 let image = images[i]
-
 
 
                 // TODO: split the text into two main chunks
@@ -185,61 +244,20 @@
                 // then comes the bottom chunk
 
 
+                    const img = new Image()        
+                    img.src = 'data:image/png;base64,'+image
+                    img.onload = function() {
+                        
+                        ctx.clearRect(0, 0, canvas.width, canvas.height)
+                        ctx.drawImage(img, (canvas.width-img.width)/2, (canvas.height-img.height)/2)
 
+                        upper_textbox.style.font = '${16}px Quicksand'
+                        upper_textbox.textContent = chunk
 
+                        ctx.globalCompositeOperation = 'multiply'
+                        ctx.drawImage(canvas_noise, 0, 0)
 
-                const img = new Image()        
-                img.src = 'data:image/png;base64,'+image
-                img.onload = function() {
-                    
-                    ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-                    ctx.drawImage(img, canvas.width/2-img.width/2, canvas.height/2-img.height/2)
-
-                    let punto = 16
-                    
-                    upper_textbox.style.font = '${punto}px Quicksand'
-
-                    upper_textbox.textContent = chunk
-
-                    // ctx.font = `${punto}px Quicksand`
-                    // ctx.fillStyle = 'white'
-                    // ctx.textAlign = 'center'
-                    // ctx.textBaseline = 'middle'
-
-                    // let thresholdWidth = img.width / 2
-
-                    // let words = chunk.split(" ")
-                    // let line = ""
-                    // let lines = []
-                    // let lineCount = 0
-
-                    // for (let i = 0; i < words.length; i++) {
-                    //     let testLine = line + words[i] + " "
-                    //     let testLineWidth = ctx.measureText(testLine).width
-                    //     if (testLineWidth > thresholdWidth) {
-                    //         lines.push(line.trim())
-                    //         line = words[i] + " "
-                    //         lineCount++
-                    //     } else {
-                    //         line = testLine
-                    //     }
-                    // }
-
-                    // if (line.trim().length > 0) {
-                    //     lines.push(line.trim())
-                    //     lineCount++
-                    // }
-
-                    // let x = canvas.width / 2
-                    // let y = canvas.height / 2 - ((lineCount - 1) * punto / 2)
-
-                    // for (let i = 0; i < lines.length; i++) {
-                    //     const textY = y + (i * punto)
-                    //     ctx.fillText(lines[i], x, textY)
-                    // }
-
-                }
+                    }
 
                 await sleep(.06 * chunk.length)
 
@@ -247,7 +265,7 @@
 
         }
 
-        main()
+        play_a_dream()
 
     </script>
 
