@@ -408,7 +408,7 @@
                     xhr.open("GET", url, true)
                     xhr.setRequestHeader("username", text_username.value)
                     xhr.setRequestHeader("password", text_password.value)
-                    xhr.setRequestHeader("cmd", "reset_memory")
+                    xhr.setRequestHeader("cmd", "reset_memories")
                     xhr.onreadystatechange = function() {
                         if (xhr.readyState == XMLHttpRequest.DONE) {
                             document.body.style.cursor = 'auto'
