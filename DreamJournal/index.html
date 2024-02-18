@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>DreamJournal</title>
+    <title>Dream Catcher</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
 </head>
 
@@ -20,7 +20,7 @@
 
         const sleep = sec => new Promise(r => setTimeout(r, sec*1_000))
 
-        async function fetch_dreams() {
+        async function fetch_some_dreams(amount) {
 
             if (is_request_running) return
             else is_request_running = true
@@ -29,11 +29,15 @@
             let xhr = new XMLHttpRequest()
             let response = null
             xhr.open("GET", 'https://lisica.lisica.ai:64243/dreamjournal', true)
-            xhr.setRequestHeader("cmd", "dreams")
+            xhr.setRequestHeader("cmd", "fetch_some_dreams")
+            xhr.setRequestHeader("amount", amount)
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     let result = JSON.parse(xhr.responseText)
-                    response = result.answer
+                    let liked_dreams = result.liked_dreams
+                    let recent_dreams = result.recent_dreams
+                    let random_dreams = result.random_dreams
+                    let metadata = result.metadata
                     console.log('response received:',response)
                 }
             }
@@ -46,16 +50,37 @@
 
         }
 
-        async function fetch_until() {
+        async function fetch_a_dream(dream_id) {
 
-            // if (is_request_running) return
-            // else is_request_running = true
-            //document.body.style.cursor = 'wait'
+            let response = await fetch(`https://lisica.lisica.ai:64243/assets_dream/${dream_id}.log`)
+            response = await response.json()
+
+            let chunks = response['chunks']
+            let hm_chunks = response['chunks'].length
+
+            let imgs = []
+            let depths = []
+            for (let i = 0; i < hm_chunks; i++) {
+
+                let r = await fetch(`https://lisica.lisica.ai:64243/assets_dream/${dream_id}_img_${i}.png`)
+                r = await response.blob()
+                imgs.push(r)
+
+                r = await fetch(`https://lisica.lisica.ai:64243/assets_dream/${dream_id}_depth_${i}.png`)
+                r = await response.blob()
+                depths.push(r)
+            }
+
+            return chunks, imgs, depths
+
+        }
+
+        async function fetch_until() {
 
             let xhr = new XMLHttpRequest()
             let response = null
             xhr.open("GET", 'https://lisica.lisica.ai:64243/dreamjournal', true)
-            xhr.setRequestHeader("cmd", "until")
+            xhr.setRequestHeader("cmd", "until_next_dream")
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     let result = JSON.parse(xhr.responseText)
@@ -66,13 +91,11 @@
             xhr.send()
             while (response == null) await sleep(.1)
 
-            // is_request_running = false
-            //document.body.style.cursor = 'auto'
             return response
 
         }
 
-        async function fetch_search(text) {
+        async function search_some_dreams(text, amount) {
 
             if (is_request_running) return
             else is_request_running = true
@@ -81,8 +104,9 @@
             let xhr = new XMLHttpRequest()
             let response = null
             xhr.open("GET", 'https://lisica.lisica.ai:64243/dreamjournal', true)
-            xhr.setRequestHeader("cmd", "until")
+            xhr.setRequestHeader("cmd", "search_some_dreams")
             xhr.setRequestHeader("text", text)
+            xhr.setRequestHeader("amount", amount)
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                     let result = JSON.parse(xhr.responseText)
@@ -134,9 +158,18 @@
         canvas.width = document.body.clientWidth 
         canvas.height = document.body.clientHeight
         const ctx = canvas.getContext("2d")
+        
+        let image = new Image()
+        image.src = 'https://shop.wwf.ca/cdn/shop/files/Dmitry-Deshevykh-WWF-Russia_red_fox.jpg?v=1694548960&width=2048'
+        image.onload = function() {
+            ctx.drawImage(image, 0, 0)
+        }
 
         const canvas_noise = document.createElement("canvas")
         document.body.appendChild(canvas_noise)
+        canvas_noise.style.position = 'absolute'
+        canvas_noise.style.top = '0px'
+        canvas_noise.style.left = '0px'
         canvas_noise.width = document.body.clientWidth 
         canvas_noise.height = document.body.clientHeight
         const ctx_noise = canvas_noise.getContext("2d")
@@ -144,41 +177,141 @@
         const upper_textbox = document.createElement("div")
         document.body.appendChild(upper_textbox)
         upper_textbox.style.position = 'absolute'
-        upper_textbox.style.top = '33%'
-        upper_textbox.style.left = '50%'
-        upper_textbox.style.transform = 'translate(-50%, -50%)'
-        upper_textbox.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
+        upper_textbox.style.top = '18px'
+        upper_textbox.style.left = '30px'
+        upper_textbox.style.width = '66%'
+        upper_textbox.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'
+        upper_textbox.style.display = 'inline-block'
         upper_textbox.style.color = 'white'
         upper_textbox.style.fontFamily = 'Quicksand'
-        upper_textbox.style.fontSize = '14pt'
-        upper_textbox.style.textAlign = 'center'
+        upper_textbox.style.fontSize = '12pt'
+        upper_textbox.style.textAlign = 'left'
         upper_textbox.style.border = 'none'
         upper_textbox.style.outline = 'none'
         upper_textbox.style.padding = '10px'
-        //upper_textbox.textContent = 'Hello there'
+        upper_textbox.style.borderRadius = '16px'
+        upper_textbox.textContent = 'This is a sample text, i didnt know what i was writing so i kept writing. This is a sample text, i didnt know what i was writing so i kept writing. This is a sample text, i didnt know what i was writing so i kept writing'
 
         const lower_textbox = document.createElement("div")
         document.body.appendChild(lower_textbox)
         lower_textbox.style.position = 'absolute'
-        lower_textbox.style.bottom = '33%'
-        lower_textbox.style.left = '50%'
-        lower_textbox.style.transform = 'translate(-50%, -50%)'
-        lower_textbox.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
+        lower_textbox.style.bottom = '18px'
+        lower_textbox.style.right = '30px'
+        lower_textbox.style.width = '66%'
+        lower_textbox.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'
+        lower_textbox.style.display = 'inline-block'
         lower_textbox.style.color = 'white'
         lower_textbox.style.fontFamily = 'Quicksand'
-        lower_textbox.style.fontSize = '14pt'
-        lower_textbox.style.textAlign = 'center'
+        lower_textbox.style.fontSize = '12pt'
+        lower_textbox.style.textAlign = 'right'
         lower_textbox.style.border = 'none'
         lower_textbox.style.outline = 'none'
         lower_textbox.style.padding = '10px'
-        //lower_textbox.textContent = 'Hello there'
+        lower_textbox.style.borderRadius = '16px'
+        lower_textbox.textContent = 'This is a sample text, i didnt know what i was writing so i kept writing. This is a sample text, i didnt know what i was writing so i kept writing. This is a sample text, i didnt know what i was writing so i kept writing'
+
+        const right_button = document.createElement("button")
+        document.body.appendChild(right_button)
+        right_button.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'
+        right_button.style.position = 'absolute'
+        right_button.style.bottom = '50%'
+        right_button.style.left = '8px'
+        right_button.style.fontFamily = 'Quicksand'
+        right_button.style.fontSize = '16pt'
+        right_button.style.textAlign = 'center'
+        right_button.innerHTML = "<" //"&larr;"
+        right_button.style.color = "white"
+        right_button.style.borderRadius = '50%';  // Circular shape
+        right_button.style.border = 'none';  // No border
+        right_button.style.boxShadow = '0px 0px 6px white';  // White shadow
+        right_button.style.display = 'flex';
+        right_button.style.justifyContent = 'center';
+        right_button.style.alignItems = 'center';
+        right_button.addEventListener('click', function() {
+            console.log('Left button clicked');
+            // TODO: Add your functionality here
+        })
+
+        const left_button = document.createElement("button")
+        document.body.appendChild(left_button)
+        left_button.style.backgroundColor = 'rgba(0, 0, 0, 0.7)'
+        left_button.style.position = 'absolute'
+        left_button.style.bottom = '50%'
+        left_button.style.right = '8px'
+        left_button.style.fontFamily = 'Quicksand'
+        left_button.style.fontSize = '16pt'
+        left_button.style.textAlign = 'center'
+        left_button.innerHTML = ">" //"&rarr;"
+        left_button.style.color = "white"
+        left_button.style.borderRadius = '50%';  // Circular shape
+        left_button.style.border = 'none';  // No border
+        left_button.style.boxShadow = '0px 0px 6px white';  // White shadow
+        left_button.style.display = 'flex';
+        left_button.style.justifyContent = 'center';
+        left_button.style.alignItems = 'center';
+        left_button.addEventListener('click', function() {
+            console.log('Right button clicked');
+            // TODO: Add your functionality here
+        })
+
+        // at the center:
+        // most liked
+        // most recent
+        // random
+        // search
+
+        const div_most_recent = document.createElement("div");
+        document.body.appendChild(div_most_recent);
+        div_most_recent.style.position = 'absolute';
+        div_most_recent.style.top = '16%';
+        div_most_recent.style.left = '16%';
+        div_most_recent.style.transform = 'translate(-50%, -50%)';
+        div_most_recent.style.color = 'black';
+        div_most_recent.innerHTML = '<p>Most Recent</p>';
+
+        const div_most_liked = document.createElement("div");
+        document.body.appendChild(div_most_liked);
+        div_most_liked.style.position = 'absolute';
+        div_most_liked.style.bottom = '16%';
+        div_most_liked.style.left = '16%';
+        div_most_liked.style.transform = 'translate(-50%, -50%)';
+        div_most_liked.style.color = 'black';
+        div_most_liked.innerHTML = '<p>Most Liked</p>';
+
+        const div_most_random = document.createElement("div");
+        document.body.appendChild(div_most_random);
+        div_most_random.style.position = 'absolute';
+        div_most_random.style.top = '16%';
+        div_most_random.style.right = '64pt';
+        div_most_random.style.transform = 'translate(-50%, -50%)';
+        div_most_random.style.color = 'black';
+        div_most_random.style.textAlign = 'left'
+        div_most_random.innerHTML = '<p>Most Random</p>';
+
+        const div_search = document.createElement("div");
+        document.body.appendChild(div_search);
+        div_search.style.position = 'absolute';
+        div_search.style.bottom = '16%';
+        div_search.style.right = '64pt';
+        div_search.style.transform = 'translate(-50%, -50%)';
+        div_search.style.color = 'black';
+        div_search.style.textAlign = 'left';
+        div_search.innerHTML = '<p>Search</p>';
+
+        // todo: download this dream button at the top right
+
+
+
+
+        // todo : at the very end write the "main loop", with all these ui's disappear etc
+
+
 
     </script>
 
     <script src='perlin.js'></script>
 
     <script>
-
 
         // create an independent fn for perlin field here that updates 2nd canvas every n seconds
         
@@ -194,7 +327,7 @@
             for (let x = 0; x < canvas_noise.width; x+=4) {
                 for (let y = 0; y < canvas_noise.height; y+=4) {
 
-                    let value = noise.simplex3(x / 100, y / 100, perlin_time)
+                    let value = noise.simplex3(x / 170, y / 160, perlin_time)
                     value = Math.abs(value) * 256
 
                     var cell = (x + y * canvas_noise.width) * 4
@@ -210,13 +343,7 @@
 
         setInterval(apply_perlin_mist, 60)
 
-        
-
-
-
-
-
-
+        //
 
         async function play_a_dream() {
 
@@ -254,8 +381,8 @@
                         upper_textbox.style.font = '${16}px Quicksand'
                         upper_textbox.textContent = chunk
 
-                        ctx.globalCompositeOperation = 'multiply'
-                        ctx.drawImage(canvas_noise, 0, 0)
+                        // ctx.globalCompositeOperation = 'multiply'
+                        // ctx.drawImage(canvas_noise, 0, 0)
 
                     }
 
